@@ -9,4 +9,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>Microservice</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>Registration</module>
+    </modules>
 </project>
