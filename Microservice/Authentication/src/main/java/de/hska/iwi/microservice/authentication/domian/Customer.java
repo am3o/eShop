@@ -25,11 +25,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Customer")
+@Table(name = "customer")
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id = 1;
 
     @Column(name = "name")
     private String name;
@@ -44,7 +44,7 @@ public class Customer {
     private String password;
 
     @Column(name = "role")
-    private int role;
+    private int role = 2;
 
     protected Customer() {
     }
@@ -57,12 +57,12 @@ public class Customer {
         this.role = role;
     }
 
-    public int getId() {
-        return id;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public long getId() {
+        return id;
     }
 
     public String getName() {

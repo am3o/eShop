@@ -28,7 +28,7 @@ public interface IAuthenticationServiceFacade {
     /**
      * Liefert die hinterlegten Informationen zu dem speziellen Benutzer zurück.
      */
-    Customer getCustomerInformation(int customerId);
+    Customer getCustomerInformation(long customerId);
 
     /**
      * Aktualisiert einen Benutzer im System.
@@ -38,15 +38,15 @@ public interface IAuthenticationServiceFacade {
     /**
      * Löscht einen Benutzer aus dem System.
      */
-    boolean deleteCustomer(int customerId);
+    boolean deleteCustomer(long customerId);
 
     /**
      * Logt einen Benutzer in das System ein.
      */
-    boolean logInCustomer(int customerId);
+    boolean logInCustomer(long customerId);
 
     /**
      * Logt einen Benutzer aus dem System aus.
      */
-    boolean logOutCustomer(int customerId);
+    boolean logOutCustomer(long customerId);
 }

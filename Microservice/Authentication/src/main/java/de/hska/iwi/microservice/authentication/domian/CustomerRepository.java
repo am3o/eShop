@@ -17,8 +17,16 @@
 
 package de.hska.iwi.microservice.authentication.domian;
 
-import org.springframework.data.repository.Repository;
+import org.springframework.data.repository.CrudRepository;
 
-public interface CustomerRepository extends Repository<Customer, Long> {
-    Customer findById(int id);
+public interface CustomerRepository extends CrudRepository<Customer, Long> {
+    Customer save(Customer customer);
+
+    Customer findById(long id);
+
+    Customer findByName(String name);
+
+    Customer findByUsername(String username);
+
+    Customer findByUsernameAndPassword(String username, String password);
 }

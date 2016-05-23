@@ -17,17 +17,19 @@
 
 package de.hska.iwi.microservice.authentication.web;
 
+import de.hska.iwi.microservice.authentication.domian.Customer;
 import de.hska.iwi.microservice.authentication.service.IAuthenticationServiceFacade;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class AuthenticationController implements IAuthenticationController {
+class AuthenticationController implements IAuthenticationController {
     private final Logger logger = Logger.getLogger(AuthenticationController.class);
     private final IAuthenticationServiceFacade authenticationServiceFasade;
 
@@ -38,32 +40,33 @@ public class AuthenticationController implements IAuthenticationController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public boolean createUser() {
-        return false;
+    public boolean createUser(@ModelAttribute Customer customer) {
+        return authenticationServiceFasade.createCustomer(customer);
     }
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-    public String getUserInformation(@PathVariable("userId") int userId) {
+    public String getUserInformation(@PathVariable("userId") long userId) {
+        logger.info(String.format("Service-Aufruf: getCustomerInformation mit dem Wert: %d", userId));
         return authenticationServiceFasade.getCustomerInformation(userId).toString();
     }
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
-    public boolean updateUser(@PathVariable("userId") int userId) {
+    public boolean updateUser(@PathVariable("userId") long userId) {
         return false;
     }
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
-    public boolean deleteUser(@PathVariable("userId") int userId) {
-        return false;
+    public boolean deleteUser(@PathVariable("userId") long userId) {
+        return authenticationServiceFasade.deleteCustomer(userId);
     }
 
     @RequestMapping(value = "/{userId}/login", method = RequestMethod.PUT)
-    public boolean loginUser(@PathVariable("userId") int userId) {
+    public boolean loginUser(@PathVariable("userId") long userId) {
         return false;
     }
 
     @RequestMapping(value = "/{userId}/logout", method = RequestMethod.PUT)
-    public boolean logoutUser(@PathVariable("userId") int userId) {
+    public boolean logoutUser(@PathVariable("userId") long userId) {
         return false;
     }
 }

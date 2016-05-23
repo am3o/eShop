@@ -17,13 +17,15 @@
 
 package de.hska.iwi.microservice.authentication.web;
 
+import de.hska.iwi.microservice.authentication.domian.Customer;
+
 public interface IAuthenticationController {
     /**
      * Erzeugt einen neuen Benutzer und die Operation wird quitiert, wenn dies erfolgreich war.
      *
      * @return Status des Vorgangs.
      */
-    boolean createUser();
+    boolean createUser(Customer customer);
 
     /**
      * Liefert alle vorliegenden Informationen zurück, welche von dem speziellen Benutzer vorhanden
@@ -32,7 +34,7 @@ public interface IAuthenticationController {
      * @param userId eindeutige BenutzerId
      * @return vorliegende Informationen zum Benutzer
      */
-    String getUserInformation(int userId);
+    String getUserInformation(long userId);
 
     /**
      * Aktualisiert die Informationen eines speziellen Benutzers.
@@ -40,7 +42,7 @@ public interface IAuthenticationController {
      * @param userId eindeutige BenutzerId
      * @return Status des Vorgangs
      */
-    boolean updateUser(int userId);
+    boolean updateUser(long userId);
 
     /**
      * Löscht einen speziellen Benutzer aus dem System.
@@ -48,7 +50,7 @@ public interface IAuthenticationController {
      * @param userId eindeutige BenutzerId
      * @return Status des Vorgangs.
      */
-    boolean deleteUser(int userId);
+    boolean deleteUser(long userId);
 
     /**
      * Logt einen Benutzer in das System ein.
@@ -56,7 +58,7 @@ public interface IAuthenticationController {
      * @param userId eindeutige BenutzerId.
      * @return Status des Vorgangs
      */
-    boolean loginUser(int userId);
+    boolean loginUser(long userId);
 
     /**
      * Logt einen Benutzer aus dem System aus.
@@ -64,5 +66,5 @@ public interface IAuthenticationController {
      * @param userId eindeutige BenutzerId
      * @return Status des Vorgangs
      */
-    boolean logoutUser(int userId);
+    boolean logoutUser(long userId);
 }

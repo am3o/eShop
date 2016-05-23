@@ -24,25 +24,34 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 @Service
 public class AuthenticationServiceFacade implements IAuthenticationServiceFacade {
     private final Logger logger = Logger.getLogger(AuthenticationServiceFacade.class);
     private final CustomerRepository customerRepository;
 
+    @PersistenceContext
+    private final EntityManager entityManager;
+
     @Autowired
-    public AuthenticationServiceFacade(CustomerRepository customerRepository) {
+    public AuthenticationServiceFacade(CustomerRepository customerRepository, EntityManager entityManager) {
         super();
         logger.info("Erzeuge AuthenticationServiceFasade");
         this.customerRepository = customerRepository;
+        this.entityManager = entityManager;
     }
 
     @Override
     public boolean createCustomer(Customer value) {
-        return false;
+        boolean createCustomerStatus = true;
+        customerRepository.save(value);
+        return createCustomerStatus;
     }
 
     @Override
-    public Customer getCustomerInformation(int customerId) {
+    public Customer getCustomerInformation(long customerId) {
         return customerRepository.findById(customerId);
     }
 
@@ -53,19 +62,19 @@ public class AuthenticationServiceFacade implements IAuthenticationServiceFacade
     }
 
     @Override
-    public boolean deleteCustomer(int customerId) {
+    public boolean deleteCustomer(long customerId) {
         Customer customer = customerRepository.findById(customerId);
+        customerRepository.delete(customer);
+        return !customerRepository.exists(customerId);
+    }
 
+    @Override
+    public boolean logInCustomer(long customerId) {
         return false;
     }
 
     @Override
-    public boolean logInCustomer(int customerId) {
-        return false;
-    }
-
-    @Override
-    public boolean logOutCustomer(int customerId) {
+    public boolean logOutCustomer(long customerId) {
         return false;
     }
 }

@@ -44,7 +44,6 @@ public class AuthenticationServerConfig {
 
     @Bean
     public EntityManagerFactory entityManagerFactory() {
-
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setGenerateDdl(true);
 
