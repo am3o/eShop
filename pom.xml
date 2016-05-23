@@ -5,6 +5,7 @@
     <groupId>de.hska.iwi</groupId>
     <artifactId>eShop</artifactId>
     <version>0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
     <name>eShop</name>
     <url>http://maven.apache.org</url>
