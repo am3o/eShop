@@ -17,21 +17,23 @@
 
 package de.hska.iwi.microservice.authentication.service;
 
-public interface IAuthenticationServiceFasade {
+import de.hska.iwi.microservice.authentication.domian.Customer;
+
+public interface IAuthenticationServiceFacade {
     /**
      * Erzeugt einen neuen Benutzer im System.
      */
-    boolean createCustomer(Object value);
+    boolean createCustomer(Customer value);
 
     /**
      * Liefert die hinterlegten Informationen zu dem speziellen Benutzer zurück.
      */
-    String getCustomerInformation(int customerId);
+    Customer getCustomerInformation(int customerId);
 
     /**
      * Aktualisiert einen Benutzer im System.
      */
-    boolean updateCustomer(Object value);
+    boolean updateCustomer(Customer value);
 
     /**
      * Löscht einen Benutzer aus dem System.

@@ -17,7 +17,7 @@
 
 package de.hska.iwi.microservice.authentication.web;
 
-import de.hska.iwi.microservice.authentication.service.IAuthenticationServiceFasade;
+import de.hska.iwi.microservice.authentication.service.IAuthenticationServiceFacade;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +29,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthenticationController implements IAuthenticationController {
     private final Logger logger = Logger.getLogger(AuthenticationController.class);
-    private final IAuthenticationServiceFasade authenticationServiceFasade;
+    private final IAuthenticationServiceFacade authenticationServiceFasade;
 
     @Autowired
-    public AuthenticationController(IAuthenticationServiceFasade authenticationServiceFasade) {
+    public AuthenticationController(IAuthenticationServiceFacade authenticationServiceFasade) {
         logger.info("Erzeuge Authentication-Steuereinheit");
         this.authenticationServiceFasade = authenticationServiceFasade;
     }
@@ -44,7 +44,7 @@ public class AuthenticationController implements IAuthenticationController {
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
     public String getUserInformation(@PathVariable("userId") int userId) {
-        return "leer";
+        return authenticationServiceFasade.getCustomerInformation(userId).toString();
     }
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.PUT)

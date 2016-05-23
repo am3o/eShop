@@ -1,15 +1,28 @@
 # Spring properties
 spring:
   application:
-     name: authentication-service  # Service registers under this name
+     name: Authentication-Service # Service registers under this name
+  freemarker:
+    enabled: false                # Ignore Eureka dashboard FreeMarker templates
+  thymeleaf:
+    cache: false                  # Allow Thymeleaf templates to be reloaded at runtime
+    prefix: classpath:/accounts-server/templates/    # Trailing / mandatory
+                                  # Template location for this application only
 
-# Discovery Server Access
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:1111/eureka/
+# Map the error path to error template (for Thymeleaf)
+error:
+  path: /error
 
 # HTTP Server
 server:
   port: 4201   # HTTP (Tomcat) port
-  contextPath: /api/user
+
+# Discovery Server Access
+#  1. DEV ONLY: Reduce the lease renewal interval to speed up registration
+#  2. Define URL of registration server (defaultZone)
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:1111/eureka/
+  instance:
+    leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION

@@ -17,27 +17,45 @@
 
 package de.hska.iwi.microservice.authentication.service;
 
+import de.hska.iwi.microservice.authentication.domian.Customer;
+import de.hska.iwi.microservice.authentication.domian.CustomerRepository;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AuthenticationServiceFasade implements IAuthenticationServiceFasade {
+public class AuthenticationServiceFacade implements IAuthenticationServiceFacade {
+    private final Logger logger = Logger.getLogger(AuthenticationServiceFacade.class);
+    private final CustomerRepository customerRepository;
+
+    @Autowired
+    public AuthenticationServiceFacade(CustomerRepository customerRepository) {
+        super();
+        logger.info("Erzeuge AuthenticationServiceFasade");
+        this.customerRepository = customerRepository;
+    }
+
     @Override
-    public boolean createCustomer(Object value) {
+    public boolean createCustomer(Customer value) {
         return false;
     }
 
     @Override
-    public String getCustomerInformation(int customerId) {
-        return null;
+    public Customer getCustomerInformation(int customerId) {
+        return customerRepository.findById(customerId);
     }
 
     @Override
-    public boolean updateCustomer(Object value) {
-        return false;
+    public boolean updateCustomer(Customer value) {
+
+        return true;
     }
 
     @Override
     public boolean deleteCustomer(int customerId) {
+        Customer customer = customerRepository.findById(customerId);
+
         return false;
     }
 

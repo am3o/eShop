@@ -19,13 +19,13 @@ package de.hska.iwi.microservice.authentication;
 
 import org.apache.log4j.Logger;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.context.annotation.Import;
 
-@EnableAutoConfiguration
 @EnableDiscoveryClient
 @SpringBootApplication
+@Import(AuthenticationServerConfig.class)
 public class AuthenticationServer {
     private static Logger logger = Logger.getLogger(AuthenticationServer.class);
 
