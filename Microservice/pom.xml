@@ -7,9 +7,11 @@
         <groupId>de.hska.iwi</groupId>
         <version>0.1-SNAPSHOT</version>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
     <artifactId>Microservice</artifactId>
     <packaging>pom</packaging>
+
     <modules>
         <module>Registration</module>
     </modules>
