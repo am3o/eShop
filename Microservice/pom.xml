@@ -14,5 +14,6 @@
 
     <modules>
         <module>Registration</module>
+        <module>Product</module>
     </modules>
 </project>
