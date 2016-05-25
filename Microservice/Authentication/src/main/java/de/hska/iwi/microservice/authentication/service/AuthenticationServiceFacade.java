@@ -24,23 +24,16 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 @Service
 public class AuthenticationServiceFacade implements IAuthenticationServiceFacade {
     private final Logger logger = Logger.getLogger(AuthenticationServiceFacade.class);
     private final CustomerRepository customerRepository;
 
-    @PersistenceContext
-    private final EntityManager entityManager;
-
     @Autowired
-    public AuthenticationServiceFacade(CustomerRepository customerRepository, EntityManager entityManager) {
+    public AuthenticationServiceFacade(CustomerRepository customerRepository) {
         super();
         logger.info("Erzeuge AuthenticationServiceFasade");
         this.customerRepository = customerRepository;
-        this.entityManager = entityManager;
     }
 
     @Override

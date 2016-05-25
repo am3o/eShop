@@ -52,21 +52,27 @@ class AuthenticationController implements IAuthenticationController {
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
     public boolean updateUser(@PathVariable("userId") long userId) {
+        //FIXME: Aktuell gibt es kein Anwendungsszenario, dennoch nett zu haben
         return false;
     }
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
     public boolean deleteUser(@PathVariable("userId") long userId) {
+        //FIXME: Aktuell korrekt implemnentiert, jedoch kein Anwendungsszenario hierfür
         return authenticationServiceFasade.deleteCustomer(userId);
     }
 
     @RequestMapping(value = "/{userId}/login", method = RequestMethod.PUT)
     public boolean loginUser(@PathVariable("userId") long userId) {
+        //TODO: Anmeldung liefert bei Erfolg den passenden Benutzer zurück
+        //      Sassionhandling client-seitig?
         return false;
     }
 
     @RequestMapping(value = "/{userId}/logout", method = RequestMethod.PUT)
     public boolean logoutUser(@PathVariable("userId") long userId) {
+        //TODO: Abmeldung liefert bei Erfolg den Benutzer zurück?
+        //      Sassionhandling client-seitig?
         return false;
     }
 }

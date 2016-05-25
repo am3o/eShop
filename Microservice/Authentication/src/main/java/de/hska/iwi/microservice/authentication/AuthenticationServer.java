@@ -17,6 +17,8 @@
 
 package de.hska.iwi.microservice.authentication;
 
+import de.hska.iwi.microservice.authentication.config.AuthenticationServerConfig;
+
 import org.apache.log4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -15,24 +15,22 @@
  *
  */
 
-package de.hska.iwi.microservice.authentication;
+package de.hska.iwi.microservice.authentication.config;
+
+import de.hska.iwi.microservice.authentication.AuthenticationServer;
 
 import org.apache.log4j.Logger;
 import org.apache.tomcat.jdbc.pool.DataSource;
-import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import javax.persistence.EntityManagerFactory;
-
-@Configurable
+@EnableAutoConfiguration
 @PropertySource("classpath:db-config.properties")
 public class AuthenticationServerConfig {
     private final Logger logger = Logger.getLogger(AuthenticationServerConfig.class);
@@ -40,20 +38,6 @@ public class AuthenticationServerConfig {
     public AuthenticationServerConfig() {
         super();
         logger.info("Authentication-Konfiguration wurde geladen.");
-    }
-
-    @Bean
-    public EntityManagerFactory entityManagerFactory() {
-        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        vendorAdapter.setGenerateDdl(true);
-
-        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
-        factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("de.hska.iwi.microservice.authentication.domian");
-        factory.setDataSource(dataSource());
-        factory.afterPropertiesSet();
-
-        return factory.getObject();
     }
 
     @Bean
