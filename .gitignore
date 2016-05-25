@@ -125,3 +125,4 @@ hs_err_pid*
 
 # Project-specific stuff:
 *hibernate.cfg.xml
+*db-config.properties
