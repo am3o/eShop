@@ -35,8 +35,8 @@ public class CategoryServer {
     private static Logger logger = Logger.getLogger(CategoryServer.class);
 
     public static void main(String[] args) {
-        logger.info("Erzeuge Authentication-Service.");
-        System.setProperty("spring.config.name", "Authentication-Server");
+        logger.info("Erzeuge Category-Service.");
+        System.setProperty("spring.config.name", "Category-Server");
         SpringApplication.run(CategoryServer.class, args);
     }
 }
