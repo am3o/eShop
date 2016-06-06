@@ -17,7 +17,9 @@
 
 package de.hska.iwi.microservice.authentication.web;
 
-import de.hska.iwi.microservice.authentication.domian.Customer;
+import de.hska.iwi.microservice.authentication.entity.Customer;
+
+import java.util.List;
 
 public interface IAuthenticationController {
     /**
@@ -25,7 +27,15 @@ public interface IAuthenticationController {
      *
      * @return Status des Vorgangs.
      */
-    boolean createUser(Customer customer);
+    Customer createCustomer(Customer customer);
+
+    /**
+     * Liefert eine Liste von Benutzern zurück.
+     *
+     * @param customer Benutzerinformationen
+     * @return Liste an Benutzern
+     */
+    List<Customer> getCustomerInformation(Customer customer);
 
     /**
      * Liefert alle vorliegenden Informationen zurück, welche von dem speziellen Benutzer vorhanden
@@ -34,15 +44,15 @@ public interface IAuthenticationController {
      * @param userId eindeutige BenutzerId
      * @return vorliegende Informationen zum Benutzer
      */
-    String getUserInformation(long userId);
+    Customer getCustomerInformation(long customerId);
 
     /**
      * Aktualisiert die Informationen eines speziellen Benutzers.
      *
-     * @param userId eindeutige BenutzerId
+     * @param customer eindeutige Benutzer
      * @return Status des Vorgangs
      */
-    boolean updateUser(long userId);
+    Customer updateCustomer(Customer customer);
 
     /**
      * Löscht einen speziellen Benutzer aus dem System.
@@ -50,7 +60,7 @@ public interface IAuthenticationController {
      * @param userId eindeutige BenutzerId
      * @return Status des Vorgangs.
      */
-    boolean deleteUser(long userId);
+    boolean deleteCustomer(Customer customer);
 
     /**
      * Logt einen Benutzer in das System ein.
@@ -58,7 +68,7 @@ public interface IAuthenticationController {
      * @param userId eindeutige BenutzerId.
      * @return Status des Vorgangs
      */
-    boolean loginUser(long userId);
+    Customer loginCustomer(Customer customer);
 
     /**
      * Logt einen Benutzer aus dem System aus.
@@ -66,5 +76,5 @@ public interface IAuthenticationController {
      * @param userId eindeutige BenutzerId
      * @return Status des Vorgangs
      */
-    boolean logoutUser(long userId);
+    Customer logoutCustomer(Customer customer);
 }

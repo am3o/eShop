@@ -17,13 +17,20 @@
 
 package de.hska.iwi.microservice.authentication.service;
 
-import de.hska.iwi.microservice.authentication.domian.Customer;
+import de.hska.iwi.microservice.authentication.entity.Customer;
+
+import java.util.List;
 
 public interface IAuthenticationServiceFacade {
     /**
      * Erzeugt einen neuen Benutzer im System.
      */
-    boolean createCustomer(Customer value);
+    Customer createCustomer(Customer customer);
+
+    /**
+     * Liefert eine Liste an CustomerDAO zurück auf welche die gegebenen Informationen zutreffen.
+     */
+    List<Customer> getCustomerInformation(Customer customer);
 
     /**
      * Liefert die hinterlegten Informationen zu dem speziellen Benutzer zurück.
@@ -33,20 +40,20 @@ public interface IAuthenticationServiceFacade {
     /**
      * Aktualisiert einen Benutzer im System.
      */
-    boolean updateCustomer(Customer value);
+    Customer updateCustomer(Customer customer);
 
     /**
      * Löscht einen Benutzer aus dem System.
      */
-    boolean deleteCustomer(long customerId);
+    boolean deleteCustomer(Customer customer);
 
     /**
      * Logt einen Benutzer in das System ein.
      */
-    boolean logInCustomer(long customerId);
+    Customer logInCustomer(Customer customer);
 
     /**
      * Logt einen Benutzer aus dem System aus.
      */
-    boolean logOutCustomer(long customerId);
+    Customer logOutCustomer(Customer customer);
 }

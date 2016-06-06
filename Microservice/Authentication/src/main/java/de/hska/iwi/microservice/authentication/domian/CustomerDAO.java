@@ -28,7 +28,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "customer")
-public class Customer implements Serializable {
+public class CustomerDAO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -51,10 +51,11 @@ public class Customer implements Serializable {
     @Column(name = "role")
     private int role = 2;
 
-    protected Customer() {
+    protected CustomerDAO() {
     }
 
-    public Customer(String name, String lastname, String username, String password, int role) {
+    public CustomerDAO(long id, String name, String lastname, String username, String password, int role) {
+        this.id = id;
         this.name = name;
         this.lastname = lastname;
         this.username = username;
@@ -112,6 +113,10 @@ public class Customer implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("Customer[id=%d, name=%s, lastname=%s, username=%s, password=%s, role=%d]", id, name, lastname, username, password, role);
+        return String.format("CustomerDAO[id=%d, name=%s, lastname=%s, username=%s, password=%s, role=%d]", id, name, lastname, username, password, role);
+    }
+
+    public de.hska.iwi.microservice.authentication.entity.Customer toCustomer() {
+        return new de.hska.iwi.microservice.authentication.entity.Customer(this.id, this.name, this.lastname, this.username, this.password, this.role);
     }
 }

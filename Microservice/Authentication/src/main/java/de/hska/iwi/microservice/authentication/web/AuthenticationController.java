@@ -17,7 +17,7 @@
 
 package de.hska.iwi.microservice.authentication.web;
 
-import de.hska.iwi.microservice.authentication.domian.Customer;
+import de.hska.iwi.microservice.authentication.entity.Customer;
 import de.hska.iwi.microservice.authentication.service.IAuthenticationServiceFacade;
 
 import org.apache.log4j.Logger;
@@ -27,6 +27,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 class AuthenticationController implements IAuthenticationController {
@@ -39,40 +41,53 @@ class AuthenticationController implements IAuthenticationController {
         this.authenticationServiceFasade = authenticationServiceFasade;
     }
 
+    @Override
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public boolean createUser(@ModelAttribute Customer customer) {
+    public Customer createCustomer(@ModelAttribute Customer customer) {
+        logger.info(String.format("Service-Aufruf: createCustomer mit dem Wert: %s", customer.toString()));
         return authenticationServiceFasade.createCustomer(customer);
     }
 
+    @Override
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public List<Customer> getCustomerInformation(Customer customer) {
+        //WARNING Sicherheitslücke! Sollte überdacht werden
+        logger.info(String.format("Service-Aufruf: getCustomerInformation mit dem Wert: %s", customer.toString()));
+        return authenticationServiceFasade.getCustomerInformation(customer);
+    }
+
+    @Override
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-    public String getUserInformation(@PathVariable("userId") long userId) {
-        logger.info(String.format("Service-Aufruf: getCustomerInformation mit dem Wert: %d", userId));
-        return authenticationServiceFasade.getCustomerInformation(userId).toString();
+    public Customer getCustomerInformation(@PathVariable("userId") long customerId) {
+        logger.info(String.format("Service-Aufruf: getCustomerInformation mit dem Wert: %d", customerId));
+        return authenticationServiceFasade.getCustomerInformation(customerId);
     }
 
+    @Override
     @RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
-    public boolean updateUser(@PathVariable("userId") long userId) {
-        //FIXME: Aktuell gibt es kein Anwendungsszenario, dennoch nett zu haben
-        return false;
+    public Customer updateCustomer(@ModelAttribute Customer customer) {
+        logger.info(String.format("Service-Aufruf: updateCustomer mit dem Wert: %s", customer.toString()));
+        return authenticationServiceFasade.updateCustomer(customer);
     }
 
+    @Override
     @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
-    public boolean deleteUser(@PathVariable("userId") long userId) {
-        //FIXME: Aktuell korrekt implemnentiert, jedoch kein Anwendungsszenario hierfür
-        return authenticationServiceFasade.deleteCustomer(userId);
+    public boolean deleteCustomer(@ModelAttribute Customer customer) {
+        logger.info(String.format("Service-Aufruf: deleteCustomer mit dem Wert: %s", customer.toString()));
+        return authenticationServiceFasade.deleteCustomer(customer);
     }
 
-    @RequestMapping(value = "/{userId}/login", method = RequestMethod.PUT)
-    public boolean loginUser(@PathVariable("userId") long userId) {
-        //TODO: Anmeldung liefert bei Erfolg den passenden Benutzer zurück
-        //      Sassionhandling client-seitig?
-        return false;
+    @Override
+    @RequestMapping(value = "/login", method = RequestMethod.PUT)
+    public Customer loginCustomer(Customer customer) {
+        logger.info(String.format("Service-Aufruf: loginCustomer mit dem Wert: %s", customer.toString()));
+        return authenticationServiceFasade.logInCustomer(customer);
     }
 
-    @RequestMapping(value = "/{userId}/logout", method = RequestMethod.PUT)
-    public boolean logoutUser(@PathVariable("userId") long userId) {
-        //TODO: Abmeldung liefert bei Erfolg den Benutzer zurück?
-        //      Sassionhandling client-seitig?
-        return false;
+    @Override
+    @RequestMapping(value = "/logout", method = RequestMethod.PUT)
+    public Customer logoutCustomer(Customer customer) {
+        logger.info(String.format("Service-Aufruf: logoutCustomer mit dem Wert: %s", customer.toString()));
+        return authenticationServiceFasade.logOutCustomer(customer);
     }
 }
