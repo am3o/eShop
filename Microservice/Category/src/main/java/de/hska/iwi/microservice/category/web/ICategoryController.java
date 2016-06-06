@@ -17,7 +17,7 @@
 
 package de.hska.iwi.microservice.category.web;
 
-import de.hska.iwi.microservice.category.domian.Category;
+import de.hska.iwi.microservice.category.entity.Category;
 
 import java.util.List;
 
@@ -25,13 +25,38 @@ import java.util.List;
  * Created by ameo on 27.05.16.
  */
 public interface ICategoryController {
+    /**
+     * Liefert alle Kategorien zurück.
+     *
+     * @return Liste von Kategorien
+     */
     List<Category> getAllCategories();
 
+    /**
+     * Erstellt eine neue Kategorie
+     *
+     * @param category Kategorie
+     * @return Kategorie
+     */
     Category createCategory(Category category);
 
+    /**
+     * Aktualisiert eine bestehende Kategorie
+     *
+     * @param category Kategorie
+     * @return Kategorie
+     */
     Category updateCategory(Category category);
 
-    Category getCategory(int id);
+    /**
+     * Liefert eine spezielle Kategorie zurück.
+     *
+     * @return Kategorie
+     */
+    Category getCategory(int categoryId);
 
-    boolean deleteCategory(int id);
+    /**
+     * Löscht eine vorhandene Kategorie.
+     */
+    boolean deleteCategory(int categoryId);
 }

@@ -17,12 +17,15 @@
 
 package de.hska.iwi.microservice.category.service;
 
-import de.hska.iwi.microservice.category.domian.Category;
+import de.hska.iwi.microservice.category.domian.CategoryDAO;
 import de.hska.iwi.microservice.category.domian.CategoryRepository;
+import de.hska.iwi.microservice.category.entity.Category;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,6 +33,7 @@ import java.util.List;
  */
 @Service
 public class CategoryServiceFacade implements ICategoryServiceFacade {
+    private final Logger logger = Logger.getLogger(CategoryServiceFacade.class);
     private CategoryRepository categoryRepository;
 
     @Autowired
@@ -37,29 +41,49 @@ public class CategoryServiceFacade implements ICategoryServiceFacade {
         this.categoryRepository = categoryRepository;
     }
 
+    private CategoryDAO convertToCategoryDAO(Category category) {
+        return new CategoryDAO(category.getId(), category.getName());
+    }
+
+    private List<Category> convertToListCategory(List<CategoryDAO> list) {
+        List<Category> result = new ArrayList<>();
+        for (CategoryDAO value : list) {
+            result.add(value.toCategory());
+        }
+        return result;
+    }
+
     @Override
     public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
+        logger.info("Liefere alle Kategorien zurück.");
+        return this.convertToListCategory(categoryRepository.findAll());
     }
 
     @Override
     public Category createCategory(Category category) {
-        return categoryRepository.save(category);
+        logger.info(String.format("Erstelle neue Kategory mit dem Wert: %s", category.toString()));
+        CategoryDAO categoryDAO = this.convertToCategoryDAO(category);
+        return categoryRepository.save(categoryDAO).toCategory();
     }
 
     @Override
     public Category updateCategory(Category category) {
-        return null;
+        logger.info(String.format("Aktualisiere vorhande Kategory mit dem Wert:%s", category.toString()));
+        CategoryDAO categoryDAO = this.convertToCategoryDAO(category);
+        return categoryRepository.save(categoryDAO).toCategory();
     }
 
     @Override
-    public Category getCategory(int id) {
-        return categoryRepository.findById(id);
+    public Category getCategory(int categoryId) {
+        logger.info(String.format("Liefere Kategorie zurück mit dem Wert: %d", categoryId));
+        return categoryRepository.findById(categoryId).toCategory();
     }
 
     @Override
-    public boolean deleteCategory(int id) {
-        categoryRepository.delete((long) id);
-        return categoryRepository.exists((long) id);
+    public boolean deleteCategory(int categoryId) {
+        //FIXME Abfrage ob Kategorie wirklich gelöscht wurde muss hinzugefügt werden
+        logger.info(String.format("Lösche Kategorie mit dem Wert: %d", categoryId));
+        categoryRepository.delete(categoryRepository.findById(categoryId));
+        return true;
     }
 }

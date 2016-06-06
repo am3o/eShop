@@ -17,7 +17,7 @@
 
 package de.hska.iwi.microservice.category.web;
 
-import de.hska.iwi.microservice.category.domian.Category;
+import de.hska.iwi.microservice.category.entity.Category;
 import de.hska.iwi.microservice.category.service.ICategoryServiceFacade;
 
 import org.apache.log4j.Logger;
@@ -41,36 +41,42 @@ public class CategoryController implements ICategoryController {
 
     @Autowired
     public CategoryController(ICategoryServiceFacade categoryServiceFacade) {
+        logger.info("Erzeuge Kategorie-Steuereinheit");
         this.categoryServiceFacade = categoryServiceFacade;
     }
 
     @Override
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public List<Category> getAllCategories() {
+        logger.info("Service-Aufruf: getAllCategories");
         return categoryServiceFacade.getAllCategories();
     }
 
     @Override
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public Category createCategory(@ModelAttribute Category category) {
+        logger.info(String.format("Service-Aufruf: createCategory mit dem Wert: %s", category.toString()));
         return categoryServiceFacade.createCategory(category);
     }
 
     @Override
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
     public Category updateCategory(@ModelAttribute Category category) {
+        logger.info(String.format("Service-Aufruf: updateCategory mit dem Wert: %s", category.toString()));
         return categoryServiceFacade.updateCategory(category);
     }
 
     @Override
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Category getCategory(@PathVariable("id") int id) {
-        return categoryServiceFacade.getCategory(id);
+    public Category getCategory(@PathVariable("id") int categoryId) {
+        logger.info(String.format("Service-Aufruf: getCategory mit dem Wert: %s", categoryId));
+        return categoryServiceFacade.getCategory(categoryId);
     }
 
     @Override
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public boolean deleteCategory(@PathVariable("id") int id) {
-        return categoryServiceFacade.deleteCategory(id);
+    public boolean deleteCategory(@PathVariable("id") int categoryId) {
+        logger.info(String.format("Service-Aufruf: deleteCategory mit dem Wert: %s", categoryId));
+        return categoryServiceFacade.deleteCategory(categoryId);
     }
 }

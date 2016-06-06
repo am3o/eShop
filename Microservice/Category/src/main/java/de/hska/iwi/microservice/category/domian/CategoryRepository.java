@@ -24,8 +24,8 @@ import java.util.List;
 /**
  * Created by ameo on 27.05.16.
  */
-public interface CategoryRepository extends CrudRepository<Category, Long> {
-    List<Category> findAll();
+public interface CategoryRepository extends CrudRepository<CategoryDAO, Long> {
+    List<CategoryDAO> findAll();
 
-    Category findById(int id);
+    CategoryDAO findById(int id);
 }
