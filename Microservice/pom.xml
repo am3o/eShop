@@ -15,5 +15,6 @@
     <modules>
         <module>Registration</module>
         <module>Authentication</module>
+        <module>Category</module>
     </modules>
 </project>
