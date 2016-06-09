@@ -1,16 +1,21 @@
 package de.hska.iwi.microservice.product.domain;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 @Entity
 @Table(name = "product")
 public class Product {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
 
     private String name;
 
@@ -22,11 +27,22 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    public long getId() {
+    protected Product() {
+    }
+
+    public Product(String name, double price, String details, Category category) {
+        super();
+        this.name = name;
+        this.price = price;
+        this.details = details;
+        this.category = category;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
