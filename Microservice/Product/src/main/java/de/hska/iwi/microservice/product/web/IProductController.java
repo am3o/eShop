@@ -7,10 +7,10 @@ public interface IProductController {
 
     Product createProduct();
 
-    Product updateProduct(int id, Product product);
+    Product updateProduct(long id, Product product);
 
-    Product deleteProduct(int id);
+    Product deleteProduct(long id);
 
-    Product getProduct(int id);
+    Product getProduct(long id);
 
 }

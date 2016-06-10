@@ -1,6 +1,5 @@
 package de.hska.iwi.microservice.product.web;
 
-import de.hska.iwi.microservice.product.domain.Category;
 import de.hska.iwi.microservice.product.domain.Product;
 import de.hska.iwi.microservice.product.domain.ProductRepository;
 
@@ -25,24 +24,29 @@ public class ProductController implements IProductController {
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public Product createProduct() {
-        return new Product("leer", 0.1, "leer", new Category("dummy"));
+        return productRepository.save(new Product());
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public Iterable<Product> getProducts() {
+        return productRepository.findAll();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public Product updateProduct(@PathVariable("id") int id, @RequestBody Product product) {
+    public Product updateProduct(@PathVariable("id") long id, @RequestBody Product product) {
         product.setId(id);
         return productRepository.save(product);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public Product deleteProduct(@PathVariable("id") int id) {
+    public Product deleteProduct(@PathVariable("id") long id) {
         Product product = productRepository.findById(id);
         productRepository.delete(product);
         return product;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Product getProduct(@PathVariable("id") int id) {
+    public Product getProduct(@PathVariable("id") long id) {
         return productRepository.findById(id);
     }
 }
