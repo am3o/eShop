@@ -81,7 +81,6 @@ public class CategoryServiceFacade implements ICategoryServiceFacade {
 
     @Override
     public boolean deleteCategory(int categoryId) {
-        //FIXME Abfrage ob Kategorie wirklich gelöscht wurde muss hinzugefügt werden
         logger.info(String.format("Lösche Kategorie mit dem Wert: %d", categoryId));
         categoryRepository.delete(categoryRepository.findById(categoryId));
         return true;
