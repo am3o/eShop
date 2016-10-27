@@ -17,20 +17,11 @@
 
 package de.hska.iwi.microservice.registration;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
+import junit.framework.TestCase;
 
-@SpringBootApplication
-@EnableEurekaServer
-@EnableEurekaClient
-public class RegistrationServer {
-    /**
-     * Der Registration-Service übernimmt die elementare Aufgabe des Registrierens von anderen
-     * Services und das zur Verfügung stellen von registriereten Services.
-     */
-    public static void main(String[] args) {
-        SpringApplication.run(RegistrationServer.class, args);
+public class RegistrationServerTest extends TestCase {
+    //TODO: Sinnvolle Testfälle hinzufügen
+    public void testMain() throws Exception {
+        assertTrue(true);
     }
 }
