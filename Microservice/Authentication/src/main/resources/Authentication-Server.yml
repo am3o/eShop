@@ -15,14 +15,10 @@ error:
 
 # HTTP Server
 server:
-  port: 4201   # HTTP (Tomcat) port
+  port: 4201
 
 # Discovery Server Access
-#  1. DEV ONLY: Reduce the lease renewal interval to speed up registration
-#  2. Define URL of registration server (defaultZone)
 eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:1111/eureka/
-  instance:
-    leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
