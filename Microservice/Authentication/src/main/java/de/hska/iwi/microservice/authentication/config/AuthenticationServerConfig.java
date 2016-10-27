@@ -19,6 +19,7 @@ package de.hska.iwi.microservice.authentication.config;
 
 import de.hska.iwi.microservice.authentication.AuthenticationServer;
 
+import de.hska.iwi.microservice.authentication.domian.CustomerRepository;
 import org.apache.log4j.Logger;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,7 +104,7 @@ public class AuthenticationServerConfig {
             vendorAdapter.setDatabasePlatform(properties.getProperty("spring.jpa.hibernate.dialect"));
 
             factory.setJpaVendorAdapter(vendorAdapter);
-            factory.setPackagesToScan("de.hska.iwi.microservice.authentication.domian");
+            factory.setPackagesToScan(CustomerRepository.class.getPackage().getName());
             factory.setDataSource(dataSource);
             factory.afterPropertiesSet();
         } catch (IOException e) {
