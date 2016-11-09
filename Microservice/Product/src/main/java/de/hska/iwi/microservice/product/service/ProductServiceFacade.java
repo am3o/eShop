@@ -65,7 +65,11 @@ public class ProductServiceFacade implements IProductServiceFacade {
 
     @Override
     public boolean deleteProduct(int id) {
-        return false;
+        ProductDAO obj = productRepository.findById(id);
+        if(obj instanceof ProductDAO) {
+            productRepository.delete(obj);
+        }
+        return !(productRepository.findById(id) instanceof ProductDAO);
     }
 
     @Override
