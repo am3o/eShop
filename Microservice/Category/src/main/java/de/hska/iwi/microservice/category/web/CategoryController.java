@@ -60,7 +60,7 @@ public class CategoryController implements ICategoryController {
     }
 
     @Override
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public Category updateCategory(@ModelAttribute Category category) {
         logger.info(String.format("Service-Aufruf: updateCategory mit dem Wert: %s", category.toString()));
         return categoryServiceFacade.updateCategory(category);
