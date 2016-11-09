@@ -75,6 +75,12 @@ public class ProductServiceFacade implements IProductServiceFacade {
     }
 
     @Override
+    public List<Product> getProductsByCategoryId(int id) {
+        List<ProductDAO> result = productRepository.findByCategoryId(id);
+        return this.convertToListProduct(result);
+    }
+
+    @Override
     public Product getProduct(int id) {
         return productRepository.findById(id).toProduct();
     }

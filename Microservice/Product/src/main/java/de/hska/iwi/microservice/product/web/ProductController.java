@@ -61,4 +61,11 @@ public class ProductController implements IProductController {
         logger.info("Liefere spezielles Produkt zurück");
         return productServiceFacade.getProduct(id);
     }
+
+    @Override
+    @RequestMapping(value = "/category/{id}", method = RequestMethod.GET)
+    public List<Product> getProductsByCategorieId(@PathVariable("id") int id) {
+        logger.info("Liefere alle Produkt mit der speziellen Kategorie zurück");
+        return productServiceFacade.getProductsByCategoryId(id);
+    }
 }
