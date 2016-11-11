@@ -26,7 +26,7 @@ public interface CustomerRepository extends CrudRepository<CustomerDAO, Long> {
 
     CustomerDAO findById(long id);
 
-    List<CustomerDAO> findByUsername(String username);
+    CustomerDAO findByUsername(String username);
 
     CustomerDAO findByUsernameAndPassword(String username, String password);
 }

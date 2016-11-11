@@ -30,7 +30,12 @@ public interface IAuthenticationServiceFacade {
     /**
      * Liefert eine Liste an CustomerDAO zurück auf welche die gegebenen Informationen zutreffen.
      */
-    List<Customer> getCustomerInformation(Customer customer);
+    Customer getCustomerInformation(Customer customer);
+
+    /**
+     * Liefert die hinterlegten Informationen zu dem speziellen Benutzer zurück.
+     */
+    Customer getCustomerInformation(String customername);
 
     /**
      * Liefert die hinterlegten Informationen zu dem speziellen Benutzer zurück.

@@ -30,14 +30,6 @@ public interface IAuthenticationController {
     Customer createCustomer(Customer customer);
 
     /**
-     * Liefert eine Liste von Benutzern zurück.
-     *
-     * @param customer Benutzerinformationen
-     * @return Liste an Benutzern
-     */
-    List<Customer> getCustomerInformation(Customer customer);
-
-    /**
      * Liefert alle vorliegenden Informationen zurück, welche von dem speziellen Benutzer vorhanden
      * sind.
      *
@@ -45,6 +37,14 @@ public interface IAuthenticationController {
      * @return vorliegende Informationen zum Benutzer
      */
     Customer getCustomerInformation(long customerId);
+
+    /**
+     * Liefert anhand des einzigartigen Anwendernamen den Anwender zurück.
+     *
+     * @param username Anwendername
+     * @return Anwender
+     */
+    Customer getCustomerInformation(String username);
 
     /**
      * Aktualisiert die Informationen eines speziellen Benutzers.
