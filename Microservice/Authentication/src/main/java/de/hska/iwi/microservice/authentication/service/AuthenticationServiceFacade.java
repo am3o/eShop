@@ -60,9 +60,15 @@ public class AuthenticationServiceFacade implements IAuthenticationServiceFacade
     }
 
     @Override
-    public List<Customer> getCustomerInformation(Customer customer) {
+    public Customer getCustomerInformation(Customer customer) {
         logger.info(String.format("Suche nach Benutzern mit den folgenden Kriterien: %s", customer.toString()));
-        return this.convertToListCustomer(customerRepository.findByUsername(customer.getUsername()));
+        return customerRepository.findByUsername(customer.getUsername()).toCustomer();
+    }
+
+    @Override
+    public Customer getCustomerInformation(String customername) {
+        logger.info(String.format("Suche nach Anwendername[%s] im System", customername));
+        return customerRepository.findByUsername(customername).toCustomer();
     }
 
     @Override

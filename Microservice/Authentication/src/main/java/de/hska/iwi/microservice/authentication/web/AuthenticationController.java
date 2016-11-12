@@ -22,16 +22,12 @@ import de.hska.iwi.microservice.authentication.service.IAuthenticationServiceFac
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-class AuthenticationController implements IAuthenticationController {
+public class AuthenticationController implements IAuthenticationController {
     private final Logger logger = Logger.getLogger(AuthenticationController.class);
     private final IAuthenticationServiceFacade authenticationServiceFasade;
 
@@ -50,10 +46,9 @@ class AuthenticationController implements IAuthenticationController {
 
     @Override
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public List<Customer> getCustomerInformation(Customer customer) {
-        //WARNING Sicherheitslücke! Sollte überdacht werden
-        logger.info(String.format("Service-Aufruf: getCustomerInformation mit dem Wert: %s", customer.toString()));
-        return authenticationServiceFasade.getCustomerInformation(customer);
+    public Customer getCustomerInformation(@RequestParam("user") String customername) {
+        logger.info(String.format("Service-Aufruf: getCustomerInformation mit dem Wert: %s", customername));
+        return authenticationServiceFasade.getCustomerInformation(customername);
     }
 
     @Override
@@ -62,6 +57,7 @@ class AuthenticationController implements IAuthenticationController {
         logger.info(String.format("Service-Aufruf: getCustomerInformation mit dem Wert: %d", customerId));
         return authenticationServiceFasade.getCustomerInformation(customerId);
     }
+
 
     @Override
     @RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
