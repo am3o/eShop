@@ -82,7 +82,10 @@ public class CategoryServiceFacade implements ICategoryServiceFacade {
     @Override
     public boolean deleteCategory(int categoryId) {
         logger.info(String.format("Lösche Kategorie mit dem Wert: %d", categoryId));
-        categoryRepository.delete(categoryRepository.findById(categoryId));
-        return true;
+        CategoryDAO obj = categoryRepository.findById(categoryId);
+        if(obj instanceof CategoryDAO) {
+            categoryRepository.delete(obj);
+        }
+        return !(categoryRepository.findById(categoryId) instanceof CategoryDAO);
     }
 }

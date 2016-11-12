@@ -22,11 +22,8 @@ import de.hska.iwi.microservice.category.service.ICategoryServiceFacade;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -54,14 +51,14 @@ public class CategoryController implements ICategoryController {
 
     @Override
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public Category createCategory(@ModelAttribute Category category) {
+    public Category createCategory(@RequestBody Category category) {
         logger.info(String.format("Service-Aufruf: createCategory mit dem Wert: %s", category.toString()));
         return categoryServiceFacade.createCategory(category);
     }
 
     @Override
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    public Category updateCategory(@ModelAttribute Category category) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public Category updateCategory(@RequestBody Category category) {
         logger.info(String.format("Service-Aufruf: updateCategory mit dem Wert: %s", category.toString()));
         return categoryServiceFacade.updateCategory(category);
     }
@@ -78,5 +75,12 @@ public class CategoryController implements ICategoryController {
     public boolean deleteCategory(@PathVariable("id") int categoryId) {
         logger.info(String.format("Service-Aufruf: deleteCategory mit dem Wert: %s", categoryId));
         return categoryServiceFacade.deleteCategory(categoryId);
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    class CategoryNotFoundException extends RuntimeException {
+        public CategoryNotFoundException(String userId) {
+            super("could not find user '" + userId + "'.");
+        }
     }
 }
