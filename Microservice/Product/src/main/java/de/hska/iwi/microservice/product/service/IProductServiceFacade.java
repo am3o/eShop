@@ -41,9 +41,14 @@ public interface IProductServiceFacade {
     boolean deleteProduct(int id);
 
     /**
-     * Liefert alle Produktecon dem System zurück.
+     * Liefert alle Produkte aus dem System zurück.
      */
     List<Product> getProducts();
+
+    /**
+     * Liefert alle Produkte mit der speziellen Kategorie aus dem System zurück.
+     */
+    List<Product> getProductsByCategoryId(int id);
 
     /**
      * Liefert ein spezielles Produkt zurück.

@@ -30,4 +30,9 @@ public interface IProductController {
      * Liefert ein spezielles Produkt zurück.
      */
     Product getProduct(int id);
+
+    /**
+     * Liefert Produkte zurück mit einer gemeinsamen Categorie.
+     */
+    List<Product> getProductsByCategorieId(int id);
 }

@@ -26,6 +26,8 @@ public interface ProductRepository extends CrudRepository<ProductDAO, Long> {
 
     List<ProductDAO> findAll();
 
+    List<ProductDAO> findByCategoryId(int id);
+
     ProductDAO findById(int id);
 
     ProductDAO findByName(String name);
