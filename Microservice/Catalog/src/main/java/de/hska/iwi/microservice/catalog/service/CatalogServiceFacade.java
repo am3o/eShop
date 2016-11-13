@@ -1,6 +1,7 @@
 package de.hska.iwi.microservice.catalog.service;
 
 import de.hska.iwi.microservice.catalog.client.CategoryServiceClient;
+import de.hska.iwi.microservice.catalog.client.ProductServiceClient;
 import de.hska.iwi.microservice.catalog.entity.Catalog;
 import de.hska.iwi.microservice.catalog.entity.Category;
 import de.hska.iwi.microservice.catalog.entity.Product;
@@ -22,12 +23,16 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     private static final String PRODUCT_SERVICE = "production-service";
 
     private CategoryServiceClient categoryServiceClient;
+    private ProductServiceClient productServiceClient;
 
     @Autowired
     public CatalogServiceFacade(DiscoveryClient discoveryClient) {
         try{
             String categoryServiceUrl = discoveryClient.getInstances(CATEGORY_SERVICE).iterator().next().getUri().toString();
             this.categoryServiceClient = new CategoryServiceClient(categoryServiceUrl);
+
+            String productServiceUrl = discoveryClient.getInstances(PRODUCT_SERVICE).iterator().next().getUri().toString();
+            this.productServiceClient = new ProductServiceClient(productServiceUrl);
         }catch (Exception ex) {
             logger.error("Initialisierungsfehler", ex);
         }
@@ -75,7 +80,7 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
 
     @Override
     public List<Product> getProducts() {
-        return null;
+        return productServiceClient.getProducts();
     }
 
     @Override
