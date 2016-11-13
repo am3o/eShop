@@ -1,8 +1,12 @@
 package de.hska.iwi.microservice.catalog.service;
 
+import de.hska.iwi.microservice.catalog.client.CategoryServiceClient;
 import de.hska.iwi.microservice.catalog.entity.Catalog;
 import de.hska.iwi.microservice.catalog.entity.Category;
 import de.hska.iwi.microservice.catalog.entity.Product;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,14 +16,31 @@ import java.util.List;
  */
 @Service
 public class CatalogServiceFacade implements ICatalogServiceFacade{
+    private final Logger logger = Logger.getLogger(CatalogServiceFacade.class);
+
+    private static final String CATEGORY_SERVICE = "Category-Service";
+    private static final String PRODUCT_SERVICE = "production-service";
+
+    private CategoryServiceClient categoryServiceClient;
+
+    @Autowired
+    public CatalogServiceFacade(DiscoveryClient discoveryClient) {
+        try{
+            String categoryServiceUrl = discoveryClient.getInstances(CATEGORY_SERVICE).iterator().next().getUri().toString();
+            this.categoryServiceClient = new CategoryServiceClient(categoryServiceUrl);
+        }catch (Exception ex) {
+            logger.error("Initialisierungsfehler", ex);
+        }
+    }
+
     @Override
     public List<Category> getAllCategories() {
-        return null;
+        return categoryServiceClient.getAllCategories();
     }
 
     @Override
     public Category createCategory(Category category) {
-        return null;
+        return categoryServiceClient.createCategory(category);
     }
 
     @Override
@@ -29,12 +50,12 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
 
     @Override
     public Category getCategory(int categoryId) {
-        return null;
+        return categoryServiceClient.getCategory(categoryId);
     }
 
     @Override
     public boolean deleteCategory(int categoryId) {
-        return false;
+        return categoryServiceClient.deleteCategory(categoryId);
     }
 
     @Override
