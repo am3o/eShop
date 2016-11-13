@@ -1,4 +1,4 @@
-package de.hska.iwi.microservice.catalog.web;
+package de.hska.iwi.microservice.catalog.service;
 
 import de.hska.iwi.microservice.catalog.entity.Catalog;
 import de.hska.iwi.microservice.catalog.entity.Category;
@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by ameo on 13.11.16.
  */
-public interface ICatalogController {
+public interface ICatalogServiceFacade {
     List<Category> getAllCategories();
 
     Category createCategory(Category category);
@@ -24,11 +24,11 @@ public interface ICatalogController {
 
     Product updateProduct(int productId, Product product);
 
-    boolean deleteProduct(int productId);
+    boolean deleteProduct(int id);
 
     List<Product> getProducts();
 
-    Product getProduct(int productId);
+    Product getProduct(int id);
 
     List<Product> getProductsByCategorieId(int id);
 
