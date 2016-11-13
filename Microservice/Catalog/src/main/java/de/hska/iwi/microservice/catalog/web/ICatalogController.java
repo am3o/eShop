@@ -34,8 +34,6 @@ public interface ICatalogController {
 
     List<Catalog> getCatalog();
 
-    Catalog getCatalogProduct(int productId);
-
     List<Catalog> getCatalogCategorie(int categoryId);
 
     List<Catalog> searchCatalog(float minPrice, float maxPrice, String content);

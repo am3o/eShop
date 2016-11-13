@@ -89,13 +89,7 @@ public class CatalogController implements ICatalogController {
     }
 
     @Override
-    @RequestMapping(value = "/catalog/product/{productId}", method = RequestMethod.GET)
-    public Catalog getCatalogProduct(@PathVariable(value = "productId") int productId) {
-        return null;
-    }
-
-    @Override
-    @RequestMapping(value = "/catalog/category/{categoryId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/catalog/{categoryId}", method = RequestMethod.GET)
     public List<Catalog> getCatalogCategorie(@PathVariable(value = "categoryId") int categoryId) {
         return null;
     }
