@@ -1,0 +1,14 @@
+# Spring properties
+spring:
+  application:
+     name: Catalog-Service # Service registers under this name
+
+# HTTP Server
+server:
+  port: 5001
+
+# Discovery Server Access
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:1111/eureka/
