@@ -65,7 +65,7 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
 
     @Override
     public Product createProduct(Product product) {
-        return null;
+        return productServiceClient.createProduct(product);
     }
 
     @Override
@@ -75,7 +75,7 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
 
     @Override
     public boolean deleteProduct(int id) {
-        return false;
+        return productServiceClient.deleteProduct(id);
     }
 
     @Override
@@ -85,12 +85,12 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
 
     @Override
     public Product getProduct(int id) {
-        return null;
+        return productServiceClient.getProduct(id);
     }
 
     @Override
     public List<Product> getProductsByCategorieId(int id) {
-        return null;
+        return productServiceClient.getProductsByCategorieId(id);
     }
 
     @Override
