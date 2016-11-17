@@ -1,3 +1,6 @@
+spring:
+  profiles: container
+
 server:
   port: ${PORT:1111}
 
