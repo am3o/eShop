@@ -11,6 +11,7 @@
     <groupId>de.hska.iwi.microservice</groupId>
     <artifactId>RegistrationService</artifactId>
     <packaging>jar</packaging>
+    <version>0.1-SNAPSHOT</version>
 
     <name>RegistrationService</name>
     <url>http://maven.apache.org</url>
@@ -45,4 +46,14 @@
             <version>RELEASE</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}:${project.version}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>
