@@ -1,8 +1,5 @@
-spring:
-  profiles: container
-
 server:
-  port: ${PORT:1111}
+  port: ${PORT:8761}
 
 eureka:
   client:
