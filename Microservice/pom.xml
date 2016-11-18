@@ -17,5 +17,6 @@
         <module>Authentication</module>
         <module>Category</module>
         <module>Product</module>
+        <module>Gateway</module>
     </modules>
 </project>

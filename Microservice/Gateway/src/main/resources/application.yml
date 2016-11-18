@@ -1,0 +1,16 @@
+spring:
+  application:
+     name: Gateway-Service
+
+server:
+  port: 8080
+
+zuul:
+  routes:
+    catalog:
+      path: /catalog/**
+      url: http://localhost:5001/
+    auth:
+      path: /auth/**
+      url: http://localhost:4201/
+  prefix: /api
