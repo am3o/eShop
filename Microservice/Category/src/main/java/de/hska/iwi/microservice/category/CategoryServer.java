@@ -17,26 +17,21 @@
 
 package de.hska.iwi.microservice.category;
 
-import de.hska.iwi.microservice.category.config.CategoryServerConfig;
-
 import org.apache.log4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.context.annotation.Import;
 
 /**
  * Created by ameo on 27.05.16.
  */
 @EnableDiscoveryClient
 @SpringBootApplication
-@Import(CategoryServerConfig.class)
 public class CategoryServer {
     private static Logger logger = Logger.getLogger(CategoryServer.class);
 
     public static void main(String[] args) {
         logger.info("Erzeuge CategoryDAO-Service.");
-        System.setProperty("spring.config.name", "Category-Server");
         SpringApplication.run(CategoryServer.class, args);
     }
 }
