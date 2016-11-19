@@ -17,26 +17,21 @@
 
 package de.hska.iwi.microservice.product;
 
-import de.hska.iwi.microservice.product.config.ProductServerConfiguration;
-
 import org.apache.log4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.context.annotation.Import;
 
 /**
  * Created by ameo on 25.05.16.
  */
 @EnableDiscoveryClient
 @SpringBootApplication
-@Import(ProductServerConfiguration.class)
 public class ProductServer {
     private static Logger logger = Logger.getLogger(ProductServer.class);
 
     public static void main(String[] args) {
         logger.info("Erzeuge Product-Service");
-        System.setProperty("spring.config.name", "Product-Server");
         SpringApplication.run(ProductServer.class, args);
     }
 }

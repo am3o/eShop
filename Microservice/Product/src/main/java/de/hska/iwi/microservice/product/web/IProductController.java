@@ -22,17 +22,12 @@ public interface IProductController {
     boolean deleteProduct(int id);
 
     /**
-     * Liefert alle Produktecon dem System zurück.
+     * Liefert alle Produktecon dem System zurück oder wennn der Parameter übergeben wird, werden alle Produkte zurückgeliefert, welche die entsprechende CategorieId besitzen
      */
-    List<Product> getProducts();
+    List<Product> getProducts(int categorieId);
 
     /**
      * Liefert ein spezielles Produkt zurück.
      */
     Product getProduct(int id);
-
-    /**
-     * Liefert Produkte zurück mit einer gemeinsamen Categorie.
-     */
-    List<Product> getProductsByCategorieId(int id);
 }
