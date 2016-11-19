@@ -12,7 +12,7 @@ system:
 spring:
   profiles: default
   application:
-    name: production-service
+    name: category-service
   jpa:
     show-sql: true
   datasource:
