@@ -5,6 +5,7 @@
 
     <groupId>de.hska.iwi.microservice</groupId>
     <artifactId>ProductService</artifactId>
+    <version>0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>ProductService</name>
@@ -66,6 +67,7 @@
     </dependencyManagement>
 
     <build>
+        <finalName>${project.artifactId}:${project.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
