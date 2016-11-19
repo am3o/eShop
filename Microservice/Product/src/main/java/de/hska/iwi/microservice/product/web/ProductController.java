@@ -46,9 +46,16 @@ public class ProductController implements IProductController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public List<Product> getProducts() {
-        logger.info("Liefere alle Produkte zurück");
-        return productServiceFacade.getProducts();
+    public List<Product> getProducts(@RequestParam(value = "categoryId", required = false, defaultValue = "-1") int categorieId) {
+        List<Product> result;
+        if(categorieId != -1) {
+            logger.info(String.format("Liefere alle Produkte der Kategorie %d zurück.", categorieId));
+            result = productServiceFacade.getProductsByCategoryId(categorieId);
+        }else {
+            logger.info("Liefere alle Produkte zurück");
+            result = productServiceFacade.getProducts();
+        }
+        return result;
     }
 
     @Override
@@ -56,12 +63,5 @@ public class ProductController implements IProductController {
     public Product getProduct(@PathVariable("id") int id) {
         logger.info("Liefere spezielles Produkt zurück");
         return productServiceFacade.getProduct(id);
-    }
-
-    @Override
-    @RequestMapping(value = "/category/{id}", method = RequestMethod.GET)
-    public List<Product> getProductsByCategorieId(@PathVariable("id") int id) {
-        logger.info("Liefere alle Produkt mit der speziellen Kategorie zurück");
-        return productServiceFacade.getProductsByCategoryId(id);
     }
 }
