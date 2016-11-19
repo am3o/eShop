@@ -29,7 +29,6 @@ public class RegistrationServer {
      * Services und das zur Verfügung stellen von registriereten Services.
      */
     public static void main(String[] args) {
-        System.setProperty("spring.config.name", "Registration-Server");
         SpringApplication.run(RegistrationServer.class, args);
     }
 }
