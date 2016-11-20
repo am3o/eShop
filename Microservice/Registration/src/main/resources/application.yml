@@ -1,5 +1,9 @@
+system:
+  eureka:
+    port: 8761
+
 server:
-  port: ${PORT:8761}
+  port: ${PORT:${system.eureka.port}}
 
 eureka:
   client:
