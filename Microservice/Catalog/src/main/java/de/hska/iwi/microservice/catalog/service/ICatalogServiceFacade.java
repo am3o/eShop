@@ -26,11 +26,9 @@ public interface ICatalogServiceFacade {
 
     boolean deleteProduct(int id);
 
-    List<Product> getProducts();
+    List<Product> getProducts(int categoryId);
 
     Product getProduct(int id);
-
-    List<Product> getProductsByCategorieId(int id);
 
     List<Catalog> getCatalog();
 

@@ -42,17 +42,12 @@ public class ProductServiceClient implements ProductService{
     }
 
     @Override
-    public List<Product> getProducts() {
-        return service.getProducts();
+    public List<Product> getProducts(int categoryId) {
+        return service.getProducts(categoryId);
     }
 
     @Override
     public Product getProduct(int id) {
         return service.getProduct(id);
-    }
-
-    @Override
-    public List<Product> getProductsByCategorieId(int id) {
-        return service.getProductsByCategorieId(id);
     }
 }

@@ -1,6 +1,7 @@
 package de.hska.iwi.microservice.catalog.client.api;
 
 import de.hska.iwi.microservice.catalog.entity.Product;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -30,15 +31,10 @@ public interface ProductService {
     @GET
     @Path(value = "/")
     @Produces(MediaType.APPLICATION_JSON)
-    List<Product> getProducts();
+    List<Product> getProducts(@RequestParam(name = "categoryId", required = false, defaultValue = "-1") int categoryId);
 
     @GET
     @Path(value = "/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     Product getProduct(@PathParam(value = "id") int id);
-
-    @GET
-    @Path(value = "/category/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    List<Product> getProductsByCategorieId(@PathParam(value = "id") int id);
 }

@@ -72,20 +72,14 @@ public class CatalogController implements ICatalogController {
 
     @Override
     @RequestMapping(value = "/product/", method = RequestMethod.GET)
-    public List<Product> getProducts() {
-        return serviceFacade.getProducts();
+    public List<Product> getProducts(@RequestParam(name = "categoryId", required = false, defaultValue = "-1") int categoryId) {
+        return serviceFacade.getProducts(categoryId);
     }
 
     @Override
     @RequestMapping(value = "/product/{productId}", method = RequestMethod.GET)
     public Product getProduct(@PathVariable(value = "productId") int id) {
         return serviceFacade.getProduct(id);
-    }
-
-    @Override
-    @RequestMapping(value = "/product/category/{categoryId}", method = RequestMethod.GET)
-    public List<Product> getProductsByCategorieId(@PathVariable(value = "categoryId") int id) {
-        return serviceFacade.getProductsByCategorieId(id);
     }
 
     @Override
