@@ -15,7 +15,6 @@ public class CatalogServer {
 
     public static void main(String[] args) {
         logger.info("Erzeuge Catalog-Service.");
-        System.setProperty("spring.config.name", "Catalog-Server");
         SpringApplication.run(CatalogServer.class, args);
     }
 }
