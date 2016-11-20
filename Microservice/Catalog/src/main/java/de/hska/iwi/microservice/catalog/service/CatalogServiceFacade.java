@@ -79,18 +79,13 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     }
 
     @Override
-    public List<Product> getProducts() {
-        return productServiceClient.getProducts();
+    public List<Product> getProducts(int categoryId) {
+        return productServiceClient.getProducts(categoryId);
     }
 
     @Override
     public Product getProduct(int id) {
         return productServiceClient.getProduct(id);
-    }
-
-    @Override
-    public List<Product> getProductsByCategorieId(int id) {
-        return productServiceClient.getProductsByCategorieId(id);
     }
 
     @Override

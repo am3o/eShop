@@ -26,11 +26,9 @@ public interface ICatalogController {
 
     boolean deleteProduct(int productId);
 
-    List<Product> getProducts();
+    List<Product> getProducts(int categoryId);
 
     Product getProduct(int productId);
-
-    List<Product> getProductsByCategorieId(int id);
 
     List<Catalog> getCatalog();
 
