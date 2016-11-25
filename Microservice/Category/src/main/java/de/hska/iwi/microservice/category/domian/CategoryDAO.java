@@ -35,8 +35,10 @@ import javax.persistence.Table;
 @Table(name = "category")
 public class CategoryDAO implements Serializable {
     private static final long serialVersionUID = 1L;
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private int id;
 
     @Column(name = "name")
@@ -50,12 +52,12 @@ public class CategoryDAO implements Serializable {
         this.name = name;
     }
 
-    public int getId() {
-        return id;
-    }
-
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {
@@ -64,6 +66,11 @@ public class CategoryDAO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Category[id=%d, name=%s]", this.id, this.name);
     }
 
     public Category toCategory() {
