@@ -1,13 +1,16 @@
 system:
-  eureka:
-    hostname: localhost
-    port: 8761
-  datasource:
-    hostname: localhost
-    port: 3306
-    database: eShop
-    username: eShop
-    password: sicher
+  default:
+    server:
+      port: 4201
+    eureka:
+      hostname: localhost
+      port: 8761
+    datasource:
+      hostname: localhost
+      port: 3306
+      database: eShop
+      username: eShop
+      password: sicher
 
 spring:
   profiles: default
@@ -16,17 +19,16 @@ spring:
   jpa:
     show-sql: true
   datasource:
-    url: jdbc:mysql://${system.datasource.hostname}:${system.datasource.port}/${system.datasource.database}?useSSL=false
-    username: ${system.datasource.username}
-    password: ${system.datasource.password}
+    url: jdbc:mysql://${system.default.datasource.hostname}:${system.default.datasource.port}/${system.default.datasource.database}?useSSL=false
+    username: ${system.default.datasource.username}
+    password: ${system.default.datasource.password}
 
 server:
-  port: 4201
+  port: ${PORT:${system.default.server.port}}
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://${system.eureka.hostname}:${system.eureka.port}/eureka/
+      defaultZone: http://${system.default.eureka.hostname}:${system.default.eureka.port}/eureka/
   instance:
     preferIpAddress: true
-    appname: ${spring.application.name}
