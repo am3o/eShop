@@ -10,30 +10,39 @@ import java.util.List;
 /**
  * Created by ameo on 13.11.16.
  */
-@Path(value = "/")
 public interface CategoryService {
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    /**
+     * Liefert alle Kategorien zurück.
+     *
+     * @return Liste von Kategorien
+     */
     List<Category> getAllCategories();
 
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    @Headers("Content-Type: application/json")
+    /**
+     * Erstellt eine neue Kategorie
+     *
+     * @param category Kategorie
+     * @return Kategorie
+     */
     Category createCategory(Category category);
 
-    @PUT
-    @Path("/{categoryId}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
+    /**
+     * Aktualisiert eine bestehende Kategorie
+     *
+     * @param category Kategorie
+     * @return Kategorie
+     */
     Category updateCategory(Category category);
 
-    @GET
-    @Path("/{categoryId}")
-    @Produces(MediaType.APPLICATION_JSON)
-    Category getCategory(@PathParam("categoryId") int categoryId);
+    /**
+     * Liefert eine spezielle Kategorie zurück.
+     *
+     * @return Kategorie
+     */
+    Category getCategory(int categoryId);
 
-    @DELETE
-    @Path("/{categoryId}")
-    boolean deleteCategory(@PathParam("categoryId") int categoryId);
+    /**
+     * Löscht eine vorhandene Kategorie.
+     */
+    boolean deleteCategory(int categoryId);
 }
