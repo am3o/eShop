@@ -74,26 +74,6 @@
             <artifactId>spring-cloud-starter-eureka</artifactId>
             <version>RELEASE</version>
         </dependency>
-        <dependency>
-            <groupId>com.netflix.feign</groupId>
-            <artifactId>feign-core</artifactId>
-            <version>8.18.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.netflix.feign</groupId>
-            <artifactId>feign-jaxrs</artifactId>
-            <version>8.11.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.netflix.feign</groupId>
-            <artifactId>feign-jackson</artifactId>
-            <version>8.11.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-core</artifactId>
-            <version>1.19.2</version>
-        </dependency>
     </dependencies>
 
     <build>
