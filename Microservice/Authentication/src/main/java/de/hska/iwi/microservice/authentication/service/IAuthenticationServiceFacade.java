@@ -50,15 +50,20 @@ public interface IAuthenticationServiceFacade {
     /**
      * Löscht einen Benutzer aus dem System.
      */
-    boolean deleteCustomer(Customer customer);
+    boolean deleteCustomer(long CustomerId);
+
+    /**
+     * Überprüft ob der angegebene Benutzer dem System vorliegt.
+     */
+    boolean existCustomer(String username, String password);
 
     /**
      * Logt einen Benutzer in das System ein.
      */
-    Customer logInCustomer(Customer customer);
+    boolean logInCustomer(String username, String password);
 
     /**
      * Logt einen Benutzer aus dem System aus.
      */
-    Customer logOutCustomer(Customer customer);
+    boolean logOutCustomer(String username, String password);
 }

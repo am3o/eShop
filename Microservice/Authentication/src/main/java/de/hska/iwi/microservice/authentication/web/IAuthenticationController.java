@@ -18,63 +18,45 @@
 package de.hska.iwi.microservice.authentication.web;
 
 import de.hska.iwi.microservice.authentication.entity.Customer;
+import org.apache.catalina.connector.Response;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface IAuthenticationController {
     /**
      * Erzeugt einen neuen Benutzer und die Operation wird quitiert, wenn dies erfolgreich war.
-     *
-     * @return Status des Vorgangs.
      */
-    Customer createCustomer(Customer customer);
+    ResponseEntity<Customer> createCustomer(Customer customer);
+
+    /**
+     * Überprüft ob der angegebene Benutzer existiert.
+     */
+    ResponseEntity<Boolean> existCustomer(String username, String password);
 
     /**
      * Liefert alle vorliegenden Informationen zurück, welche von dem speziellen Benutzer vorhanden
      * sind.
-     *
-     * @param userId eindeutige BenutzerId
-     * @return vorliegende Informationen zum Benutzer
      */
-    Customer getCustomerInformation(long customerId);
-
-    /**
-     * Liefert anhand des einzigartigen Anwendernamen den Anwender zurück.
-     *
-     * @param username Anwendername
-     * @return Anwender
-     */
-    Customer getCustomerInformation(String username);
+    ResponseEntity<Customer> getCustomerInformation(long customerId);
 
     /**
      * Aktualisiert die Informationen eines speziellen Benutzers.
-     *
-     * @param customer eindeutige Benutzer
-     * @return Status des Vorgangs
      */
-    Customer updateCustomer(Customer customer);
+    ResponseEntity<Customer> updateCustomer(Customer customer);
 
     /**
      * Löscht einen speziellen Benutzer aus dem System.
-     *
-     * @param userId eindeutige BenutzerId
-     * @return Status des Vorgangs.
      */
-    boolean deleteCustomer(Customer customer);
+    ResponseEntity<Boolean> deleteCustomer(int customerId);
 
     /**
      * Logt einen Benutzer in das System ein.
-     *
-     * @param userId eindeutige BenutzerId.
-     * @return Status des Vorgangs
      */
-    Customer loginCustomer(Customer customer);
+    ResponseEntity<Boolean> loginCustomer(String username, String password);
 
     /**
      * Logt einen Benutzer aus dem System aus.
-     *
-     * @param userId eindeutige BenutzerId
-     * @return Status des Vorgangs
      */
-    Customer logoutCustomer(Customer customer);
+    ResponseEntity<Boolean> logoutCustomer(String username, String password);
 }
