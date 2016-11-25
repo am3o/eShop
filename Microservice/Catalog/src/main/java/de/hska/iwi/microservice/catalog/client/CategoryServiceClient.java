@@ -7,6 +7,7 @@ import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.jaxrs.JAXRSContract;
 import org.apache.log4j.Logger;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -16,40 +17,37 @@ import java.util.List;
 public class CategoryServiceClient implements CategoryService{
     private static final Logger logger = Logger.getLogger(CategoryServiceClient.class);
 
-    private final CategoryService service;
+    private final String serviceUrl;
+    private final RestTemplate restClient = new RestTemplate();
 
-    public CategoryServiceClient(String categoryServiceUrl) {
-        this.service = Feign.builder()
-                .contract(new JAXRSContract())
-                .encoder(new JacksonEncoder())
-                .decoder(new JacksonDecoder())
-                .target(CategoryService.class, categoryServiceUrl);
+    public CategoryServiceClient(String serviceUrl) {
+        this.serviceUrl = serviceUrl;
     }
 
+    @Override
     public List<Category> getAllCategories() {
-        logger.info("Liefere alle Kategorien zurück vom Kategorie-Service.");
-        return service.getAllCategories();
+        return restClient.getForObject(String.format("%s/", serviceUrl), List.class);
     }
 
+    @Override
     public Category createCategory(Category category) {
-        logger.info("Erzeuge eine neue Kategorie beim Kategorie-Service");
-        return service.createCategory(category);
+        return restClient.postForEntity(String.format("%s/", serviceUrl), category, Category.class).getBody();
     }
 
-
+    @Override
     public Category updateCategory(Category category) {
-        logger.info("Aktuallisiere eine Kategorie beim Kategorie-Service");
-        return service.updateCategory(category);
+        restClient.put(String.format("%s/%d", serviceUrl, category.getId()), category);
+        return this.getCategory(category.getId());
     }
 
-
+    @Override
     public Category getCategory(int categoryId) {
-        logger.info("Liefere eine spezielle Kategorie zurück vom Kategorie-Service.");
-        return service.getCategory(categoryId);
+        return restClient.getForObject(String.format("%s/%d", serviceUrl, categoryId), Category.class);
     }
 
+    @Override
     public boolean deleteCategory(int categoryId) {
-        logger.info("Lösche eine Kategorie beim Kategorie-Service");
-        return service.deleteCategory(categoryId);
+        restClient.delete(String.format("%s/%d", serviceUrl, categoryId));
+        return !(this.getCategory(categoryId) instanceof Category);
     }
 }
