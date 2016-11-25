@@ -23,13 +23,13 @@ public class CatalogController implements ICatalogController {
     private ICatalogServiceFacade serviceFacade;
 
     @Override
-    @RequestMapping(value = "/category/", method = RequestMethod.GET)
+    @RequestMapping(value = "/category", method = RequestMethod.GET)
     public List<Category> getAllCategories() {
         return serviceFacade.getAllCategories();
     }
 
     @Override
-    @RequestMapping(value = "/category/", method = RequestMethod.POST)
+    @RequestMapping(value = "/category", method = RequestMethod.POST)
     public Category createCategory(@RequestBody Category category) {
         return serviceFacade.createCategory(category);
     }
@@ -53,7 +53,7 @@ public class CatalogController implements ICatalogController {
     }
 
     @Override
-    @RequestMapping(value = "/product/", method = RequestMethod.POST)
+    @RequestMapping(value = "/product", method = RequestMethod.POST)
     public Product createProduct(@RequestBody Product product) {
         return serviceFacade.createProduct(product);
     }
@@ -71,7 +71,7 @@ public class CatalogController implements ICatalogController {
     }
 
     @Override
-    @RequestMapping(value = "/product/", method = RequestMethod.GET)
+    @RequestMapping(value = "/product", method = RequestMethod.GET)
     public List<Product> getProducts(@RequestParam(name = "categoryId", required = false, defaultValue = "-1") int categoryId) {
         return serviceFacade.getProducts(categoryId);
     }
