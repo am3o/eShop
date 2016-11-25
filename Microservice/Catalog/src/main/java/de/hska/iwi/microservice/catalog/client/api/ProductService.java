@@ -1,6 +1,13 @@
 package de.hska.iwi.microservice.catalog.client.api;
 
 import de.hska.iwi.microservice.catalog.entity.Product;
+import feign.Headers;
+import feign.Param;
+import feign.RequestLine;
+import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.ws.rs.*;
@@ -10,31 +17,29 @@ import java.util.List;
 /**
  * Created by ameo on 13.11.16.
  */
-@Path(value = "/")
 public interface ProductService {
-    @POST
-    @Path(value = "/")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
+    /**
+     * Erstellt ein neues Produkt in dem System.
+     */
     Product createProduct(Product product);
 
-    @PUT
-    @Path(value = "/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    Product updateProduct(@PathParam(value = "id")int id, Product product);
+    /**
+     * Aktualisiert ein vorhandenes Produkt im System.
+     */
+    Product updateProduct(int id, Product product);
 
-    @DELETE
-    @Path(value = "/{id}")
-    boolean deleteProduct(@PathParam(value = "id") int id);
+    /**
+     * Löscht ein vorhandenes Produkt aus dem System.
+     */
+    boolean deleteProduct(int id);
 
-    @GET
-    @Path(value = "/")
-    @Produces(MediaType.APPLICATION_JSON)
-    List<Product> getProducts(@RequestParam(name = "categoryId", required = false, defaultValue = "-1") int categoryId);
+    /**
+     * Liefert alle Produktecon dem System zurück oder wennn der Parameter übergeben wird, werden alle Produkte zurückgeliefert, welche die entsprechende CategorieId besitzen
+     */
+    List<Product> getProducts(int categorieId);
 
-    @GET
-    @Path(value = "/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    Product getProduct(@PathParam(value = "id") int id);
+    /**
+     * Liefert ein spezielles Produkt zurück.
+     */
+    Product getProduct(int id);
 }
