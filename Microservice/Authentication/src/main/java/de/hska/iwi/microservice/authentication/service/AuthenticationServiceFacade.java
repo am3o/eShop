@@ -45,13 +45,6 @@ public class AuthenticationServiceFacade implements IAuthenticationServiceFacade
                 customer.getUsername(), customer.getPassword(), customer.getRole());
     }
 
-    private List<Customer> convertToListCustomer(List<CustomerDAO> value) {
-        List<Customer> result = new ArrayList<>();
-        for (CustomerDAO customerDAO : value)
-            result.add(customerDAO.toCustomer());
-        return result;
-    }
-
     @Override
     public Customer createCustomer(Customer customer) {
         logger.info("Erzeuge neuen Kunden in der Datenbank");
@@ -85,22 +78,27 @@ public class AuthenticationServiceFacade implements IAuthenticationServiceFacade
     }
 
     @Override
-    public boolean deleteCustomer(Customer customer) {
-        logger.info(String.format("Lösche Benutzer %s aus dem System", customer.toString()));
-        CustomerDAO customerDAO = this.convertToCustomerDAO(customer);
-        customerRepository.delete(customerDAO);
-        return customerRepository.equals(customerDAO);
+    public boolean deleteCustomer(long customerId) {
+        logger.info(String.format("Lösche Benutzer %d aus dem System", customerId));
+        customerRepository.delete(customerId);
+        return !(customerRepository.findById(customerId) instanceof CustomerDAO);
     }
 
     @Override
-    public Customer logInCustomer(Customer customer) {
-        logger.info(String.format("Melde Benutzer %s im System an", customer.toString()));
-        return customerRepository.findByUsernameAndPassword(customer.getUsername(), customer.getPassword()).toCustomer();
+    public boolean existCustomer(String username, String password) {
+        logger.info(String.format("Überprüft ob Benutzer %s:%s dem System vorliegt", username, password));
+        return customerRepository.findByUsernameAndPassword(username, password) instanceof CustomerDAO;
     }
 
     @Override
-    public Customer logOutCustomer(Customer customer) {
-        logger.info(String.format("Melde Benutzer %s vom System ab", customer.toString()));
-        return customerRepository.findByUsernameAndPassword(customer.getUsername(), customer.getPassword()).toCustomer();
+    public boolean logInCustomer(String username, String password) {
+        logger.info(String.format("Melde Benutzer %s:%s im System an", username, password));
+        return customerRepository.findByUsernameAndPassword(username, password) instanceof CustomerDAO;
+    }
+
+    @Override
+    public boolean logOutCustomer(String username, String password) {
+        logger.info(String.format("Melde Benutzer %s:%s vom System ab", username, password));
+        return customerRepository.findByUsernameAndPassword(username, password) instanceof CustomerDAO;
     }
 }

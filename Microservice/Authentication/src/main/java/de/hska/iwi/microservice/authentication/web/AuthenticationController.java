@@ -22,6 +22,8 @@ import de.hska.iwi.microservice.authentication.service.IAuthenticationServiceFac
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,51 +41,51 @@ public class AuthenticationController implements IAuthenticationController {
 
     @Override
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public Customer createCustomer(@ModelAttribute Customer customer) {
+    public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
         logger.info(String.format("Service-Aufruf: createCustomer mit dem Wert: %s", customer.toString()));
-        return authenticationServiceFasade.createCustomer(customer);
+        return new ResponseEntity<Customer>(authenticationServiceFasade.createCustomer(customer), HttpStatus.CREATED);
     }
 
     @Override
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public Customer getCustomerInformation(@RequestParam("user") String customername) {
-        logger.info(String.format("Service-Aufruf: getCustomerInformation mit dem Wert: %s", customername));
-        return authenticationServiceFasade.getCustomerInformation(customername);
+    public ResponseEntity<Boolean> existCustomer(@RequestHeader(name = "usr") String username, @RequestHeader(name = "pass") String password) {
+        return new ResponseEntity<Boolean>(authenticationServiceFasade.existCustomer(username, password), HttpStatus.OK);
     }
 
     @Override
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-    public Customer getCustomerInformation(@PathVariable("userId") long customerId) {
+    public ResponseEntity<Customer> getCustomerInformation(@PathVariable("userId") long customerId) {
         logger.info(String.format("Service-Aufruf: getCustomerInformation mit dem Wert: %d", customerId));
-        return authenticationServiceFasade.getCustomerInformation(customerId);
+        return new ResponseEntity<Customer>(authenticationServiceFasade.getCustomerInformation(customerId), HttpStatus.OK);
     }
 
 
     @Override
     @RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
-    public Customer updateCustomer(@ModelAttribute Customer customer) {
+    public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer) {
         logger.info(String.format("Service-Aufruf: updateCustomer mit dem Wert: %s", customer.toString()));
-        return authenticationServiceFasade.updateCustomer(customer);
+        return new ResponseEntity<Customer>(authenticationServiceFasade.updateCustomer(customer), HttpStatus.ACCEPTED);
     }
 
     @Override
     @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
-    public boolean deleteCustomer(@ModelAttribute Customer customer) {
-        logger.info(String.format("Service-Aufruf: deleteCustomer mit dem Wert: %s", customer.toString()));
-        return authenticationServiceFasade.deleteCustomer(customer);
+    public ResponseEntity<Boolean> deleteCustomer(@PathVariable("userId") int customerId) {
+        logger.info(String.format("Service-Aufruf: deleteCustomer mit dem Wert: %d", customerId));
+        return new ResponseEntity<Boolean>(authenticationServiceFasade.deleteCustomer(customerId), HttpStatus.ACCEPTED);
     }
 
     @Override
     @RequestMapping(value = "/login", method = RequestMethod.PUT)
-    public Customer loginCustomer(Customer customer) {
-        logger.info(String.format("Service-Aufruf: loginCustomer mit dem Wert: %s", customer.toString()));
-        return authenticationServiceFasade.logInCustomer(customer);
+    public ResponseEntity<Boolean> loginCustomer(@RequestHeader(name = "usr") String username, @RequestHeader(name = "pass") String password) {
+        logger.info(String.format("Service-Aufruf: loginCustomer mit dem Wert: %s : %s", username, password));
+        return new ResponseEntity<Boolean>(authenticationServiceFasade.logInCustomer(username, password), authenticationServiceFasade.logInCustomer(username, password)?HttpStatus.OK:HttpStatus.FORBIDDEN);
     }
 
     @Override
     @RequestMapping(value = "/logout", method = RequestMethod.PUT)
-    public Customer logoutCustomer(Customer customer) {
-        logger.info(String.format("Service-Aufruf: logoutCustomer mit dem Wert: %s", customer.toString()));
-        return authenticationServiceFasade.logOutCustomer(customer);
+    public ResponseEntity<Boolean> logoutCustomer(@RequestHeader(name = "usr") String username, @RequestHeader(name = "pass") String password) {
+        logger.info(String.format("Service-Aufruf: logoutCustomer mit dem Wert: %s : %s", username, password));
+        return new ResponseEntity<Boolean>(authenticationServiceFasade.logInCustomer(username, password), authenticationServiceFasade.logInCustomer(username, password)?HttpStatus.OK:HttpStatus.FORBIDDEN);
+
     }
 }
