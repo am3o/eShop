@@ -31,7 +31,7 @@ public class CategoryServer {
     private static Logger logger = Logger.getLogger(CategoryServer.class);
 
     public static void main(String[] args) {
-        logger.info("Erzeuge CategoryDAO-Service.");
+        logger.info("Erzeuge Category-Service.");
         SpringApplication.run(CategoryServer.class, args);
     }
 }

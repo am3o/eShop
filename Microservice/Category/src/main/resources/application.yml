@@ -1,32 +1,69 @@
 system:
-  eureka:
-    hostname: localhost
-    port: 8761
-  datasource:
-    hostname: localhost
-    port: 3306
-    database: eShop
-    username: eShop
-    password: sicher
+  docker:
+    server:
+      port: ${CONTAINER_CATEGORY_PORT}
+    eureka:
+      hostname: ${CONTAINER_EUREKA_NAME}
+      port: ${CONTAINER_EUREKA_PORT}
+    datasource:
+      hostname: ${CONTAINER_DATASOURCE_NAME}
+      port: ${CONTAINER_DATASOURCE_PORT}
+      database: ${CONTAINER_DATASOURCE_DATABASE}
+      username: ${CONTAINER_DATASOURCE_USERNAME}
+      password: ${CONTAINER_DATASOURCE_PASSWORD}
+  default:
+    server:
+      port: 4211
+    eureka:
+      hostname: localhost
+      port: 8761
+    datasource:
+      hostname: localhost
+      port: 3306
+      database: eShop
+      username: eShopCate
+      password: sicher
+---
 
 spring:
   profiles: default
   application:
-    name: category-service
+      name: category-service
   jpa:
     show-sql: true
   datasource:
-    url: jdbc:mysql://${system.datasource.hostname}:${system.datasource.port}/${system.datasource.database}?useSSL=false
-    username: ${system.datasource.username}
-    password: ${system.datasource.password}
+    url: jdbc:mysql://${system.default.datasource.hostname}:${system.default.datasource.port}/${system.default.datasource.database}?useSSL=false
+    username: ${system.default.datasource.username}
+    password: ${system.default.datasource.password}
 
 server:
-  port: 4211
+  port: ${PORT:${system.default.server.port}}
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://${system.eureka.hostname}:${system.eureka.port}/eureka/
+      defaultZone: http://${system.default.eureka.hostname}:${system.default.eureka.port}/eureka/
   instance:
     preferIpAddress: true
-    appname: ${spring.application.name}
+---
+
+spring:
+  profiles: docker-container
+  application:
+      name: category-service
+  jpa:
+    show-sql: true
+  datasource:
+    url: jdbc:mysql://${system.docker.datasource.hostname}:${system.docker.datasource.port}/${system.docker.datasource.database}?useSSL=false
+    username: ${system.docker.datasource.username}
+    password: ${system.docker.datasource.password}
+
+server:
+  port: ${PORT:${system.docker.server.port}}
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${system.docker.eureka.hostname}:${system.docker.eureka.port}/eureka/
+  instance:
+    preferIpAddress: true

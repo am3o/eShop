@@ -23,6 +23,7 @@ import de.hska.iwi.microservice.category.service.ICategoryServiceFacade;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,43 +45,36 @@ public class CategoryController implements ICategoryController {
 
     @Override
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public List<Category> getAllCategories() {
+    public ResponseEntity<List<Category>> getAllCategories() {
         logger.info("Service-Aufruf: getAllCategories");
-        return categoryServiceFacade.getAllCategories();
+        return new ResponseEntity<List<Category>>(categoryServiceFacade.getAllCategories(), HttpStatus.OK);
     }
 
     @Override
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public Category createCategory(@RequestBody Category category) {
+    public ResponseEntity<Category> createCategory(@RequestBody Category category) {
         logger.info(String.format("Service-Aufruf: createCategory mit dem Wert: %s", category.toString()));
-        return categoryServiceFacade.createCategory(category);
+        return new ResponseEntity<Category>(categoryServiceFacade.createCategory(category), HttpStatus.CREATED);
     }
 
     @Override
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public Category updateCategory(@RequestBody Category category) {
+    public ResponseEntity<Category> updateCategory(@RequestBody Category category) {
         logger.info(String.format("Service-Aufruf: updateCategory mit dem Wert: %s", category.toString()));
-        return categoryServiceFacade.updateCategory(category);
+        return new ResponseEntity<Category>(categoryServiceFacade.updateCategory(category), HttpStatus.ACCEPTED);
     }
 
     @Override
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Category getCategory(@PathVariable("id") int categoryId) {
+    public ResponseEntity<Category> getCategory(@PathVariable("id") int categoryId) {
         logger.info(String.format("Service-Aufruf: getCategory mit dem Wert: %s", categoryId));
-        return categoryServiceFacade.getCategory(categoryId);
+        return new ResponseEntity<Category>(categoryServiceFacade.getCategory(categoryId), HttpStatus.OK);
     }
 
     @Override
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public boolean deleteCategory(@PathVariable("id") int categoryId) {
+    public ResponseEntity<Boolean> deleteCategory(@PathVariable("id") int categoryId) {
         logger.info(String.format("Service-Aufruf: deleteCategory mit dem Wert: %s", categoryId));
-        return categoryServiceFacade.deleteCategory(categoryId);
-    }
-
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    class CategoryNotFoundException extends RuntimeException {
-        public CategoryNotFoundException(String userId) {
-            super("could not find user '" + userId + "'.");
-        }
+        return new ResponseEntity<Boolean>(categoryServiceFacade.deleteCategory(categoryId), HttpStatus.ACCEPTED);
     }
 }
