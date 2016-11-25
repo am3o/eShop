@@ -33,7 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ProductDAO {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private int id;
 
     @Column(name = "name")
@@ -51,8 +51,9 @@ public class ProductDAO {
     protected ProductDAO() {
     }
 
-    public ProductDAO(String name, double price, String details, int categoryId) {
+    public ProductDAO(int id, String name, double price, String details, int categoryId) {
         super();
+        this.id = id;
         this.name = name;
         this.price = price;
         this.details = details;

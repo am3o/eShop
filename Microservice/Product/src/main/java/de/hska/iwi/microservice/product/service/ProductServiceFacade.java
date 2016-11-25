@@ -41,7 +41,7 @@ public class ProductServiceFacade implements IProductServiceFacade {
     }
 
     private ProductDAO convertToProductDAO(Product product) {
-        return new ProductDAO(product.getName(), product.getPrice(), product.getDetails(), product.getCategoryId());
+        return new ProductDAO(product.getId(), product.getName(), product.getPrice(), product.getDetails(), product.getCategoryId());
     }
 
     private List<Product> convertToListProduct(List<ProductDAO> list) {
