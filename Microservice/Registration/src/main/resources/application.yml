@@ -1,9 +1,19 @@
 system:
-  eureka:
-    port: 8761
+  docker:
+    eureka:
+      name: ${CONTAINER_EUREKA_NAME}
+      port: ${CONTAINER_EUREKA_PORT}
+  default:
+    eureka:
+      name: localhost
+      port: 8761
+
+---
+spring:
+  profiles: default
 
 server:
-  port: ${PORT:${system.eureka.port}}
+  port: ${PORT:${system.default.eureka.port}}
 
 eureka:
   client:
@@ -12,6 +22,23 @@ eureka:
     server:
       waitTimeInMsWhenSyncEmpty: 0
   instance:
-    hostname: localhost
+    hostname: ${system.default.eureka.name}
+    prefer-ip-address: true
+---
+
+spring:
+  profiles: docker-container
+
+server:
+  port: ${PORT:${system.docker.eureka.port}}
+
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    server:
+      waitTimeInMsWhenSyncEmpty: 0
+  instance:
+    hostname: ${system.docker.eureka.name}
     prefer-ip-address: true
 
