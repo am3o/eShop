@@ -1,7 +1,7 @@
 system:
   docker:
     server:
-      port: ${CONTAINER_PORT}
+      port: ${CONTAINER_CATEGORY_PORT}
     eureka:
       hostname: ${CONTAINER_EUREKA_NAME}
       port: ${CONTAINER_EUREKA_PORT}
