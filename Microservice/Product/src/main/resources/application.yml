@@ -1,13 +1,16 @@
 system:
-  eureka:
-    hostname: localhost
-    port: 8761
-  datasource:
-    hostname: localhost
-    port: 3306
-    database: eShop
-    username: eShop
-    password: sicher
+  default:
+    server:
+      port: 4205
+    eureka:
+      hostname: localhost
+      port: 8761
+    datasource:
+      hostname: localhost
+      port: 3306
+      database: eShop
+      username: eShop
+      password: sicher
 
 spring:
   profiles: default
@@ -21,7 +24,7 @@ spring:
     password: ${system.datasource.password}
 
 server:
-  port: 4205
+  port: ${PORT:${system.default.server.port}}
 
 eureka:
   client:
