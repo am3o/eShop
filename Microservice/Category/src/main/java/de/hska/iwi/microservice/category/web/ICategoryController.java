@@ -18,6 +18,7 @@
 package de.hska.iwi.microservice.category.web;
 
 import de.hska.iwi.microservice.category.entity.Category;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -30,7 +31,7 @@ public interface ICategoryController {
      *
      * @return Liste von Kategorien
      */
-    List<Category> getAllCategories();
+    ResponseEntity<List<Category>> getAllCategories();
 
     /**
      * Erstellt eine neue Kategorie
@@ -38,7 +39,7 @@ public interface ICategoryController {
      * @param category Kategorie
      * @return Kategorie
      */
-    Category createCategory(Category category);
+    ResponseEntity<Category> createCategory(Category category);
 
     /**
      * Aktualisiert eine bestehende Kategorie
@@ -46,17 +47,17 @@ public interface ICategoryController {
      * @param category Kategorie
      * @return Kategorie
      */
-    Category updateCategory(Category category);
+    ResponseEntity<Category> updateCategory(Category category);
 
     /**
      * Liefert eine spezielle Kategorie zurück.
      *
      * @return Kategorie
      */
-    Category getCategory(int categoryId);
+    ResponseEntity<Category> getCategory(int categoryId);
 
     /**
      * Löscht eine vorhandene Kategorie.
      */
-    boolean deleteCategory(int categoryId);
+    ResponseEntity<Boolean> deleteCategory(int categoryId);
 }
