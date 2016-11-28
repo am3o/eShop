@@ -33,13 +33,15 @@ public class CatalogController implements ICatalogController {
     @Override
     @RequestMapping(value = "/category", method = RequestMethod.POST)
     public ResponseEntity<Category> createCategory(@RequestHeader("usr") String username, @RequestHeader("pass") String password, @RequestBody Category category) {
-        return new ResponseEntity<Category>(serviceFacade.createCategory(new Credential(username, password), category), HttpStatus.CREATED);
+        if(!serviceFacade.checkPermission(new Credential(username, password)))
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        return new ResponseEntity<Category>(serviceFacade.createCategory(category), HttpStatus.CREATED);
     }
 
     @Override
     @RequestMapping(value = "/category/{categoryId}", method = RequestMethod.PUT)
     public ResponseEntity<Category> updateCategory(@RequestHeader("usr") String username, @RequestHeader("pass") String password, @PathVariable(value = "categoryId") int categoryId, @RequestBody Category category) {
-        return new ResponseEntity<Category>(serviceFacade.updateCategory(new Credential(username, password), categoryId, category), HttpStatus.OK);
+        return new ResponseEntity<Category>(serviceFacade.updateCategory(categoryId, category), HttpStatus.OK);
     }
 
     @Override
@@ -51,19 +53,19 @@ public class CatalogController implements ICatalogController {
     @Override
     @RequestMapping(value = "/category/{categoryId}", method = RequestMethod.DELETE)
     public ResponseEntity<Boolean> deleteCategory(@RequestHeader("usr") String username, @RequestHeader("pass") String password, @PathVariable(value = "categoryId") int categoryId) {
-        return new ResponseEntity<Boolean>(serviceFacade.deleteCategory(new Credential(username, password), categoryId), HttpStatus.OK);
+        return new ResponseEntity<Boolean>(serviceFacade.deleteCategory(categoryId), HttpStatus.OK);
     }
 
     @Override
     @RequestMapping(value = "/product", method = RequestMethod.POST)
     public ResponseEntity<Product> createProduct(@RequestHeader("usr") String username, @RequestHeader("pass") String password, @RequestBody Product product) {
-        return new ResponseEntity<Product>(serviceFacade.createProduct(new Credential(username, password), product), HttpStatus.OK);
+        return new ResponseEntity<Product>(serviceFacade.createProduct(product), HttpStatus.OK);
     }
 
     @Override
     @RequestMapping(value = "/product/{productId}", method = RequestMethod.PUT)
     public ResponseEntity<Product> updateProduct(@RequestHeader("usr") String username, @RequestHeader("pass") String password, @PathVariable(value = "productId") int productId, @RequestBody Product product) {
-        return new ResponseEntity<Product>(serviceFacade.updateProduct(new Credential(username, password), productId, product), HttpStatus.OK);
+        return new ResponseEntity<Product>(serviceFacade.updateProduct(productId, product), HttpStatus.OK);
     }
 
     @Override

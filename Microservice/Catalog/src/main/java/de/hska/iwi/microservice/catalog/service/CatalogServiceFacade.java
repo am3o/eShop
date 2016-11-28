@@ -76,20 +76,22 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     }
 
     @Override
+    public boolean checkPermission(Credential credential) {
+        return authenticationServiceClient.existCustomer(credential.getUsername(), credential.getPassword(), true);
+    }
+
+    @Override
     public List<Category> getAllCategories() {
         return categoryServiceClient.getAllCategories();
     }
 
     @Override
-    public Category createCategory(Credential credential, Category category) {
-        Category result = null;
-        if(authenticationServiceClient.existCustomer(credential.getUsername(), credential.getPassword()))
-            result = categoryServiceClient.createCategory(category);
-        return result;
+    public Category createCategory(Category category) {
+        return categoryServiceClient.createCategory(category);
     }
 
     @Override
-    public Category updateCategory(Credential credential, int categoryId, Category category) {
+    public Category updateCategory(int categoryId, Category category) {
         return categoryServiceClient.updateCategory(category);
     }
 
@@ -99,17 +101,17 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     }
 
     @Override
-    public boolean deleteCategory(Credential credential, int categoryId) {
+    public boolean deleteCategory(int categoryId) {
         return categoryServiceClient.deleteCategory(categoryId);
     }
 
     @Override
-    public Product createProduct(Credential credential, Product product) {
+    public Product createProduct(Product product) {
         return productServiceClient.createProduct(product);
     }
 
     @Override
-    public Product updateProduct(Credential credential, int productId, Product product) {
+    public Product updateProduct(int productId, Product product) {
         return productServiceClient.updateProduct(productId, product);
     }
 

@@ -11,19 +11,21 @@ import java.util.List;
  * Created by ameo on 13.11.16.
  */
 public interface ICatalogServiceFacade {
+    boolean checkPermission(Credential credential);
+
     List<Category> getAllCategories();
 
-    Category createCategory(Credential credential, Category category);
+    Category createCategory(Category category);
 
-    Category updateCategory(Credential credential, int categoryId, Category category);
+    Category updateCategory(int categoryId, Category category);
 
     Category getCategory(int categoryId);
 
-    boolean deleteCategory(Credential credential, int categoryId);
+    boolean deleteCategory(int categoryId);
 
-    Product createProduct(Credential credential, Product product);
+    Product createProduct(Product product);
 
-    Product updateProduct(Credential credential, int productId, Product product);
+    Product updateProduct(int productId, Product product);
 
     boolean deleteProduct(int id);
 
