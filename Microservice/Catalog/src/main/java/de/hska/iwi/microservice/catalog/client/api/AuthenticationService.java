@@ -9,5 +9,5 @@ public interface AuthenticationService {
     /**
      * Überprüft ob der angegebene Benutzer existiert.
      */
-    Boolean existCustomer(String username, String password);
+    Boolean existCustomer(String username, String password, boolean permission);
 }

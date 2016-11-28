@@ -6,6 +6,10 @@ import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  * Created by ameo on 26.11.16.
@@ -19,16 +23,29 @@ public class AuthenticationServiceClient implements AuthenticationService {
     public AuthenticationServiceClient(String serviceUrl) {
         this.serviceUrl = serviceUrl;
     }
-    
+
     @Override
-    public Boolean existCustomer(String username, String password) {
+    public Boolean existCustomer(String username, String password, boolean permission) {
+        URI destUri = null;
+        try {
+            destUri = new URI(serviceUrl);
+        } catch (URISyntaxException ex) {
+            logger.error("Fehler beim auflösen der URI", ex);
+
+        }
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.add("usr", username);
         headers.add("pass", password);
 
-        HttpEntity<String> entity = new HttpEntity<String>(null,headers);
-        ResponseEntity<Boolean> result = restClient.exchange(String.format("%s/", serviceUrl), HttpMethod.GET, entity, Boolean.class);
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromUri(destUri).queryParam("permission", permission);
+
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
+
+        ResponseEntity<Boolean> result = restClient.exchange(uriBuilder.build().encode().toUri(),
+                                                                HttpMethod.GET,
+                                                                entity,
+                                                                Boolean.class);
         return result.getBody();
     }
 }
