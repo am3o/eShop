@@ -48,8 +48,10 @@ public class AuthenticationController implements IAuthenticationController {
 
     @Override
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ResponseEntity<Boolean> existCustomer(@RequestHeader(name = "usr") String username, @RequestHeader(name = "pass") String password) {
-        return new ResponseEntity<Boolean>(authenticationServiceFasade.existCustomer(username, password), HttpStatus.OK);
+    public ResponseEntity<Boolean> existCustomer(@RequestHeader(name = "usr") String username, @RequestHeader(name = "pass") String password, @RequestParam(value = "permission", required = false, defaultValue = "false") boolean permission) {
+        return new ResponseEntity<Boolean>(permission?authenticationServiceFasade.checkPermission(username, password):
+                                                        authenticationServiceFasade.existCustomer(username, password),
+                                            HttpStatus.OK);
     }
 
     @Override

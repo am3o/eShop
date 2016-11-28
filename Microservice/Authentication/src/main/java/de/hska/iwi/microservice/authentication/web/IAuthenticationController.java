@@ -32,7 +32,7 @@ public interface IAuthenticationController {
     /**
      * Überprüft ob der angegebene Benutzer existiert.
      */
-    ResponseEntity<Boolean> existCustomer(String username, String password);
+    ResponseEntity<Boolean> existCustomer(String username, String password, boolean permission);
 
     /**
      * Liefert alle vorliegenden Informationen zurück, welche von dem speziellen Benutzer vorhanden
