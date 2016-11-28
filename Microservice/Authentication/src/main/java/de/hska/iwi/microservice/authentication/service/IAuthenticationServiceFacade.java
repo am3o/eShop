@@ -58,6 +58,11 @@ public interface IAuthenticationServiceFacade {
     boolean existCustomer(String username, String password);
 
     /**
+     * Überprüfung ob der angegebene Benutzer über passende Rechte im System verfügt.
+     */
+    boolean checkPermission(String username, String password);
+
+    /**
      * Logt einen Benutzer in das System ein.
      */
     boolean logInCustomer(String username, String password);
