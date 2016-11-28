@@ -2,11 +2,13 @@ package de.hska.iwi.microservice.catalog.web;
 
 import de.hska.iwi.microservice.catalog.entity.Catalog;
 import de.hska.iwi.microservice.catalog.entity.Category;
+import de.hska.iwi.microservice.catalog.entity.Credential;
 import de.hska.iwi.microservice.catalog.entity.Product;
-import de.hska.iwi.microservice.catalog.service.CatalogServiceFacade;
 import de.hska.iwi.microservice.catalog.service.ICatalogServiceFacade;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,79 +26,79 @@ public class CatalogController implements ICatalogController {
 
     @Override
     @RequestMapping(value = "/category", method = RequestMethod.GET)
-    public List<Category> getAllCategories() {
-        return serviceFacade.getAllCategories();
+    public ResponseEntity<List<Category>> getAllCategories() {
+        return new ResponseEntity<List<Category>>(serviceFacade.getAllCategories(), HttpStatus.OK);
     }
 
     @Override
     @RequestMapping(value = "/category", method = RequestMethod.POST)
-    public Category createCategory(@RequestBody Category category) {
-        return serviceFacade.createCategory(category);
+    public ResponseEntity<Category> createCategory(@RequestHeader("usr") String username, @RequestHeader("pass") String password, @RequestBody Category category) {
+        return new ResponseEntity<Category>(serviceFacade.createCategory(new Credential(username, password), category), HttpStatus.CREATED);
     }
 
     @Override
     @RequestMapping(value = "/category/{categoryId}", method = RequestMethod.PUT)
-    public Category updateCategory(@PathVariable(value = "categoryId") int categoryId, @RequestBody Category category) {
-        return serviceFacade.updateCategory(categoryId, category);
+    public ResponseEntity<Category> updateCategory(@RequestHeader("usr") String username, @RequestHeader("pass") String password, @PathVariable(value = "categoryId") int categoryId, @RequestBody Category category) {
+        return new ResponseEntity<Category>(serviceFacade.updateCategory(new Credential(username, password), categoryId, category), HttpStatus.OK);
     }
 
     @Override
     @RequestMapping(value = "/category/{categoryId}", method = RequestMethod.GET)
-    public Category getCategory(@PathVariable(value = "categoryId") int categoryId) {
-        return serviceFacade.getCategory(categoryId);
+    public ResponseEntity<Category> getCategory(@PathVariable(value = "categoryId") int categoryId) {
+        return new ResponseEntity<Category>(serviceFacade.getCategory(categoryId), HttpStatus.OK);
     }
 
     @Override
     @RequestMapping(value = "/category/{categoryId}", method = RequestMethod.DELETE)
-    public boolean deleteCategory(@PathVariable(value = "categoryId") int categoryId) {
-        return serviceFacade.deleteCategory(categoryId);
+    public ResponseEntity<Boolean> deleteCategory(@RequestHeader("usr") String username, @RequestHeader("pass") String password, @PathVariable(value = "categoryId") int categoryId) {
+        return new ResponseEntity<Boolean>(serviceFacade.deleteCategory(new Credential(username, password), categoryId), HttpStatus.OK);
     }
 
     @Override
     @RequestMapping(value = "/product", method = RequestMethod.POST)
-    public Product createProduct(@RequestBody Product product) {
-        return serviceFacade.createProduct(product);
+    public ResponseEntity<Product> createProduct(@RequestHeader("usr") String username, @RequestHeader("pass") String password, @RequestBody Product product) {
+        return new ResponseEntity<Product>(serviceFacade.createProduct(new Credential(username, password), product), HttpStatus.OK);
     }
 
     @Override
     @RequestMapping(value = "/product/{productId}", method = RequestMethod.PUT)
-    public Product updateProduct(@PathVariable(value = "productId") int productId, @RequestBody Product product) {
-        return serviceFacade.updateProduct(productId, product);
+    public ResponseEntity<Product> updateProduct(@RequestHeader("usr") String username, @RequestHeader("pass") String password, @PathVariable(value = "productId") int productId, @RequestBody Product product) {
+        return new ResponseEntity<Product>(serviceFacade.updateProduct(new Credential(username, password), productId, product), HttpStatus.OK);
     }
 
     @Override
     @RequestMapping(value = "/product/{productId}", method = RequestMethod.DELETE)
-    public boolean deleteProduct(@PathVariable(value = "productId") int productId) {
-        return serviceFacade.deleteProduct(productId);
+    public ResponseEntity<Boolean> deleteProduct(@RequestHeader("usr") String username, @RequestHeader("pass") String password, @PathVariable(value = "productId") int productId) {
+        return new ResponseEntity<Boolean>(serviceFacade.deleteProduct(productId), HttpStatus.OK);
     }
 
     @Override
     @RequestMapping(value = "/product", method = RequestMethod.GET)
-    public List<Product> getProducts(@RequestParam(name = "categoryId", required = false, defaultValue = "-1") int categoryId) {
-        return serviceFacade.getProducts(categoryId);
+    public ResponseEntity<List<Product>> getProducts(@RequestParam(name = "categoryId", required = false, defaultValue = "-1") int categoryId) {
+        return new ResponseEntity<List<Product>>(serviceFacade.getProducts(categoryId), HttpStatus.OK);
     }
 
     @Override
     @RequestMapping(value = "/product/{productId}", method = RequestMethod.GET)
-    public Product getProduct(@PathVariable(value = "productId") int id) {
-        return serviceFacade.getProduct(id);
+    public ResponseEntity<Product> getProduct(@PathVariable(value = "productId") int id) {
+        return new ResponseEntity<Product>(serviceFacade.getProduct(id), HttpStatus.OK);
     }
 
     @Override
     @RequestMapping(value = "/catalog/", method = RequestMethod.GET)
-    public List<Catalog> getCatalog() {
-        return serviceFacade.getCatalog();
+    public ResponseEntity<List<Catalog>> getCatalog() {
+        return new ResponseEntity<List<Catalog>>(serviceFacade.getCatalog(), HttpStatus.OK);
     }
 
     @Override
     @RequestMapping(value = "/catalog/{categoryId}", method = RequestMethod.GET)
-    public List<Catalog> getCatalogCategorie(@PathVariable(value = "categoryId") int categoryId) {
-        return serviceFacade.getCatalogCategorie(categoryId);
+    public ResponseEntity<List<Catalog>> getCatalogCategorie(@PathVariable(value = "categoryId") int categoryId) {
+        return new ResponseEntity<List<Catalog>>(serviceFacade.getCatalogCategorie(categoryId), HttpStatus.OK);
     }
 
     @Override
     @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public List<Catalog> searchCatalog(@RequestParam("minPrice") float minPrice,@RequestParam("maxPrice") float maxPrice,@RequestParam("content") String content) {
-        return serviceFacade.searchCatalog(minPrice, maxPrice, content);
+    public ResponseEntity<List<Catalog>> searchCatalog(@RequestParam("minPrice") float minPrice,@RequestParam("maxPrice") float maxPrice,@RequestParam("content") String content) {
+        return new ResponseEntity<List<Catalog>>(serviceFacade.searchCatalog(minPrice, maxPrice, content), HttpStatus.OK);
     }
 }

@@ -2,7 +2,9 @@ package de.hska.iwi.microservice.catalog.web;
 
 import de.hska.iwi.microservice.catalog.entity.Catalog;
 import de.hska.iwi.microservice.catalog.entity.Category;
+import de.hska.iwi.microservice.catalog.entity.Credential;
 import de.hska.iwi.microservice.catalog.entity.Product;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -10,29 +12,29 @@ import java.util.List;
  * Created by ameo on 13.11.16.
  */
 public interface ICatalogController {
-    List<Category> getAllCategories();
+    ResponseEntity<List<Category>> getAllCategories();
 
-    Category createCategory(Category category);
+    ResponseEntity<Category> createCategory(String username, String password, Category category);
 
-    Category updateCategory(int categoryId, Category category);
+    ResponseEntity<Category> updateCategory(String username, String password, int categoryId, Category category);
 
-    Category getCategory(int categoryId);
+    ResponseEntity<Category> getCategory(int categoryId);
 
-    boolean deleteCategory(int categoryId);
+    ResponseEntity<Boolean> deleteCategory(String username, String password, int categoryId);
 
-    Product createProduct(Product product);
+    ResponseEntity<Product> createProduct(String username, String password, Product product);
 
-    Product updateProduct(int productId, Product product);
+    ResponseEntity<Product> updateProduct(String username, String password, int productId, Product product);
 
-    boolean deleteProduct(int productId);
+    ResponseEntity<Boolean> deleteProduct(String username, String password, int productId);
 
-    List<Product> getProducts(int categoryId);
+    ResponseEntity<List<Product>> getProducts(int categoryId);
 
-    Product getProduct(int productId);
+    ResponseEntity<Product> getProduct(int productId);
 
-    List<Catalog> getCatalog();
+    ResponseEntity<List<Catalog>> getCatalog();
 
-    List<Catalog> getCatalogCategorie(int categoryId);
+    ResponseEntity<List<Catalog>> getCatalogCategorie(int categoryId);
 
-    List<Catalog> searchCatalog(float minPrice, float maxPrice, String content);
+    ResponseEntity<List<Catalog>> searchCatalog(float minPrice, float maxPrice, String content);
 }

@@ -1,10 +1,12 @@
 package de.hska.iwi.microservice.catalog.service;
 
+import de.hska.iwi.microservice.catalog.client.AuthenticationServiceClient;
 import de.hska.iwi.microservice.catalog.client.CategoryServiceClient;
 import de.hska.iwi.microservice.catalog.client.ProductServiceClient;
 import de.hska.iwi.microservice.catalog.client.api.ProductService;
 import de.hska.iwi.microservice.catalog.entity.Catalog;
 import de.hska.iwi.microservice.catalog.entity.Category;
+import de.hska.iwi.microservice.catalog.entity.Credential;
 import de.hska.iwi.microservice.catalog.entity.Product;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +26,15 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
 
     private static final String CATEGORY_SERVICE = "category-Service";
     private static final String PRODUCT_SERVICE = "production-service";
+    private static final String AUTHENTICATION_SERVICE = "production-service";
 
     private static final String CATEGORY_SERVICE_URL_DEFAULTT = "http://localhost:4211/";
     private static final String PRODUCT_SERVICE_URL_DEFAULT = "http://localhost:4205/";
+    private static final String AUTHENTICATION_SERVICE_URL_DEFAULT = "http://localhost:4201/";
 
     private CategoryServiceClient categoryServiceClient;
     private ProductServiceClient productServiceClient;
+    private AuthenticationServiceClient authenticationServiceClient;
 
     @Autowired
     public CatalogServiceFacade(DiscoveryClient discoveryClient) {
@@ -56,6 +61,18 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
             if(!(this.productServiceClient instanceof ProductServiceClient))
                 this.productServiceClient = new ProductServiceClient(PRODUCT_SERVICE_URL_DEFAULT);
         }
+
+        try {
+            if(discoveryClient.getServices().contains(AUTHENTICATION_SERVICE)){
+                URI authenticationUrl = discoveryClient.getInstances(AUTHENTICATION_SERVICE).get(0).getUri();
+                this.authenticationServiceClient = new AuthenticationServiceClient(authenticationUrl.toString());
+            }
+        }catch (Exception ex) {
+            logger.error("Initialisierungsfehler: ProductService", ex);
+        }finally {
+            if(!(this.authenticationServiceClient instanceof AuthenticationServiceClient))
+                this.authenticationServiceClient = new AuthenticationServiceClient(AUTHENTICATION_SERVICE_URL_DEFAULT);
+        }
     }
 
     @Override
@@ -64,13 +81,16 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     }
 
     @Override
-    public Category createCategory(Category category) {
-        return categoryServiceClient.createCategory(category);
+    public Category createCategory(Credential credential, Category category) {
+        Category result = null;
+        if(authenticationServiceClient.existCustomer(credential.getUsername(), credential.getPassword()))
+            result = categoryServiceClient.createCategory(category);
+        return result;
     }
 
     @Override
-    public Category updateCategory(int categoryId, Category category) {
-        return null;
+    public Category updateCategory(Credential credential, int categoryId, Category category) {
+        return categoryServiceClient.updateCategory(category);
     }
 
     @Override
@@ -79,17 +99,17 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     }
 
     @Override
-    public boolean deleteCategory(int categoryId) {
+    public boolean deleteCategory(Credential credential, int categoryId) {
         return categoryServiceClient.deleteCategory(categoryId);
     }
 
     @Override
-    public Product createProduct(Product product) {
+    public Product createProduct(Credential credential, Product product) {
         return productServiceClient.createProduct(product);
     }
 
     @Override
-    public Product updateProduct(int productId, Product product) {
+    public Product updateProduct(Credential credential, int productId, Product product) {
         return productServiceClient.updateProduct(productId, product);
     }
 

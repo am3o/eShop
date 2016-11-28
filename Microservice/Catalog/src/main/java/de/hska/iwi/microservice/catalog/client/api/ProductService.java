@@ -1,17 +1,6 @@
 package de.hska.iwi.microservice.catalog.client.api;
 
 import de.hska.iwi.microservice.catalog.entity.Product;
-import feign.Headers;
-import feign.Param;
-import feign.RequestLine;
-import org.springframework.cloud.netflix.feign.FeignClient;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 /**
@@ -26,12 +15,12 @@ public interface ProductService {
     /**
      * Aktualisiert ein vorhandenes Produkt im System.
      */
-    Product updateProduct(int id, Product product);
+    Product updateProduct(int productId, Product product);
 
     /**
      * Löscht ein vorhandenes Produkt aus dem System.
      */
-    boolean deleteProduct(int id);
+    Boolean deleteProduct(int productId);
 
     /**
      * Liefert alle Produktecon dem System zurück oder wennn der Parameter übergeben wird, werden alle Produkte zurückgeliefert, welche die entsprechende CategorieId besitzen
@@ -41,5 +30,5 @@ public interface ProductService {
     /**
      * Liefert ein spezielles Produkt zurück.
      */
-    Product getProduct(int id);
+    Product getProduct(int productId);
 }

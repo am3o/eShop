@@ -45,7 +45,7 @@ public class ProductServiceClient implements ProductService {
     }
 
     @Override
-    public boolean deleteProduct(int id) {
+    public Boolean deleteProduct(int id) {
         restClient.delete(String.format("%s/%d", serviceUrl, id));
         return !(this.getProduct(id) instanceof Product);
     }

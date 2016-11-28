@@ -2,10 +2,6 @@ package de.hska.iwi.microservice.catalog.client;
 
 import de.hska.iwi.microservice.catalog.client.api.CategoryService;
 import de.hska.iwi.microservice.catalog.entity.Category;
-import feign.Feign;
-import feign.jackson.JacksonDecoder;
-import feign.jackson.JacksonEncoder;
-import feign.jaxrs.JAXRSContract;
 import org.apache.log4j.Logger;
 import org.springframework.web.client.RestTemplate;
 
@@ -46,7 +42,7 @@ public class CategoryServiceClient implements CategoryService{
     }
 
     @Override
-    public boolean deleteCategory(int categoryId) {
+    public Boolean deleteCategory(int categoryId) {
         restClient.delete(String.format("%s/%d", serviceUrl, categoryId));
         return !(this.getCategory(categoryId) instanceof Category);
     }
