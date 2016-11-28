@@ -3,8 +3,12 @@ package de.hska.iwi.microservice.catalog.client;
 import de.hska.iwi.microservice.catalog.client.api.ProductService;
 import de.hska.iwi.microservice.catalog.entity.Product;
 import org.apache.log4j.Logger;
+import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 /**
@@ -22,7 +26,25 @@ public class ProductServiceClient implements ProductService {
 
     @Override
     public List<Product> getProducts(int categoryId) {
-        return restClient.getForObject(String.format("%s/?categoryId=%d", serviceUrl, categoryId), List.class);
+        URI destUri = null;
+        try {
+            destUri = new URI(serviceUrl);
+        } catch (URISyntaxException ex) {
+            logger.error("Fehler beim auflösen der URI", ex);
+
+        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromUri(destUri).queryParam("categoryId", categoryId);
+
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
+
+        ResponseEntity<List> result = restClient.exchange(uriBuilder.build().encode().toUri(),
+                                                            HttpMethod.GET,
+                                                            entity,
+                                                            List.class);
+        return result.getBody();
     }
 
     @Override
