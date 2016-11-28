@@ -41,6 +41,8 @@ public class CatalogController implements ICatalogController {
     @Override
     @RequestMapping(value = "/category/{categoryId}", method = RequestMethod.PUT)
     public ResponseEntity<Category> updateCategory(@RequestHeader("usr") String username, @RequestHeader("pass") String password, @PathVariable(value = "categoryId") int categoryId, @RequestBody Category category) {
+        if(!serviceFacade.checkPermission(new Credential(username, password)))
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         return new ResponseEntity<Category>(serviceFacade.updateCategory(categoryId, category), HttpStatus.OK);
     }
 
@@ -53,24 +55,32 @@ public class CatalogController implements ICatalogController {
     @Override
     @RequestMapping(value = "/category/{categoryId}", method = RequestMethod.DELETE)
     public ResponseEntity<Boolean> deleteCategory(@RequestHeader("usr") String username, @RequestHeader("pass") String password, @PathVariable(value = "categoryId") int categoryId) {
+        if(!serviceFacade.checkPermission(new Credential(username, password)))
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         return new ResponseEntity<Boolean>(serviceFacade.deleteCategory(categoryId), HttpStatus.OK);
     }
 
     @Override
     @RequestMapping(value = "/product", method = RequestMethod.POST)
     public ResponseEntity<Product> createProduct(@RequestHeader("usr") String username, @RequestHeader("pass") String password, @RequestBody Product product) {
+        if(!serviceFacade.checkPermission(new Credential(username, password)))
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         return new ResponseEntity<Product>(serviceFacade.createProduct(product), HttpStatus.OK);
     }
 
     @Override
     @RequestMapping(value = "/product/{productId}", method = RequestMethod.PUT)
     public ResponseEntity<Product> updateProduct(@RequestHeader("usr") String username, @RequestHeader("pass") String password, @PathVariable(value = "productId") int productId, @RequestBody Product product) {
+        if(!serviceFacade.checkPermission(new Credential(username, password)))
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         return new ResponseEntity<Product>(serviceFacade.updateProduct(productId, product), HttpStatus.OK);
     }
 
     @Override
     @RequestMapping(value = "/product/{productId}", method = RequestMethod.DELETE)
     public ResponseEntity<Boolean> deleteProduct(@RequestHeader("usr") String username, @RequestHeader("pass") String password, @PathVariable(value = "productId") int productId) {
+        if(!serviceFacade.checkPermission(new Credential(username, password)))
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         return new ResponseEntity<Boolean>(serviceFacade.deleteProduct(productId), HttpStatus.OK);
     }
 
