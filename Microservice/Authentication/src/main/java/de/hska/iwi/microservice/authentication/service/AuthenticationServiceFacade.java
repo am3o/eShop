@@ -33,6 +33,8 @@ public class AuthenticationServiceFacade implements IAuthenticationServiceFacade
     private final Logger logger = Logger.getLogger(AuthenticationServiceFacade.class);
     private final CustomerRepository customerRepository;
 
+    private static final int PERMISSION_ADMIN_ROLE = 1;
+
     @Autowired
     public AuthenticationServiceFacade(CustomerRepository customerRepository) {
         super();
@@ -88,6 +90,13 @@ public class AuthenticationServiceFacade implements IAuthenticationServiceFacade
     public boolean existCustomer(String username, String password) {
         logger.info(String.format("Überprüft ob Benutzer %s:%s dem System vorliegt", username, password));
         return customerRepository.findByUsernameAndPassword(username, password) instanceof CustomerDAO;
+    }
+
+    @Override
+    public boolean checkPermission(String username, String password) {
+        logger.info(String.format("Überprüft ob Benutzer %s:%s dem System vorliegt mit passenden Rechten", username, password));
+        CustomerDAO result = customerRepository.findByUsernameAndPassword(username, password);
+        return result.getRole() == PERMISSION_ADMIN_ROLE;
     }
 
     @Override
