@@ -21,25 +21,39 @@ package de.hska.iwi.microservice.authentication.entity;
  * Created by ameo on 06.06.16.
  */
 public class Customer {
+    public enum Permission {
+        Admin(0), User(1);
+
+        private final int value;
+
+        private Permission(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+    }
+
     private long id;
     private String name;
     private String lastname;
     private String username;
     private String password;
-    private int role;
+    private Permission role = Permission.User;
 
     public Customer() {
         super();
     }
 
-    public Customer(long id, String name, String lastname, String username, String password, int role) {
+    public Customer(long id, String name, String lastname, String username, String password, Permission role) {
         super();
         this.id = id;
         this.name = name;
         this.lastname = lastname;
         this.username = username;
         this.password = password;
-        this.role = role;
+        this.role = role ;
     }
 
     public String getName() {
@@ -74,11 +88,11 @@ public class Customer {
         this.password = password;
     }
 
-    public int getRole() {
+    public Permission getRole() {
         return role;
     }
 
-    public void setRole(int role) {
+    public void setRole(Permission role) {
         this.role = role;
     }
 

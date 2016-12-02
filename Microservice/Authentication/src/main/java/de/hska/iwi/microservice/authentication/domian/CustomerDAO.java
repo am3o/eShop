@@ -17,6 +17,8 @@
 
 package de.hska.iwi.microservice.authentication.domian;
 
+import de.hska.iwi.microservice.authentication.entity.Customer;
+
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -117,6 +119,6 @@ public class CustomerDAO implements Serializable {
     }
 
     public de.hska.iwi.microservice.authentication.entity.Customer toCustomer() {
-        return new de.hska.iwi.microservice.authentication.entity.Customer(this.id, this.name, this.lastname, this.username, this.password, this.role);
+        return new de.hska.iwi.microservice.authentication.entity.Customer(this.id, this.name, this.lastname, this.username, this.password, this.role == 0 ? Customer.Permission.Admin : Customer.Permission.User);
     }
 }
