@@ -1,4 +1,16 @@
 system:
+  docker:
+      server:
+        port: ${CONTAINER_AUTHANTICATION_PORT}
+      eureka:
+        hostname: ${CONTAINER_EUREKA_NAME}
+        port: ${CONTAINER_EUREKA_PORT}
+      datasource:
+        hostname: ${CONTAINER_DATASOURCE_NAME}
+        port: ${CONTAINER_DATASOURCE_PORT}
+        database: ${CONTAINER_DATASOURCE_DATABASE}
+        username: ${CONTAINER_DATASOURCE_USERNAME}
+        password: ${CONTAINER_DATASOURCE_PASSWORD}
   default:
     server:
       port: 4201
@@ -9,7 +21,7 @@ system:
       hostname: localhost
       port: 3306
       database: eShop
-      username: eShop
+      username: eShopAuth
       password: sicher
 
 spring:
@@ -30,5 +42,27 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://${system.default.eureka.hostname}:${system.default.eureka.port}/eureka/
+  instance:
+    preferIpAddress: true
+
+---
+spring:
+  profiles: docker-container
+  application:
+    name: production-service
+  jpa:
+    show-sql: true
+  datasource:
+    url: jdbc:mysql://${system.docker.datasource.hostname}:${system.docker.datasource.port}/${system.docker.datasource.database}?useSSL=false
+    username: ${system.docker.datasource.username}
+    password: ${system.docker.datasource.password}
+
+server:
+  port: ${PORT:${system.docker.server.port}}
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${system.docker.eureka.hostname}:${system.docker.eureka.port}/eureka/
   instance:
     preferIpAddress: true
