@@ -26,7 +26,7 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
 
     private static final String CATEGORY_SERVICE = "category-Service";
     private static final String PRODUCT_SERVICE = "production-service";
-    private static final String AUTHENTICATION_SERVICE = "production-service";
+    private static final String AUTHENTICATION_SERVICE = "AUTHENTICATION-SERVICE";
 
     private static final String CATEGORY_SERVICE_URL_DEFAULTT = "http://localhost:4211/";
     private static final String PRODUCT_SERVICE_URL_DEFAULT = "http://localhost:4205/";

@@ -1,10 +1,12 @@
 package de.hska.iwi.microservice.catalog.client;
 
 import de.hska.iwi.microservice.catalog.client.api.AuthenticationService;
+import de.hska.iwi.microservice.catalog.entity.Credential;
 import org.apache.log4j.Logger;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -16,6 +18,7 @@ import java.net.URISyntaxException;
  */
 public class AuthenticationServiceClient implements AuthenticationService {
     private static final Logger logger = Logger.getLogger(AuthenticationServiceClient.class);
+    private static final String PERMISSION_ADMIN = "Admin";
 
     private final String serviceUrl;
     private final RestTemplate restClient = new RestTemplate();
@@ -34,7 +37,6 @@ public class AuthenticationServiceClient implements AuthenticationService {
 
         }
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
         headers.add("usr", username);
         headers.add("pass", password);
 
@@ -42,10 +44,18 @@ public class AuthenticationServiceClient implements AuthenticationService {
 
         HttpEntity<String> entity = new HttpEntity<String>(headers);
 
-        ResponseEntity<Boolean> result = restClient.exchange(uriBuilder.build().encode().toUri(),
-                                                                HttpMethod.GET,
-                                                                entity,
-                                                                Boolean.class);
-        return result.getBody();
+        try{
+            ResponseEntity<Credential> responseEntity = restClient.exchange(uriBuilder.build().encode().toUri(),
+                    HttpMethod.GET,
+                    entity,
+                    Credential.class);
+            Credential responseCredential = responseEntity.getBody();
+            if(responseCredential.getUsername() instanceof String &&
+                    responseCredential.getPassword() instanceof String)
+                return responseCredential.getPermission().equals(PERMISSION_ADMIN);
+        }catch (RestClientException ex) {
+            logger.error("Fehler bei Anfrage an Authentication-Service", ex);
+        }
+        return false;
     }
 }

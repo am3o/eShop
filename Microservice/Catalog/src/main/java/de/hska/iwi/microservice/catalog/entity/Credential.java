@@ -4,19 +4,43 @@ package de.hska.iwi.microservice.catalog.entity;
  * Created by ameo on 25.11.16.
  */
 public class Credential {
-    private final String usr;
-    private final String pass;
+    public enum Role {
+        Admin, User
+    }
+
+    private String username;
+    private String password;
+    private Role permission;
+
+    public Credential() {
+    }
 
     public Credential(String username, String password) {
-        this.usr = username;
-        this.pass = password;
+        this.username = username;
+        this.password = password;
     }
 
     public String getUsername() {
-        return usr;
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
-        return pass;
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPermission() {
+        return permission.name();
+    }
+
+    public void setPermission(String permission) {
+        this.permission = Role.valueOf(permission);
     }
 }

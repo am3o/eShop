@@ -56,7 +56,7 @@ public class CatalogController implements ICatalogController {
     @RequestMapping(value = "/category/{categoryId}", method = RequestMethod.DELETE)
     public ResponseEntity<Boolean> deleteCategory(@RequestHeader("usr") String username, @RequestHeader("pass") String password, @PathVariable(value = "categoryId") int categoryId) {
         if(!serviceFacade.checkPermission(new Credential(username, password)))
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<Boolean>(Boolean.FALSE, HttpStatus.FORBIDDEN);
         return new ResponseEntity<Boolean>(serviceFacade.deleteCategory(categoryId), HttpStatus.OK);
     }
 
