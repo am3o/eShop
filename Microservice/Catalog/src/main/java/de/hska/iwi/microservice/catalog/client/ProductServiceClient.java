@@ -53,6 +53,33 @@ public class ProductServiceClient implements ProductService {
     }
 
     @Override
+    public List<Product> search(String name, float minPrice, float maxPrice) {
+        URI destUri = null;
+        try {
+            destUri = new URI(serviceUrl);
+        } catch (URISyntaxException ex) {
+            logger.error("Fehler beim auflösen der URI", ex);
+
+        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromUri(destUri)
+                                                                .path("search")
+                                                                .queryParam("name", name)
+                                                                .queryParam("minPrice", minPrice)
+                                                                .queryParam("maxPrice", maxPrice);
+
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
+
+        ResponseEntity<List> result = restClient.exchange(uriBuilder.build().encode().toUri(),
+                HttpMethod.GET,
+                entity,
+                List.class);
+        return result.getBody();
+    }
+
+    @Override
     public Product createProduct(Product product) {
         return restClient.postForEntity(String.format("%s/", serviceUrl),
                                             product,

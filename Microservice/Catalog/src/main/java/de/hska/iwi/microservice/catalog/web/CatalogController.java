@@ -21,6 +21,10 @@ import java.util.List;
 public class CatalogController implements ICatalogController {
     private static final Logger logger = Logger.getLogger(CatalogController.class);
 
+    private static final float SEARCH_MIN_PRICE_DEFAULT = Float.MIN_VALUE;
+    private static final float SEARCH_MAX_PRICE_DEFAULT = Float.MAX_VALUE;
+    private static final String SEARCH_NAME_DEFAULT = "";
+
     @Autowired
     private ICatalogServiceFacade serviceFacade;
 
@@ -110,7 +114,12 @@ public class CatalogController implements ICatalogController {
 
     @Override
     @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public ResponseEntity<List<Catalog>> searchCatalog(@RequestParam("minPrice") float minPrice,@RequestParam("maxPrice") float maxPrice,@RequestParam("content") String content) {
-        return new ResponseEntity<List<Catalog>>(serviceFacade.searchCatalog(minPrice, maxPrice, content), HttpStatus.OK);
+    public ResponseEntity<List<Product>> searchCatalog(@RequestParam(name = "minPrice", required = false) Float minPrice,
+                                                       @RequestParam(name = "maxPrice", required = false) Float maxPrice,
+                                                       @RequestParam(name = "content", required = false) String content) {
+        float searchMinPrice = minPrice instanceof Float? minPrice : SEARCH_MIN_PRICE_DEFAULT;
+        float searchMaxPrice = maxPrice instanceof Float? maxPrice : SEARCH_MAX_PRICE_DEFAULT;
+        String searchName = content instanceof String? content : SEARCH_NAME_DEFAULT;
+        return new ResponseEntity<List<Product>>(serviceFacade.searchCatalog(searchMinPrice, searchMaxPrice, searchName), HttpStatus.OK);
     }
 }

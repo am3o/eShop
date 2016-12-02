@@ -31,4 +31,9 @@ public interface ProductService {
      * Liefert ein spezielles Produkt zurück.
      */
     Product getProduct(int productId);
+
+    /**
+     * Liefert anhand der gegebenen Kriterien eine Menge an Produkten zurück.
+     */
+    List<Product> search(String name, float minPrice, float maxPrice);
 }

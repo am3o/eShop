@@ -37,5 +37,5 @@ public interface ICatalogServiceFacade {
 
     List<Catalog> getCatalogCategorie(int categoryId);
 
-    List<Catalog> searchCatalog(float minPrice, float maxPrice, String content);
+    List<Product> searchCatalog(float minPrice, float maxPrice, String content);
 }
