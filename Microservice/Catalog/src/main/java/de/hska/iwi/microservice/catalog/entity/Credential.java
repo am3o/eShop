@@ -10,7 +10,7 @@ public class Credential {
 
     private String username;
     private String password;
-    private Role permission;
+    private Role role;
 
     public Credential() {
     }
@@ -36,11 +36,11 @@ public class Credential {
         this.password = password;
     }
 
-    public String getPermission() {
-        return permission.name();
+    public String getRole() {
+        return role.name();
     }
 
-    public void setPermission(String permission) {
-        this.permission = Role.valueOf(permission);
+    public void setRole(String role) {
+        this.role = Role.valueOf(role);
     }
 }

@@ -4,8 +4,6 @@ import de.hska.iwi.microservice.catalog.client.api.AuthenticationService;
 import de.hska.iwi.microservice.catalog.entity.Credential;
 import org.apache.log4j.Logger;
 import org.springframework.http.*;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -52,7 +50,7 @@ public class AuthenticationServiceClient implements AuthenticationService {
             Credential responseCredential = responseEntity.getBody();
             if(responseCredential.getUsername() instanceof String &&
                     responseCredential.getPassword() instanceof String)
-                return responseCredential.getPermission().equals(PERMISSION_ADMIN);
+                return responseCredential.getRole().equals(PERMISSION_ADMIN);
         }catch (RestClientException ex) {
             logger.error("Fehler bei Anfrage an Authentication-Service", ex);
         }

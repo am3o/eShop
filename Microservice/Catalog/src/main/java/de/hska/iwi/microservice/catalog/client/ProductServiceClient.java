@@ -95,7 +95,13 @@ public class ProductServiceClient implements ProductService {
 
     @Override
     public Boolean deleteProduct(int id) {
+        Boolean isDeleted = false;
         restClient.delete(String.format("%s/%d", serviceUrl, id));
-        return !(this.getProduct(id) instanceof Product);
+        try{
+            isDeleted = !(this.getProduct(id) instanceof Product);
+        } catch (Exception ex) {
+            isDeleted = true;
+        }
+        return isDeleted;
     }
 }
