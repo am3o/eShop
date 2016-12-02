@@ -17,6 +17,7 @@
 
 package de.hska.iwi.microservice.authentication.web;
 
+import de.hska.iwi.microservice.authentication.builder.CustomerBuilder;
 import de.hska.iwi.microservice.authentication.entity.Customer;
 import de.hska.iwi.microservice.authentication.service.IAuthenticationServiceFacade;
 
@@ -25,8 +26,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 public class AuthenticationController implements IAuthenticationController {
@@ -48,10 +47,24 @@ public class AuthenticationController implements IAuthenticationController {
 
     @Override
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ResponseEntity<Boolean> existCustomer(@RequestHeader(name = "usr") String username, @RequestHeader(name = "pass") String password, @RequestParam(value = "permission", required = false, defaultValue = "false") boolean permission) {
-        return new ResponseEntity<Boolean>(permission?authenticationServiceFasade.checkPermission(username, password):
-                                                        authenticationServiceFasade.existCustomer(username, password),
-                                            HttpStatus.OK);
+    public ResponseEntity<Customer> existCustomer(@RequestHeader(name = "usr") String username, @RequestHeader(name = "pass") String password, @RequestParam(value = "permission", required = false, defaultValue = "false") boolean permission) {
+        ResponseEntity<Customer> response = new ResponseEntity<Customer>(new CustomerBuilder().buildEmpty(), HttpStatus.NOT_FOUND);
+        try{
+            if(this.authenticationServiceFasade.checkPermission(username, password)) {
+                CustomerBuilder builder = new CustomerBuilder(username, password);
+                if(!permission) {
+                    response = new ResponseEntity<Customer>(builder.build(), HttpStatus.OK);
+                } else {
+                    Customer.Permission role = this.authenticationServiceFasade.checkPermission(username, password)?
+                                                    Customer.Permission.Admin : Customer.Permission.User;
+                    response = new ResponseEntity<Customer>(builder.setRole(role).build(), HttpStatus.OK);
+                }
+            }
+        }catch (NullPointerException ex) {
+            logger.error("Benutzer liegt dem System nicht vor.", ex);
+        } finally {
+            return response;
+        }
     }
 
     @Override
