@@ -44,7 +44,7 @@ public class AuthenticationServiceFacade implements IAuthenticationServiceFacade
 
     private CustomerDAO convertToCustomerDAO(Customer customer) {
         return new CustomerDAO(customer.getId(), customer.getName(), customer.getLastname(),
-                customer.getUsername(), customer.getPassword(), customer.getRole());
+                customer.getUsername(), customer.getPassword(), customer.getRole().getValue());
     }
 
     @Override
