@@ -31,4 +31,9 @@ public interface IProductController {
      * Liefert ein spezielles Produkt zurück.
      */
     ResponseEntity<Product> getProduct(int productId);
+
+    /**
+     * Sucht nach passenden Produkten anhand der Kritieren minPrice, maxPrice, name
+     */
+    ResponseEntity<List<Product>> search(String details, Double minPrice, Double maxPrice);
 }

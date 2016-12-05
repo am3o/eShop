@@ -88,4 +88,10 @@ public class ProductServiceFacade implements IProductServiceFacade {
     public Product getProduct(int id) {
         return productRepository.findById(id).toProduct();
     }
+
+    @Override
+    public List<Product> search(String details, double minPrice, double maxPrice) {
+        List resultList = productRepository.search(details, minPrice, maxPrice);
+        return this.convertToListProduct(resultList);
+    }
 }
