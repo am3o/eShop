@@ -18,5 +18,6 @@
         <module>Category</module>
         <module>Product</module>
         <module>Gateway</module>
+        <module>Catalog</module>
     </modules>
 </project>
