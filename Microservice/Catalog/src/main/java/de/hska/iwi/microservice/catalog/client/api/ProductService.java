@@ -35,5 +35,5 @@ public interface ProductService {
     /**
      * Liefert anhand der gegebenen Kriterien eine Menge an Produkten zurück.
      */
-    List<Product> search(String name, float minPrice, float maxPrice);
+    List<Product> search(String details, double minPrice, double maxPrice);
 }
