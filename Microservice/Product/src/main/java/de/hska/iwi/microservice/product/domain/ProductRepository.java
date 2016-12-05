@@ -17,7 +17,9 @@
 
 package de.hska.iwi.microservice.product.domain;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -33,4 +35,7 @@ public interface ProductRepository extends CrudRepository<ProductDAO, Long> {
     ProductDAO findByName(String name);
 
     ProductDAO findByPrice(double price);
+
+    @Query("SELECT u FROM ProductDAO u WHERE u.details LIKE LOWER(CONCAT('%',:details, '%')) AND u.price BETWEEN :minPrice AND :maxPrice")
+    List<ProductDAO> search(@Param("details") String details, @Param("minPrice") double minPrice, @Param("maxPrice") double maxPrice);
 }
