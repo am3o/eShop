@@ -36,5 +36,5 @@ public interface ICatalogController {
 
     ResponseEntity<List<Catalog>> getCatalogCategorie(int categoryId);
 
-    ResponseEntity<List<Product>> searchCatalog(Float minPrice, Float maxPrice, String content);
+    ResponseEntity<List<Product>> searchCatalog(Double minPrice, Double maxPrice, String details);
 }

@@ -141,7 +141,7 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     }
 
     @Override
-    public List<Product> searchCatalog(float minPrice, float maxPrice, String content) {
+    public List<Product> searchCatalog(double minPrice, double maxPrice, String content) {
         return productServiceClient.search(content, minPrice, maxPrice);
     }
 }
