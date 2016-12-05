@@ -54,4 +54,9 @@ public interface IProductServiceFacade {
      * Liefert ein spezielles Produkt zurück.
      */
     Product getProduct(int id);
+
+    /**
+     * Sucht nach passenden Produkten anhand der gegebenen Kriterien name, minPrice, maxPrice.
+     */
+    List<Product> search(String details, double minPrice, double maxPrice);
 }
