@@ -3,6 +3,7 @@ package de.hska.iwi.microservice.catalog.client;
 import de.hska.iwi.microservice.catalog.client.api.CategoryService;
 import de.hska.iwi.microservice.catalog.entity.Category;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -14,7 +15,9 @@ public class CategoryServiceClient implements CategoryService{
     private static final Logger logger = Logger.getLogger(CategoryServiceClient.class);
 
     private final String serviceUrl;
-    private final RestTemplate restClient = new RestTemplate();
+
+    @Autowired
+    private RestTemplate restClient;
 
     public CategoryServiceClient(String serviceUrl) {
         this.serviceUrl = serviceUrl;
