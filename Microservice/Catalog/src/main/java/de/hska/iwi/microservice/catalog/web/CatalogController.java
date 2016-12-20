@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,7 +17,6 @@ import java.util.List;
 /**
  * Created by ameo on 13.11.16.
  */
-
 @RestController
 public class CatalogController implements ICatalogController {
     private static final Logger logger = Logger.getLogger(CatalogController.class);

@@ -1,5 +1,6 @@
 package de.hska.iwi.microservice.catalog.service;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import de.hska.iwi.microservice.catalog.client.AuthenticationServiceClient;
 import de.hska.iwi.microservice.catalog.client.CategoryServiceClient;
 import de.hska.iwi.microservice.catalog.client.ProductServiceClient;
@@ -76,71 +77,85 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     }
 
     @Override
+    @HystrixCommand
     public boolean checkPermission(Credential credential) {
         return authenticationServiceClient.existCustomer(credential.getUsername(), credential.getPassword(), true);
     }
 
     @Override
+    @HystrixCommand
     public List<Category> getAllCategories() {
         return categoryServiceClient.getAllCategories();
     }
 
     @Override
+    @HystrixCommand
     public Category createCategory(Category category) {
         return categoryServiceClient.createCategory(category);
     }
 
     @Override
+    @HystrixCommand
     public Category updateCategory(int categoryId, Category category) {
         return categoryServiceClient.updateCategory(category);
     }
 
     @Override
+    @HystrixCommand
     public Category getCategory(int categoryId) {
         return categoryServiceClient.getCategory(categoryId);
     }
 
     @Override
+    @HystrixCommand
     public boolean deleteCategory(int categoryId) {
         return categoryServiceClient.deleteCategory(categoryId);
     }
 
     @Override
+    @HystrixCommand
     public Product createProduct(Product product) {
         return productServiceClient.createProduct(product);
     }
 
     @Override
+    @HystrixCommand
     public Product updateProduct(int productId, Product product) {
         return productServiceClient.updateProduct(productId, product);
     }
 
     @Override
+    @HystrixCommand
     public boolean deleteProduct(int id) {
         return productServiceClient.deleteProduct(id);
     }
 
     @Override
+    @HystrixCommand
     public List<Product> getProducts(int categoryId) {
         return productServiceClient.getProducts(categoryId);
     }
 
     @Override
+    @HystrixCommand
     public Product getProduct(int id) {
         return productServiceClient.getProduct(id);
     }
 
     @Override
+    @HystrixCommand
     public List<Catalog> getCatalog() {
         return null;
     }
 
     @Override
+    @HystrixCommand
     public List<Catalog> getCatalogCategorie(int categoryId) {
         return null;
     }
 
     @Override
+    @HystrixCommand
     public List<Product> searchCatalog(double minPrice, double maxPrice, String content) {
         return productServiceClient.search(content, minPrice, maxPrice);
     }
