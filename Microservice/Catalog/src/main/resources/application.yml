@@ -11,6 +11,13 @@ spring:
 server:
   port: 5001
 
+CatalogService:
+  ribbon:
+    eureka:
+      enabled: false
+    listOfServers: localhost:5002, localhost:5003, localhost:5004, localhost:5005
+    ServerListRefreshInterval: 15000
+
 eureka:
   client:
     serviceUrl:
