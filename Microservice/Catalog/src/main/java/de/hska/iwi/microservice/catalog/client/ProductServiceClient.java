@@ -20,8 +20,7 @@ public class ProductServiceClient implements ProductService {
 
     private final String serviceUrl;
 
-    @Autowired
-    private RestTemplate restClient;
+    private RestTemplate restClient = new RestTemplate();
 
     public ProductServiceClient(String serviceUrl) {
         this.serviceUrl = serviceUrl;

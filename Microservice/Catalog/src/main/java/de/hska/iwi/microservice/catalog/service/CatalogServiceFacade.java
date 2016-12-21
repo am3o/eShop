@@ -81,10 +81,12 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     @Override
     @HystrixCommand(fallbackMethod = "defaultCheckPermission")
     public boolean checkPermission(Credential credential) {
+        logger.info("Überprüfe gegebene Anmeldeinformationen");
         return authenticationServiceClient.existCustomer(credential.getUsername(), credential.getPassword(), true);
     }
 
     public boolean defaultCheckPermission(Credential credential){
+        logger.warn("AuthentifizierungService nicht verfügbar Standardrückgabe");
         return false;
     }
 
@@ -95,6 +97,7 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     }
 
     public List<Category> defaultGetAllCategories() {
+        logger.warn("KategorienService nicht verfügbar Standardrückgabe");
         return new ArrayList<>();
     }
 
@@ -105,6 +108,7 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     }
 
     public Category defaultCreateCategory(Category category) {
+        logger.warn("KategorienService nicht verfügbar Standardrückgabe");
         return new Category();
     }
 
@@ -115,6 +119,7 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     }
 
     public Category defaultUpdateCategory(int categoryId, Category category) {
+        logger.warn("KategorienService nicht verfügbar Standardrückgabe");
         return category;
     }
 
@@ -125,6 +130,7 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     }
 
     public Category defaultGetCategory(int categoryId) {
+        logger.warn("KategorienService nicht verfügbar Standardrückgabe");
         return new Category();
     }
 
@@ -135,6 +141,7 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     }
 
     public boolean defaultDeleteCategory(int categoryId) {
+        logger.warn("KategorienService nicht verfügbar Standardrückgabe");
         return false;
     }
 
@@ -146,6 +153,7 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     }
 
     public Product defaultCreateProduct(Product product) {
+        logger.warn("ProduktService nicht verfügbar Standardrückgabe");
         return new Product();
     }
 
@@ -156,6 +164,7 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     }
 
     public Product defaultUpdateProduct(int productId, Product product) {
+        logger.warn("ProduktService nicht verfügbar Standardrückgabe");
         return product;
     }
 
@@ -166,6 +175,7 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     }
 
     public boolean defaultDeleteProduct(int id) {
+        logger.warn("ProduktService nicht verfügbar Standardrückgabe");
         return false;
     }
 
@@ -176,6 +186,7 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     }
 
     public List<Product> defaultGetProducts(int categoryId) {
+        logger.warn("ProduktService nicht verfügbar Standardrückgabe");
         return new ArrayList<>();
     }
 
@@ -186,6 +197,7 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     }
 
     public Product defaultGetProduct(int id) {
+        logger.warn("ProduktService nicht verfügbar Standardrückgabe");
         return new Product();
     }
 
@@ -208,6 +220,7 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     }
 
     public List<Product> defaultSearchCatalog(double minPrice, double maxPrice, String content) {
+        logger.warn("ProduktService nicht verfügbar Standardrückgabe");
         return new ArrayList<>();
     }
 }

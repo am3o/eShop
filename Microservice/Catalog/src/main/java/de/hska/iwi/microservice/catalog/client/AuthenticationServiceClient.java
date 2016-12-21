@@ -21,8 +21,7 @@ public class AuthenticationServiceClient implements AuthenticationService {
 
     private final String serviceUrl;
 
-    @Autowired
-    private RestTemplate restClient;
+    private final RestTemplate restClient = new RestTemplate();
 
     public AuthenticationServiceClient(String serviceUrl) {
         this.serviceUrl = serviceUrl;
