@@ -1,7 +1,18 @@
 system:
-  eureka:
-    hostname: localhost
-    port: 8761
+  docker:
+    server:
+      port: ${CONTAINER_CATALOG_PORT}
+    eureka:
+      hostname: ${CONTAINER_EUREKA_NAME}
+      port: ${CONTAINER_EUREKA_PORT}
+  default:
+    server:
+      port: 5001
+    eureka:
+      hostname: localhost
+      port: 8761
+
+---
 
 spring:
   profiles: default
@@ -9,19 +20,28 @@ spring:
     name: catalog-service
 
 server:
-  port: 5001
-
-CatalogService:
-  ribbon:
-    eureka:
-      enabled: false
-    listOfServers: localhost:5002, localhost:5003, localhost:5004, localhost:5005
-    ServerListRefreshInterval: 15000
+  port: ${PORT:${system.default.server.port}}
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://${system.eureka.hostname}:${system.eureka.port}/eureka/
+      defaultZone: http://${system.default.eureka.hostname}:${system.default.eureka.port}/eureka/
   instance:
     preferIpAddress: true
     appname: ${spring.application.name}
+---
+
+spring:
+  profiles: docker-container
+  application:
+      name: category-service
+
+server:
+  port: ${PORT:${system.docker.server.port}}
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${system.docker.eureka.hostname}:${system.docker.eureka.port}/eureka/
+  instance:
+    preferIpAddress: true
