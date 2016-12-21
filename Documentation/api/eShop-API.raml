@@ -1,0 +1,182 @@
+#%RAML 0.8
+title: Catalog-Service API
+baseUri: http://Thinkpad-Josh.fritz.box:6001
+version: v1
+mediaType: application/json
+protocols: HTTP
+
+/api:
+  description: Repräsentation der API Schnittstelle des eShop's.
+  /catalog/product/:
+    description: Operation über alle Produkte im eShop.
+    get:
+      description: Liefert alle Produkte aus dem System zurück.
+    post:
+      description: Erzeugt ein neues Produkt im System.
+      headers:
+        username:
+          displayName: usr
+          description: Benutzername des Anwenders
+          type: string
+          required: true
+        password:
+          displayName: pass
+          description: Passwort des Anwenders
+          type: string
+          required: true
+  /catalog/product/{id}:
+    description: Operation über einzelne Produkte im eShop.
+    get:
+      description: Liefert ein spezielles Produkt aus dem System zurück
+    put:
+      description: Aktualisiert ein spezielles Produkt in dem System.
+      headers:
+        username:
+          displayName: usr
+          description: Benutzername des Anwenders
+          type: string
+          required: true
+        password:
+          displayName: pass
+          description: Passwort des Anwenders
+          type: string
+          required: true
+    delete:
+      description: Löscht ein spezielles Produkt aus dem System.
+      headers:
+        username:
+          displayName: usr
+          description: Benutzername des Anwenders
+          type: string
+          required: true
+        password:
+          displayName: pass
+          description: Passwort des Anwenders
+          type: string
+          required: true
+  /catalog/product/search:
+    description: Liefert ahand der Suchkriterien passende Produkte zurück.
+    get:
+      queryParameters:
+        minPrice:
+          description: Beschreibt den minimalen Preis bei einer Suchanfrage.
+          displayName: minPrice 
+          type: integer
+        maxPrice:
+          description: Beschreibt den maximalen Preis bei einer Suchanfrage
+          displayName: maxPrice
+          type: integer
+        name:
+          description: Beschreibt den gesuchten Namen des Produkts
+          displayName: name
+          type: string
+  /catalog/category/:
+    description: Operationen über alle Kategorien im vorliegenden System.
+    get:
+      description: Liefert alle Kategorien zurück, welche im System vorliegen.
+    post:
+      description: Erzeugt eine neue Kategorie im System.
+      headers:
+        username:
+          displayName: usr
+          description: Benutzername des Anwenders
+          type: string
+          required: true
+        password:
+          displayName: pass
+          description: Passwort des Anwenders
+          type: string
+          required: true
+  /catalog/category/{categoryId}:
+    description: Operationen über einzelne Kategorien im vorliegenden System.
+    get:
+      description: Liefert eine spezielle Kategorie zurück. 
+    put:
+      description: Aktualisiert eine spezielle Kategorie. 
+      headers:
+        username:
+          displayName: usr
+          description: Benutzername des Anwenders
+          type: string
+          required: true
+        password:
+          displayName: pass
+          description: Passwort des Anwenders
+          type: string
+          required: true
+    delete:
+      description: Löscht eine spezielle Kategorie aus dem System.
+      headers:
+        username:
+          displayName: usr
+          description: Benutzername des Anwenders
+          type: string
+          required: true
+        password:
+          displayName: pass
+          description: Passwort des Anwenders
+          type: string
+          required: true
+  /auth/:
+    description: Operationen über alle vorhandenen Anwender.
+    post:
+      description: Erzeugt einen neuen Benutzer und die Operation wird quitiert, wenn dies erfolgreich war.
+  /auth/{userId}:
+    description: Operationen über spezielle bereits vorhandene Anwender.
+    put:
+      description: Aktualisiert einen vorhandenen Anwender aus dem System.
+      headers:
+        username:
+          displayName: usr
+          description: Benutzername des Anwenders
+          type: string
+          required: true
+        password:
+          displayName: pass
+          description: Passwort des Anwenders
+          type: string
+          required: true
+    delete:
+      description: Löscht einen vorhandenen Anwender aus dem System
+      headers:
+        username:
+          displayName: usr
+          description: Benutzername des Anwenders
+          type: string
+          required: true
+        password:
+          displayName: pass
+          description: Passwort des Anwenders
+          type: string
+          required: true
+  /auth/login:
+    description: Methode zum anmelden eines Anwender.
+    put:
+      description: Meldet einen Anwender in dem System an.
+      headers:
+        username:
+          displayName: usr
+          description: Benutzername des Anwenders
+          type: string
+          required: true
+        password:
+          displayName: pass
+          description: Passwort des Anwenders
+          type: string
+          required: true
+  /auth/logout:
+    description: Methode zum abmelden eines Anwnders.
+    put:
+      description: Meldet einen Anwender aus dem System ab.
+      headers:
+        username:
+          displayName: usr
+          description: Benutzername des Anwenders
+          type: string
+          required: true
+        password:
+          displayName: pass
+          description: Passwort des Anwenders
+          type: string
+          required: true
+  

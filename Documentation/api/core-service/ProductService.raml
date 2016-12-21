@@ -1,0 +1,103 @@
+#%RAML 0.8
+title: Product-Service API
+baseUri: http://Thinkpad-Josh.fritz.box:4205
+version: v1
+mediaType: application/json
+protocols: HTTP
+
+/:
+  description: Operation über alle Produkte im eShop.
+  get:
+    queryParameters:
+      categoryId:
+        displayName: categoryId
+        description: Kategorie-Id
+        type: integer
+        required: false
+    description: Liefert alle vorhandenen Produkte im eShop zurück.
+    responses:
+        200:
+          body:
+            application/json:
+              example: | 
+                [
+                  {
+                    "id": 0,
+                    "name": "ProductName",
+                    "price": 0.00,
+                    "details": "ProductDetails"
+                    "categoryId": 0
+                  }
+                ]
+  post:
+    description: Erzeugt ein neues Produkt im eShop
+    responses:
+        200:
+          body:
+            application/json:
+              example: | 
+                [
+                  {
+                    "id": $id,
+                    "name": "ProductName",
+                    "price": 0.00,
+                    "details": "ProductDetails"
+                    "categoryId": $categoryId
+                  }, ...
+                ] 
+/{id}:
+  description: Operation über einzelne Produkte im eShop.
+  get:
+    description: Liefert ein spezielles Produkt anhand der ID zurück.
+    responses:
+        200:
+          body:
+            application/json:
+              example: |
+                  {
+                    "id": $id,
+                    "name": "ProductName",
+                    "price": 0.00,
+                    "details": "ProductDetails"
+                    "categoryId": $categoryId
+                  }
+  put:
+    description: Aktualisiert ein spezielles Produkt mithilfe der ID.
+    responses:
+        200:
+          body:
+            application/json:
+              example: |
+                  {
+                    "id": $id,
+                    "name": "ProductName",
+                    "price": 0.00,
+                    "details": "ProductDetails"
+                    "categoryId": $categoryId
+                  }
+  delete:
+    description: Löscht ein spezielles Produkt aus dem eShop anhand der gegebenen ID.
+    responses:
+        200:
+          body:
+            application/json:
+              example: |
+                 true
+/search:
+  description: Liefert ahand der Suchkriterien passende Produkte zurück.
+  get:
+    queryParameters:
+      minPrice:
+        description: Beschreibt den minimalen Preis bei einer Suchanfrage.
+        displayName: minPrice 
+        type: integer
+      maxPrice:
+        description: Beschreibt den maximalen Preis bei einer Suchanfrage
+        displayName: maxPrice
+        type: integer
+      name:
+        description: Beschreibt den gesuchten Namen des Produkts
+        displayName: name
+        type: string
+      
+      
