@@ -16,6 +16,8 @@ import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -77,69 +79,114 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     }
 
     @Override
-    @HystrixCommand
+    @HystrixCommand(fallbackMethod = "defaultCheckPermission")
     public boolean checkPermission(Credential credential) {
         return authenticationServiceClient.existCustomer(credential.getUsername(), credential.getPassword(), true);
     }
 
+    public boolean defaultCheckPermission(Credential credential){
+        return false;
+    }
+
     @Override
-    @HystrixCommand
+    @HystrixCommand(fallbackMethod = "defaultGetAllCategories")
     public List<Category> getAllCategories() {
         return categoryServiceClient.getAllCategories();
     }
 
+    public List<Category> defaultGetAllCategories() {
+        return new ArrayList<>();
+    }
+
     @Override
-    @HystrixCommand
+    @HystrixCommand(fallbackMethod = "defaultCreateCategory")
     public Category createCategory(Category category) {
         return categoryServiceClient.createCategory(category);
     }
 
+    public Category defaultCreateCategory(Category category) {
+        return new Category();
+    }
+
     @Override
-    @HystrixCommand
+    @HystrixCommand(fallbackMethod = "defaultUpdateCategory")
     public Category updateCategory(int categoryId, Category category) {
         return categoryServiceClient.updateCategory(category);
     }
 
+    public Category defaultUpdateCategory(int categoryId, Category category) {
+        return category;
+    }
+
     @Override
-    @HystrixCommand
+    @HystrixCommand(fallbackMethod = "defaultGetCategory")
     public Category getCategory(int categoryId) {
         return categoryServiceClient.getCategory(categoryId);
     }
 
+    public Category defaultGetCategory(int categoryId) {
+        return new Category();
+    }
+
     @Override
-    @HystrixCommand
+    @HystrixCommand(fallbackMethod = "defaultDeleteCategory")
     public boolean deleteCategory(int categoryId) {
         return categoryServiceClient.deleteCategory(categoryId);
     }
 
+    public boolean defaultDeleteCategory(int categoryId) {
+        return false;
+    }
+
+
     @Override
-    @HystrixCommand
+    @HystrixCommand(fallbackMethod = "defaultCreateProduct")
     public Product createProduct(Product product) {
         return productServiceClient.createProduct(product);
     }
 
+    public Product defaultCreateProduct(Product product) {
+        return new Product();
+    }
+
     @Override
-    @HystrixCommand
+    @HystrixCommand(fallbackMethod = "defaultUpdateProduct")
     public Product updateProduct(int productId, Product product) {
         return productServiceClient.updateProduct(productId, product);
     }
 
+    public Product defaultUpdateProduct(int productId, Product product) {
+        return product;
+    }
+
     @Override
-    @HystrixCommand
+    @HystrixCommand(fallbackMethod = "defaultDeleteProduct")
     public boolean deleteProduct(int id) {
         return productServiceClient.deleteProduct(id);
     }
 
+    public boolean defaultDeleteProduct(int id) {
+        return false;
+    }
+
     @Override
-    @HystrixCommand
+    @HystrixCommand(fallbackMethod = "defaultGetProducts")
     public List<Product> getProducts(int categoryId) {
         return productServiceClient.getProducts(categoryId);
     }
 
+    public List<Product> defaultGetProducts(int categoryId) {
+        return new ArrayList<>();
+    }
+
     @Override
-    @HystrixCommand
+    @HystrixCommand(fallbackMethod = "defaultGetProduct")
     public Product getProduct(int id) {
         return productServiceClient.getProduct(id);
+    }
+
+    public Product defaultGetProduct(int id) {
+        return new Product();
     }
 
     @Override
@@ -155,8 +202,12 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     }
 
     @Override
-    @HystrixCommand
+    @HystrixCommand(fallbackMethod = "defaultSearchCatalog")
     public List<Product> searchCatalog(double minPrice, double maxPrice, String content) {
         return productServiceClient.search(content, minPrice, maxPrice);
+    }
+
+    public List<Product> defaultSearchCatalog(double minPrice, double maxPrice, String content) {
+        return new ArrayList<>();
     }
 }

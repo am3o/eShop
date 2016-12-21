@@ -24,11 +24,6 @@ import org.springframework.web.client.RestTemplate;
 public class CatalogServer {
     private static Logger logger = Logger.getLogger(CatalogServer.class);
 
-    @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
-
     public static void main(String[] args) {
         logger.info("Erzeuge Catalog-Service.");
         SpringApplication.run(CatalogServer.class, args);
