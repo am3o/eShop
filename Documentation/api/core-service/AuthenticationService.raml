@@ -1,0 +1,83 @@
+#%RAML 0.8
+title: Authentication-Service API
+baseUri: http://Thinkpad-Josh.fritz.box:4201
+version: v1
+mediaType: application/json
+protocols: HTTP
+
+/:
+  description: Operationen über alle vorhandenen Anwender.
+  get:
+    description: Überprüft ob der angegebene Anwender existiert.
+    headers:
+      username:
+        displayName: usr
+        description: Benutzername des Anwenders
+        type: string
+        required: true
+      password:
+        displayName: pass
+        description: Passwort des Anwenders
+        type: string
+        required: true
+  post:
+    description: Erzeugt einen neuen Benutzer und die Operation wird quitiert, wenn dies erfolgreich war.
+/{userId}:
+  description: Operationen über spezielle bereits vorhandene Anwender.
+  put:
+    description: Aktualisiert einen vorhandenen Anwender aus dem System.
+    headers:
+      username:
+        displayName: usr
+        description: Benutzername des Anwenders
+        type: string
+        required: true
+      password:
+        displayName: pass
+        description: Passwort des Anwenders
+        type: string
+        required: true
+  delete:
+    description: Löscht einen vorhandenen Anwender aus dem System
+    headers:
+      username:
+        displayName: usr
+        description: Benutzername des Anwenders
+        type: string
+        required: true
+      password:
+        displayName: pass
+        description: Passwort des Anwenders
+        type: string
+        required: true
+/login:
+  description: Methode zum anmelden eines Anwender.
+  put:
+    description: Meldet einen Anwender in dem System an.
+    headers:
+      username:
+        displayName: usr
+        description: Benutzername des Anwenders
+        type: string
+        required: true
+      password:
+        displayName: pass
+        description: Passwort des Anwenders
+        type: string
+        required: true
+/logout:
+  description: Methode zum abmelden eines Anwnders.
+  put:
+    description: Meldet einen Anwender aus dem System ab.
+    headers:
+      username:
+        displayName: usr
+        description: Benutzername des Anwenders
+        type: string
+        required: true
+      password:
+        displayName: pass
+        description: Passwort des Anwenders
+        type: string
+        required: true
+

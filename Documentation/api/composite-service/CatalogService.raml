@@ -1,0 +1,128 @@
+#%RAML 0.8
+title: Catalog-Service API
+baseUri: http://Thinkpad-Josh.fritz.box:5001
+version: v1
+mediaType: application/json
+protocols: HTTP
+
+/product/:
+  description: Operation über alle Produkte im eShop.
+  get:
+    description: Liefert alle Produkte aus dem System zurück.
+  post:
+    description: Erzeugt ein neues Produkt im System.
+    headers:
+      username:
+        displayName: usr
+        description: Benutzername des Anwenders
+        type: string
+        required: true
+      password:
+        displayName: pass
+        description: Passwort des Anwenders
+        type: string
+        required: true
+/product/{id}:
+  description: Operation über einzelne Produkte im eShop.
+  get:
+    description: Liefert ein spezielles Produkt aus dem System zurück
+  put:
+    description: Aktualisiert ein spezielles Produkt in dem System.
+    headers:
+      username:
+        displayName: usr
+        description: Benutzername des Anwenders
+        type: string
+        required: true
+      password:
+        displayName: pass
+        description: Passwort des Anwenders
+        type: string
+        required: true
+  delete:
+    description: Löscht ein spezielles Produkt aus dem System.
+    headers:
+      username:
+        displayName: usr
+        description: Benutzername des Anwenders
+        type: string
+        required: true
+      password:
+        displayName: pass
+        description: Passwort des Anwenders
+        type: string
+        required: true
+/product/category/{categoryId}:
+  description:
+  get:
+/search:
+  description: Liefert ahand der Suchkriterien passende Produkte zurück.
+  get:
+    queryParameters:
+      minPrice:
+        description: Beschreibt den minimalen Preis bei einer Suchanfrage.
+        displayName: minPrice 
+        type: integer
+      maxPrice:
+        description: Beschreibt den maximalen Preis bei einer Suchanfrage
+        displayName: maxPrice
+        type: integer
+      name:
+        description: Beschreibt den gesuchten Namen des Produkts
+        displayName: name
+        type: string
+/category/:
+  description: Operationen über alle Kategorien im vorliegenden System.
+  get:
+    description: Liefert alle Kategorien zurück, welche im System vorliegen.
+  post:
+    description: Erzeugt eine neue Kategorie im System.
+    headers:
+      username:
+        displayName: usr
+        description: Benutzername des Anwenders
+        type: string
+        required: true
+      password:
+        displayName: pass
+        description: Passwort des Anwenders
+        type: string
+        required: true
+/category/{categoryId}:
+  description: Operationen über einzelne Kategorien im vorliegenden System.
+  get:
+    description: Liefert eine spezielle Kategorie zurück. 
+  put:
+    description: Aktualisiert eine spezielle Kategorie. 
+    headers:
+      username:
+        displayName: usr
+        description: Benutzername des Anwenders
+        type: string
+        required: true
+      password:
+        displayName: pass
+        description: Passwort des Anwenders
+        type: string
+        required: true
+  delete:
+    description: Löscht eine spezielle Kategorie aus dem System.
+    headers:
+      username:
+        displayName: usr
+        description: Benutzername des Anwenders
+        type: string
+        required: true
+      password:
+        displayName: pass
+        description: Passwort des Anwenders
+        type: string
+        required: true
+/catalog/:
+  description: Operationen über Katalog-Objekte.
+  get: 
+    description: Liefert alle Produkte mit Kategorien zurück.
+/catalog/{categoryId}:
+  description: Liefert zu einer Kategorie alle Produkte als Katalog-Objekt zurück.
+  get:
+    description: Liefert zu einer Kategorie alle Produkte als Katalog-Objekt zurück.

@@ -1,0 +1,21 @@
+#%RAML 0.8
+title: Category-Service API
+baseUri: http://Thinkpad-Josh.fritz.box:4211
+version: v1
+mediaType: application/json
+protocols: HTTP
+
+/:
+  description: Operationen über alle Kategorien im vorliegenden System.
+  get:
+    description: Liefert alle Kategorien im vorliegenden System zurück.
+  post:
+    description: Erzeugt eine neue Kategorie im vorliegenden System.
+/{id}:
+  description: Operationen über einzelne Kategorien im vorliegenden System.
+  get:
+    description: Liefert eine spezielle Kategorie zurück. 
+  put:
+    description: Aktualisiert eine spezielle Kategorie. 
+  delete:
+    description: Löscht eine spezielle Kategorie aus dem System.
