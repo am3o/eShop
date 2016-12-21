@@ -19,5 +19,6 @@
         <module>Product</module>
         <module>Gateway</module>
         <module>Catalog</module>
+        <module>Monitoring</module>
     </modules>
 </project>
