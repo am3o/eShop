@@ -1,0 +1,6 @@
+spring:
+  application:
+     name: Monitoring-Service
+
+server:
+  port: 9001
