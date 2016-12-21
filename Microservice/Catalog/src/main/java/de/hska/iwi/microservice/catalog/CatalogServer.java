@@ -15,11 +15,8 @@ import org.springframework.web.client.RestTemplate;
 /**
  * Created by ameo on 13.11.16.
  */
-@Configuration
-@EnableHystrixDashboard
 @EnableDiscoveryClient
 @EnableCircuitBreaker
-@RibbonClient(name = "CatalogService")
 @SpringBootApplication
 public class CatalogServer {
     private static Logger logger = Logger.getLogger(CatalogServer.class);
