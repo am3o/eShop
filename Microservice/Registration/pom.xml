@@ -1,17 +1,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-starter-parent</artifactId>
-        <version>Angel.SR3</version>
-    </parent>
     <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>Microservice</artifactId>
+        <groupId>de.hska.iwi</groupId>
+        <version>0.1-SNAPSHOT</version>
+    </parent>
 
     <groupId>de.hska.iwi.microservice</groupId>
     <artifactId>RegistrationService</artifactId>
     <packaging>jar</packaging>
-    <version>0.1-SNAPSHOT</version>
 
     <name>RegistrationService</name>
     <url>http://maven.apache.org</url>
@@ -21,6 +21,18 @@
         <docker.image.prefix>am3o</docker.image.prefix>
         <docker.image.name>registration-service</docker.image.name>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-netflix</artifactId>
+                <version>1.2.3.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
@@ -33,24 +45,21 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
-            <version>RELEASE</version>
         </dependency>
         <!-- Spring Cloud starter -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter</artifactId>
-            <version>RELEASE</version>
         </dependency>
         <!-- Eureka for service registration -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-eureka-server</artifactId>
-            <version>RELEASE</version>
+            <artifactId>spring-cloud-netflix-eureka-server</artifactId>
         </dependency>
     </dependencies>
 
     <build>
-        <finalName>${project.artifactId}:${project.version}</finalName>
+        <finalName>${project.artifactId}:${parent.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
