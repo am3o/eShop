@@ -16,8 +16,7 @@ public class CategoryServiceClient implements CategoryService{
 
     private final String serviceUrl;
 
-    @Autowired
-    private RestTemplate restClient;
+    private RestTemplate restClient = new RestTemplate();
 
     public CategoryServiceClient(String serviceUrl) {
         this.serviceUrl = serviceUrl;
