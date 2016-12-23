@@ -12,7 +12,11 @@
     <artifactId>RegistrationService</artifactId>
     <packaging>jar</packaging>
 
-    <name>RegistrationService</name>
+    <name>registration-service</name>
+
+    <properties>
+        <docker.port>8761</docker.port>
+    </properties>
 
     <dependencyManagement>
         <dependencies>
