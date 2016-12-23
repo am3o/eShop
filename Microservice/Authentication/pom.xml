@@ -14,7 +14,6 @@
     <packaging>jar</packaging>
 
     <name>AuthenticationService</name>
-    <url>http://maven.apache.org</url>
 
     <dependencyManagement>
         <dependencies>
