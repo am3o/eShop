@@ -4,21 +4,17 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import de.hska.iwi.microservice.catalog.client.AuthenticationServiceClient;
 import de.hska.iwi.microservice.catalog.client.CategoryServiceClient;
 import de.hska.iwi.microservice.catalog.client.ProductServiceClient;
-import de.hska.iwi.microservice.catalog.client.api.ProductService;
 import de.hska.iwi.microservice.catalog.entity.Catalog;
 import de.hska.iwi.microservice.catalog.entity.Category;
 import de.hska.iwi.microservice.catalog.entity.Credential;
 import de.hska.iwi.microservice.catalog.entity.Product;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by ameo on 13.11.16.
@@ -137,6 +133,10 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     @Override
     @HystrixCommand(fallbackMethod = "defaultDeleteCategory")
     public boolean deleteCategory(int categoryId) {
+        List products = this.getProducts(categoryId);
+        for (Object item: products) {
+            this.deleteProduct(Integer.valueOf((Integer) LinkedHashMap.class.cast(item).get("id")));
+        }
         return categoryServiceClient.deleteCategory(categoryId);
     }
 
