@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>GatewayService</artifactId>
-    <name>GatewayService</name>
+    <name>gateway</name>
 
     <dependencyManagement>
         <dependencies>

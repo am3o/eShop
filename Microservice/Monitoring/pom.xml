@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>MonitoringService</artifactId>
-    <name>MonitoringService</name>
+    <name>monitoring</name>
 
     <dependencyManagement>
         <dependencies>
