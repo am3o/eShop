@@ -76,7 +76,7 @@ public class ProductController implements IProductController {
                                                 @RequestParam(value = "maxPrice", required = false) Double maxPrice) {
         double searchMinPrice = minPrice instanceof Double ? minPrice : SEARCH_MIN_PRICE_DEFAULT;
         double searchMaxPrice = maxPrice instanceof Double ? maxPrice : SEARCH_MAX_PRICE_DEFAULT;
-        List<Product> result = productServiceFacade.search(details, minPrice, maxPrice);
+        List<Product> result = productServiceFacade.search(details, searchMinPrice, searchMaxPrice);
         return new ResponseEntity<List<Product>>(result, HttpStatus.OK);
     }
 }
