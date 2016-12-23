@@ -1,0 +1,87 @@
+version: '2'
+services:
+  eshop-database:
+    image: mysql:latest
+    container_name: eshop-database
+    volumes:
+      - "/tmp/eShop-mySQL:/var/lib/mysql"
+    environment:
+      MYSQL_DATABASE: eShop
+      MYSQL_ROOT_PASSWORD: sicher
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: sicher
+    ports:
+      - "3306:3306"
+
+  product:
+    depends_on:
+      - eshop-database
+      - registration
+    image: am3o/eshop-product:latest
+    container_name: eshop-product-service
+    restart: always
+    links:
+      - registration:registration
+      - eshop-database:product-database
+    environment:
+      CONTAINER_PRODUCT_PORT: 4205
+      CONTAINER_EUREKA_NAME: registration
+      CONTAINER_EUREKA_PORT: 8761
+      CONTAINER_DATASOURCE_NAME: product-database
+      CONTAINER_DATASOURCE_PORT: 3306
+      CONTAINER_DATASOURCE_DATABASE: eShop
+      CONTAINER_DATASOURCE_USERNAME: eShopProd
+      CONTAINER_DATASOURCE_PASSWORD: sicher
+    ports:
+      - "4205:4205"
+
+  category:
+    depends_on:
+      - eshop-database
+      - registration
+    image: am3o/eshop-category:latest
+    container_name: eshop-category-service
+    restart: always
+    links:
+      - registration:registration
+      - eshop-database:category-database
+    environment:
+      CONTAINER_CATEGORY_PORT: 4211
+      CONTAINER_EUREKA_NAME: registration
+      CONTAINER_EUREKA_PORT: 8761
+      CONTAINER_DATASOURCE_NAME: category-database
+      CONTAINER_DATASOURCE_PORT: 3306
+      CONTAINER_DATASOURCE_DATABASE: eShop
+      CONTAINER_DATASOURCE_USERNAME: eShopCate
+      CONTAINER_DATASOURCE_PASSWORD: sicher
+    ports:
+      - "4211:4211"
+
+  monitoring:
+    depends_on:
+      - registration
+      - gateway
+    image: am3o/eshop-monitoring:latest
+    container_name: eshop-monitoring-service
+    restart: always
+    ports:
+      - "9001:9001"
+
+  gateway:
+    depends_on:
+      - registration
+    image: am3o/eshop-gateway:latest
+    container_name: eshop-gateway-service
+    restart: always
+    ports:
+      - "8080:8080"
+
+  registration:
+     image: am3o/eshop-registration:latest
+     container_name: eshop-registration-service
+     restart: always
+     environment:
+      CONTAINER_EUREKA_NAME: eureka
+      CONTAINER_EUREKA_PORT: 8761
+     ports:
+       - "8761:8761"
