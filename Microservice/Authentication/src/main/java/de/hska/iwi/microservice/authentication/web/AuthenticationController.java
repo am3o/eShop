@@ -47,7 +47,9 @@ public class AuthenticationController implements IAuthenticationController {
 
     @Override
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ResponseEntity<Customer> existCustomer(@RequestHeader(name = "usr") String username, @RequestHeader(name = "pass") String password, @RequestParam(value = "permission", required = false, defaultValue = "false") boolean permission) {
+    public ResponseEntity<Customer> existCustomer(@RequestHeader(name = "usr") String username,
+                                                  @RequestHeader(name = "pass") String password,
+                                                  @RequestParam(value = "permission", required = false, defaultValue = "false") boolean permission) {
         ResponseEntity<Customer> response = new ResponseEntity<Customer>(new CustomerBuilder().buildEmpty(), HttpStatus.NOT_FOUND);
         try{
             if(this.authenticationServiceFasade.checkPermission(username, password)) {
