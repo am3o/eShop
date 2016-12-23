@@ -13,7 +13,7 @@
     <artifactId>ProductService</artifactId>
     <packaging>jar</packaging>
 
-    <name>ProductService</name>
+    <name>product</name>
 
     <dependencyManagement>
         <dependencies>

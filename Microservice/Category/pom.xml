@@ -13,7 +13,7 @@
     <artifactId>CategoryService</artifactId>
     <packaging>jar</packaging>
 
-    <name>CategoryService</name>
+    <name>category</name>
 
     <dependencyManagement>
         <dependencies>
