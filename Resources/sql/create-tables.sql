@@ -7,14 +7,14 @@ CREATE TABLE category (
 ) ENGINE=InnoDB;
 
 CREATE TABLE role (
-	id INT NOT NULL,
+	id INT NOT NULL auto_increment,
 	level1 INT,
 	type VARCHAR(255),
 	PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
 CREATE TABLE product (
-	id INT NOT NULL,
+	id INT NOT NULL auto_increment,
 	details VARCHAR(255),
 	name VARCHAR(255),
 	price DOUBLE,
@@ -22,8 +22,9 @@ CREATE TABLE product (
 	PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
+
 CREATE TABLE customer (
-	id INT NOT NULL,
+	id INT NOT NULL auto_increment,
 	name VARCHAR(255) NOT NULL,
 	lastname VARCHAR(255) NOT NULL,
 	password VARCHAR(255) NOT NULL,
