@@ -2,20 +2,26 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>eShop</artifactId>
         <groupId>de.hska.iwi</groupId>
         <version>0.1-SNAPSHOT</version>
     </parent>
 
-    <modelVersion>4.0.0</modelVersion>
     <artifactId>Microservice</artifactId>
     <packaging>pom</packaging>
+
+    <name>microservice</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+        <docker.prefix>eshop</docker.prefix>
+        <docker.user>am3o</docker.user>
+        <docker.tag>latest</docker.tag>
+        <docker.port>80</docker.port>
     </properties>
 
     <modules>
@@ -42,6 +48,73 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.18.1</version>
+                <executions>
+                    <execution>
+                        <id>buildImage</id>
+                        <goals>
+                            <goal>build-nofork</goal>
+                        </goals>
+                        <phase>install</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <images>
+                        <image>
+                            <alias>${project.name}</alias>
+                            <name>${docker.user}/${docker.prefix}-${pom.name}</name>
+                            <build>
+                                <from>frolvlad/alpine-oraclejdk8:slim</from>
+                                <tags>
+                                    <tag>${docker.tag}</tag>
+                                </tags>
+                                <ports>
+                                    <port>${docker.port}</port>
+                                </ports>
+                                <volumes>
+                                    <volume>/tmp</volume>
+                                </volumes>
+                                <entryPoint>
+                                    <exec>
+                                        <arg>java</arg>
+                                        <arg>-jar</arg>
+                                        <arg>-Dspring.profiles.active=default</arg>
+                                        <arg>/app.jar</arg>
+                                    </exec>
+                                </entryPoint>
+                                <assembly>
+                                    <basedir>/</basedir>
+                                    <inline>
+                                        <dependencySets>
+                                            <dependencySet>
+                                                <useProjectArtifact>true</useProjectArtifact>
+                                                <includes>
+                                                    <include>${project.groupId}:${project.artifactId}</include>
+                                                </includes>
+                                                <outputDirectory>.</outputDirectory>
+                                                <outputFileNameMapping>app.jar</outputFileNameMapping>
+                                            </dependencySet>
+                                        </dependencySets>
+                                    </inline>
+                                </assembly>
+                                <runCmds>
+                                    <runCmd>sh -c 'touch /app.jar'</runCmd>
+                                </runCmds>
+                            </build>
+                        </image>
+                    </images>
+                </configuration>
             </plugin>
         </plugins>
     </build>
