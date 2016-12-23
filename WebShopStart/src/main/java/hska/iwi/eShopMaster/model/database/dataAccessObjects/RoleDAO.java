@@ -1,15 +1,14 @@
 package hska.iwi.eShopMaster.model.database.dataAccessObjects;
 
-import java.util.List;
-
 import hska.iwi.eShopMaster.model.database.GenericHibernateDAO;
 import hska.iwi.eShopMaster.model.database.dataobjects.Role;
 import hska.iwi.eShopMaster.model.sessionFactory.util.HibernateUtil;
-
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+
+import java.util.List;
 
 public class RoleDAO extends GenericHibernateDAO<Role, Integer> {
 	

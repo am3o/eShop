@@ -19,7 +19,6 @@ package de.hska.iwi.microservice.category.web;
 
 import de.hska.iwi.microservice.category.entity.Category;
 import de.hska.iwi.microservice.category.service.ICategoryServiceFacade;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

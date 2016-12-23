@@ -1,11 +1,7 @@
 package hska.iwi.eShopMaster.model.database.dataobjects;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * This class contains details about roles.

@@ -4,20 +4,17 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import de.hska.iwi.microservice.catalog.client.AuthenticationServiceClient;
 import de.hska.iwi.microservice.catalog.client.CategoryServiceClient;
 import de.hska.iwi.microservice.catalog.client.ProductServiceClient;
-import de.hska.iwi.microservice.catalog.client.api.ProductService;
 import de.hska.iwi.microservice.catalog.entity.Catalog;
 import de.hska.iwi.microservice.catalog.entity.Category;
 import de.hska.iwi.microservice.catalog.entity.Credential;
 import de.hska.iwi.microservice.catalog.entity.Product;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 /**

@@ -20,7 +20,6 @@ package de.hska.iwi.microservice.authentication.web;
 import de.hska.iwi.microservice.authentication.builder.CustomerBuilder;
 import de.hska.iwi.microservice.authentication.entity.Customer;
 import de.hska.iwi.microservice.authentication.service.IAuthenticationServiceFacade;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

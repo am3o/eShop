@@ -19,8 +19,6 @@ package de.hska.iwi.microservice.authentication.domian;
 
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
-
 public interface CustomerRepository extends CrudRepository<CustomerDAO, Long> {
     CustomerDAO save(CustomerDAO customer);
 
