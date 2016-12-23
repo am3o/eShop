@@ -20,13 +20,9 @@ package de.hska.iwi.microservice.authentication.service;
 import de.hska.iwi.microservice.authentication.domian.CustomerDAO;
 import de.hska.iwi.microservice.authentication.domian.CustomerRepository;
 import de.hska.iwi.microservice.authentication.entity.Customer;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class AuthenticationServiceFacade implements IAuthenticationServiceFacade {

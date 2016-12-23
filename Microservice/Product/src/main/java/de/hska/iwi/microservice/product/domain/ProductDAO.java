@@ -19,12 +19,7 @@ package de.hska.iwi.microservice.product.domain;
 
 import de.hska.iwi.microservice.product.entity.Product;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement

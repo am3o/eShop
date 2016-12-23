@@ -1,16 +1,14 @@
 package hska.iwi.eShopMaster.model.database.dataAccessObjects;
 
-import java.util.List;
-
+import hska.iwi.eShopMaster.model.database.GenericHibernateDAO;
+import hska.iwi.eShopMaster.model.database.dataobjects.Product;
+import hska.iwi.eShopMaster.model.sessionFactory.util.HibernateUtil;
 import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
-import hska.iwi.eShopMaster.model.database.GenericHibernateDAO;
-import hska.iwi.eShopMaster.model.database.dataobjects.Product;
-import hska.iwi.eShopMaster.model.sessionFactory.util.HibernateUtil;
+import java.util.List;
 
 public class ProductDAO extends GenericHibernateDAO<Product, Integer> {
 	

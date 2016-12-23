@@ -19,8 +19,6 @@ package de.hska.iwi.microservice.authentication.service;
 
 import de.hska.iwi.microservice.authentication.entity.Customer;
 
-import java.util.List;
-
 public interface IAuthenticationServiceFacade {
     /**
      * Erzeugt einen neuen Benutzer im System.

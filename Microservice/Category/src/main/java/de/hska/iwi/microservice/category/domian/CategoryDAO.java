@@ -19,14 +19,8 @@ package de.hska.iwi.microservice.category.domian;
 
 import de.hska.iwi.microservice.category.entity.Category;
 
+import javax.persistence.*;
 import java.io.Serializable;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 /**
  * Created by ameo on 27.05.16.

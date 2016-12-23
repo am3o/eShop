@@ -1,5 +1,7 @@
 package hska.iwi.eShopMaster.controller;
 
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
 import hska.iwi.eShopMaster.model.businessLogic.manager.CategoryManager;
 import hska.iwi.eShopMaster.model.businessLogic.manager.ProductManager;
 import hska.iwi.eShopMaster.model.businessLogic.manager.impl.CategoryManagerImpl;
@@ -11,9 +13,6 @@ import hska.iwi.eShopMaster.model.database.dataobjects.User;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionSupport;
 
 public class SearchAction extends ActionSupport{
 

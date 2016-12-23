@@ -1,6 +1,7 @@
 package de.hska.iwi.microservice.catalog.client.api;
 
 import de.hska.iwi.microservice.catalog.entity.Product;
+
 import java.util.List;
 
 /**

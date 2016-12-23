@@ -3,7 +3,6 @@ package de.hska.iwi.microservice.catalog.client;
 import de.hska.iwi.microservice.catalog.client.api.CategoryService;
 import de.hska.iwi.microservice.catalog.entity.Category;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;

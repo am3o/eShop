@@ -2,7 +2,6 @@ package de.hska.iwi.microservice.product.web;
 
 import de.hska.iwi.microservice.product.entity.Product;
 import de.hska.iwi.microservice.product.service.IProductServiceFacade;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

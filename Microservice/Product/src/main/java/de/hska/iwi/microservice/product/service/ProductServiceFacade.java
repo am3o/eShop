@@ -20,7 +20,6 @@ package de.hska.iwi.microservice.product.service;
 import de.hska.iwi.microservice.product.domain.ProductDAO;
 import de.hska.iwi.microservice.product.domain.ProductRepository;
 import de.hska.iwi.microservice.product.entity.Product;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -2,7 +2,6 @@ package de.hska.iwi.microservice.catalog.web;
 
 import de.hska.iwi.microservice.catalog.entity.Catalog;
 import de.hska.iwi.microservice.catalog.entity.Category;
-import de.hska.iwi.microservice.catalog.entity.Credential;
 import de.hska.iwi.microservice.catalog.entity.Product;
 import org.springframework.http.ResponseEntity;
 
