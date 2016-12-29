@@ -13,11 +13,11 @@
     <modules>
         <module>WebShopStart</module>
         <module>Microservice/Registration</module>
-        <!--module>Microservice/Authentication</module-->
+        <module>Microservice/Authentication</module>
         <module>Microservice/Category</module>
         <module>Microservice/Product</module>
         <module>Microservice/Gateway</module>
-        <!--module>Microservice/Catalog</module-->
+        <module>Microservice/Catalog</module>
         <module>Microservice/Monitoring</module>
     </modules>
 </project>
