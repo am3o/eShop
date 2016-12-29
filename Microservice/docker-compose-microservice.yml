@@ -13,6 +13,28 @@ services:
     ports:
       - "3306:3306"
 
+  authentication:
+    depends_on:
+      - eshop-database
+      - registration
+    image: am3o/eshop-authentication:latest
+    container_name: eshop-authentication-service
+    restart: always
+    links:
+      - registration:registration
+      - eshop-database:authentication-database
+    environment:
+      CONTAINER_AUTHENTICATION_PORT: 4201
+      CONTAINER_EUREKA_NAME: registration
+      CONTAINER_EUREKA_PORT: 8761
+      CONTAINER_DATASOURCE_NAME: authentication-database
+      CONTAINER_DATASOURCE_PORT: 3306
+      CONTAINER_DATASOURCE_DATABASE: eShop
+      CONTAINER_DATASOURCE_USERNAME: eShop
+      CONTAINER_DATASOURCE_PASSWORD: sicher
+    ports:
+      - "4201:4201"
+
   product:
     depends_on:
       - eshop-database
@@ -30,7 +52,7 @@ services:
       CONTAINER_DATASOURCE_NAME: product-database
       CONTAINER_DATASOURCE_PORT: 3306
       CONTAINER_DATASOURCE_DATABASE: eShop
-      CONTAINER_DATASOURCE_USERNAME: eShopProd
+      CONTAINER_DATASOURCE_USERNAME: eShop
       CONTAINER_DATASOURCE_PASSWORD: sicher
     ports:
       - "4205:4205"
@@ -52,20 +74,24 @@ services:
       CONTAINER_DATASOURCE_NAME: category-database
       CONTAINER_DATASOURCE_PORT: 3306
       CONTAINER_DATASOURCE_DATABASE: eShop
-      CONTAINER_DATASOURCE_USERNAME: eShopCate
+      CONTAINER_DATASOURCE_USERNAME: eShop
       CONTAINER_DATASOURCE_PASSWORD: sicher
     ports:
       - "4211:4211"
 
-  monitoring:
+  catalog:
     depends_on:
       - registration
-      - gateway
-    image: am3o/eshop-monitoring:latest
-    container_name: eshop-monitoring-service
-    restart: always
+    image: am3o/eshop-catalog:latest
+    container_name: eshop-catalog-service
+    links:
+      - registration:registration
+    environment:
+      CONTAINER_CATALOG_PORT: 5001
+      CONTAINER_EUREKA_NAME: registration
+      CONTAINER_EUREKA_PORT: 8761
     ports:
-      - "9001:9001"
+      - "5001:5001"
 
   gateway:
     depends_on:
@@ -85,3 +111,13 @@ services:
       CONTAINER_EUREKA_PORT: 8761
      ports:
        - "8761:8761"
+
+  monitoring:
+    depends_on:
+      - registration
+      - gateway
+    image: am3o/eshop-monitoring:latest
+    container_name: eshop-monitoring-service
+    restart: always
+    ports:
+      - "9001:9001"

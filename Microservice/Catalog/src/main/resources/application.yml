@@ -34,7 +34,7 @@ eureka:
 spring:
   profiles: docker-container
   application:
-      name: category-service
+      name: catalog-service
 
 server:
   port: ${PORT:${system.docker.server.port}}

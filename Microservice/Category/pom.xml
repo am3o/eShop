@@ -15,6 +15,10 @@
 
     <name>category</name>
 
+    <properties>
+        <docker.port>4211</docker.port>
+    </properties>
+
     <dependencyManagement>
         <dependencies>
             <dependency>

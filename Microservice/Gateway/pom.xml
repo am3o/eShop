@@ -12,6 +12,10 @@
     <artifactId>GatewayService</artifactId>
     <name>gateway</name>
 
+    <properties>
+        <docker.port>8080</docker.port>
+    </properties>
+
     <dependencyManagement>
         <dependencies>
             <dependency>

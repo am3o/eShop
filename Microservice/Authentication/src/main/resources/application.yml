@@ -1,16 +1,16 @@
 system:
   docker:
-      server:
-        port: ${CONTAINER_AUTHANTICATION_PORT}
-      eureka:
-        hostname: ${CONTAINER_EUREKA_NAME}
-        port: ${CONTAINER_EUREKA_PORT}
-      datasource:
-        hostname: ${CONTAINER_DATASOURCE_NAME}
-        port: ${CONTAINER_DATASOURCE_PORT}
-        database: ${CONTAINER_DATASOURCE_DATABASE}
-        username: ${CONTAINER_DATASOURCE_USERNAME}
-        password: ${CONTAINER_DATASOURCE_PASSWORD}
+    server:
+      port: ${CONTAINER_AUTHENTICATION_PORT}
+    eureka:
+      hostname: ${CONTAINER_EUREKA_NAME}
+      port: ${CONTAINER_EUREKA_PORT}
+    datasource:
+      hostname: ${CONTAINER_DATASOURCE_NAME}
+      port: ${CONTAINER_DATASOURCE_PORT}
+      database: ${CONTAINER_DATASOURCE_DATABASE}
+      username: ${CONTAINER_DATASOURCE_USERNAME}
+      password: ${CONTAINER_DATASOURCE_PASSWORD}
   default:
     server:
       port: 4201
@@ -24,6 +24,7 @@ system:
       username: eShopAuth
       password: sicher
 
+---
 spring:
   profiles: default
   application:
@@ -49,7 +50,7 @@ eureka:
 spring:
   profiles: docker-container
   application:
-    name: production-service
+      name: authentication-service
   jpa:
     show-sql: true
   datasource:

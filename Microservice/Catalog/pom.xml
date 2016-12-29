@@ -10,7 +10,11 @@
     </parent>
 
     <artifactId>CatalogService</artifactId>
-    <name>CatalogService</name>
+    <name>catalog</name>
+
+    <properties>
+        <docker.port>5001</docker.port>
+    </properties>
 
     <dependencyManagement>
         <dependencies>

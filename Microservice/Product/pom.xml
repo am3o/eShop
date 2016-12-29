@@ -15,6 +15,10 @@
 
     <name>product</name>
 
+    <properties>
+        <docker.port>4205</docker.port>
+    </properties>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
