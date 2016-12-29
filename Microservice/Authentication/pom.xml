@@ -13,7 +13,11 @@
     <artifactId>AuthenticationService</artifactId>
     <packaging>jar</packaging>
 
-    <name>AuthenticationService</name>
+    <name>authentication</name>
+
+    <properties>
+        <docker.port>4201</docker.port>
+    </properties>
 
     <dependencyManagement>
         <dependencies>

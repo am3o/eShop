@@ -12,6 +12,10 @@
     <artifactId>MonitoringService</artifactId>
     <name>monitoring</name>
 
+    <properties>
+        <docker.port>9001</docker.port>
+    </properties>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
