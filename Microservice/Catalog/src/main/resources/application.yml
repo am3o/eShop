@@ -29,6 +29,19 @@ eureka:
   instance:
     preferIpAddress: true
     appname: ${spring.application.name}
+    metadataMap:
+          instanceId: "${spring.application.name}:${random.value}"
+
+ribbon:
+  readTimeout: 10000
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: THREAD
+          thread:
+            timeoutInMilliseconds: 10000
 ---
 
 spring:

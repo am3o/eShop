@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by ameo on 13.11.16.
  */
-public interface CategoryService {
+public interface CategoryService extends ClientService {
     /**
      * Liefert alle Kategorien zurück.
      */

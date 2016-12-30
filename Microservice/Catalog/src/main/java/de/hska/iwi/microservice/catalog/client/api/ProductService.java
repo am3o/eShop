@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by ameo on 13.11.16.
  */
-public interface ProductService {
+public interface ProductService extends ClientService{
     /**
      * Erstellt ein neues Produkt in dem System.
      */

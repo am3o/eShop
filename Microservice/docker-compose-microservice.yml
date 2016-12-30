@@ -8,7 +8,7 @@ services:
     environment:
       MYSQL_DATABASE: eShop
       MYSQL_ROOT_PASSWORD: sicher
-      MYSQL_USER: eShop
+      MYSQL_USER: admin
       MYSQL_PASSWORD: sicher
     ports:
       - "3306:3306"

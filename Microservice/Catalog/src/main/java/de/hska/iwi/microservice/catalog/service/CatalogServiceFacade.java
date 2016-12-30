@@ -4,18 +4,19 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import de.hska.iwi.microservice.catalog.client.AuthenticationServiceClient;
 import de.hska.iwi.microservice.catalog.client.CategoryServiceClient;
 import de.hska.iwi.microservice.catalog.client.ProductServiceClient;
+import de.hska.iwi.microservice.catalog.client.api.ProductService;
 import de.hska.iwi.microservice.catalog.entity.Catalog;
 import de.hska.iwi.microservice.catalog.entity.Category;
 import de.hska.iwi.microservice.catalog.entity.Credential;
 import de.hska.iwi.microservice.catalog.entity.Product;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by ameo on 13.11.16.
@@ -28,9 +29,11 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     private static final String PRODUCT_SERVICE = "production-service";
     private static final String AUTHENTICATION_SERVICE = "AUTHENTICATION-SERVICE";
 
-    private static final String CATEGORY_SERVICE_URL_DEFAULTT = "http://localhost:4211/";
+    private static final String CATEGORY_SERVICE_URL_DEFAULT = "http://localhost:4211/";
     private static final String PRODUCT_SERVICE_URL_DEFAULT = "http://localhost:4205/";
     private static final String AUTHENTICATION_SERVICE_URL_DEFAULT = "http://localhost:4201/";
+
+    private final DiscoveryClient discoveryClient;
 
     private CategoryServiceClient categoryServiceClient;
     private ProductServiceClient productServiceClient;
@@ -38,40 +41,40 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
 
     @Autowired
     public CatalogServiceFacade(DiscoveryClient discoveryClient) {
-        try{
-            if(discoveryClient.getServices().contains(CATEGORY_SERVICE)) {
-                URI categoryServiceUri = discoveryClient.getInstances(CATEGORY_SERVICE).get(0).getUri();
-                this.categoryServiceClient = new CategoryServiceClient(categoryServiceUri.toString());
+        this.discoveryClient = discoveryClient;
+    }
+
+    private ClientService setUpClientService (DiscoveryClient discoveryClient, String servicename) {
+        ClientService service = null;
+        try {
+            if(discoveryClient instanceof DiscoveryClient) {
+                switch (servicename) {
+                    case AUTHENTICATION_SERVICE:
+                        if(discoveryClient.getServices().contains(servicename))
+                            service = new AuthenticationServiceClient(discoveryClient.getInstances(servicename).get(0).getUri().toString());
+                        else
+                            service = new AuthenticationServiceClient(AUTHENTICATION_SERVICE_URL_DEFAULT);
+                        break;
+                    case PRODUCT_SERVICE:
+                        if(discoveryClient.getServices().contains(servicename))
+                            service = new ProductServiceClient(discoveryClient.getInstances(servicename).get(0).getUri().toString());
+                        else
+                            service = new ProductServiceClient(PRODUCT_SERVICE_URL_DEFAULT);
+                        break;
+                    case CATEGORY_SERVICE:
+                        if(discoveryClient.getServices().contains(servicename))
+                            service = new CategoryServiceClient(discoveryClient.getInstances(servicename).get(0).getUri().toString());
+                        else
+                            service = new CategoryServiceClient(CATEGORY_SERVICE_URL_DEFAULT);
+                        break;
+                    default:
+                        service = null;
+                }
             }
         }catch (Exception ex) {
-            logger.error("Initialisierungsfehler: CategoryService", ex);
+            logger.error("Initialisierungsfehler: ClientService", ex);
         } finally {
-            if (!(this.categoryServiceClient instanceof CategoryServiceClient))
-                this.categoryServiceClient = new CategoryServiceClient(CATEGORY_SERVICE_URL_DEFAULTT);
-        }
-
-        try {
-            if(discoveryClient.getServices().contains(PRODUCT_SERVICE)){
-                URI productServiceUri = discoveryClient.getInstances(PRODUCT_SERVICE).get(0).getUri();
-                this.productServiceClient = new ProductServiceClient(productServiceUri.toString());
-            }
-        }catch (Exception ex) {
-            logger.error("Initialisierungsfehler: ProductService", ex);
-        }finally {
-            if(!(this.productServiceClient instanceof ProductServiceClient))
-                this.productServiceClient = new ProductServiceClient(PRODUCT_SERVICE_URL_DEFAULT);
-        }
-
-        try {
-            if(discoveryClient.getServices().contains(AUTHENTICATION_SERVICE)){
-                URI authenticationUrl = discoveryClient.getInstances(AUTHENTICATION_SERVICE).get(0).getUri();
-                this.authenticationServiceClient = new AuthenticationServiceClient(authenticationUrl.toString());
-            }
-        }catch (Exception ex) {
-            logger.error("Initialisierungsfehler: ProductService", ex);
-        }finally {
-            if(!(this.authenticationServiceClient instanceof AuthenticationServiceClient))
-                this.authenticationServiceClient = new AuthenticationServiceClient(AUTHENTICATION_SERVICE_URL_DEFAULT);
+            return service;
         }
     }
 
@@ -79,6 +82,7 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     @HystrixCommand(fallbackMethod = "defaultCheckPermission")
     public boolean checkPermission(Credential credential) {
         logger.info("Überprüfe gegebene Anmeldeinformationen");
+        authenticationServiceClient = (AuthenticationServiceClient) setUpClientService(discoveryClient, AUTHENTICATION_SERVICE);
         return authenticationServiceClient.existCustomer(credential.getUsername(), credential.getPassword(), true);
     }
 
@@ -90,6 +94,7 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     @Override
     @HystrixCommand(fallbackMethod = "defaultGetAllCategories")
     public List<Category> getAllCategories() {
+        categoryServiceClient = (CategoryServiceClient) setUpClientService(discoveryClient, CATEGORY_SERVICE);
         return categoryServiceClient.getAllCategories();
     }
 
@@ -101,6 +106,7 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     @Override
     @HystrixCommand(fallbackMethod = "defaultCreateCategory")
     public Category createCategory(Category category) {
+        categoryServiceClient = (CategoryServiceClient) setUpClientService(discoveryClient, CATEGORY_SERVICE);
         return categoryServiceClient.createCategory(category);
     }
 
@@ -112,6 +118,7 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     @Override
     @HystrixCommand(fallbackMethod = "defaultUpdateCategory")
     public Category updateCategory(int categoryId, Category category) {
+        categoryServiceClient = (CategoryServiceClient) setUpClientService(discoveryClient, CATEGORY_SERVICE);
         return categoryServiceClient.updateCategory(category);
     }
 
@@ -123,6 +130,7 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     @Override
     @HystrixCommand(fallbackMethod = "defaultGetCategory")
     public Category getCategory(int categoryId) {
+        categoryServiceClient = (CategoryServiceClient) setUpClientService(discoveryClient, CATEGORY_SERVICE);
         return categoryServiceClient.getCategory(categoryId);
     }
 
@@ -134,6 +142,11 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     @Override
     @HystrixCommand(fallbackMethod = "defaultDeleteCategory")
     public boolean deleteCategory(int categoryId) {
+        List products = this.getProducts(categoryId);
+        for (Object item: products) {
+            this.deleteProduct(Integer.valueOf((Integer) LinkedHashMap.class.cast(item).get("id")));
+        }
+        categoryServiceClient = (CategoryServiceClient) setUpClientService(discoveryClient, CATEGORY_SERVICE);
         return categoryServiceClient.deleteCategory(categoryId);
     }
 
@@ -142,10 +155,10 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
         return false;
     }
 
-
     @Override
     @HystrixCommand(fallbackMethod = "defaultCreateProduct")
     public Product createProduct(Product product) {
+        productServiceClient = (ProductServiceClient) setUpClientService(discoveryClient, PRODUCT_SERVICE);
         return productServiceClient.createProduct(product);
     }
 
@@ -157,6 +170,7 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     @Override
     @HystrixCommand(fallbackMethod = "defaultUpdateProduct")
     public Product updateProduct(int productId, Product product) {
+        productServiceClient = (ProductServiceClient) setUpClientService(discoveryClient, PRODUCT_SERVICE);
         return productServiceClient.updateProduct(productId, product);
     }
 
@@ -168,6 +182,7 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     @Override
     @HystrixCommand(fallbackMethod = "defaultDeleteProduct")
     public boolean deleteProduct(int id) {
+        productServiceClient = (ProductServiceClient) setUpClientService(discoveryClient, PRODUCT_SERVICE);
         return productServiceClient.deleteProduct(id);
     }
 
@@ -179,6 +194,7 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     @Override
     @HystrixCommand(fallbackMethod = "defaultGetProducts")
     public List<Product> getProducts(int categoryId) {
+        productServiceClient = (ProductServiceClient) setUpClientService(discoveryClient, PRODUCT_SERVICE);
         return productServiceClient.getProducts(categoryId);
     }
 
@@ -190,6 +206,7 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     @Override
     @HystrixCommand(fallbackMethod = "defaultGetProduct")
     public Product getProduct(int id) {
+        productServiceClient = (ProductServiceClient) setUpClientService(discoveryClient, PRODUCT_SERVICE);
         return productServiceClient.getProduct(id);
     }
 
@@ -213,6 +230,7 @@ public class CatalogServiceFacade implements ICatalogServiceFacade{
     @Override
     @HystrixCommand(fallbackMethod = "defaultSearchCatalog")
     public List<Product> searchCatalog(double minPrice, double maxPrice, String content) {
+        productServiceClient = (ProductServiceClient) setUpClientService(discoveryClient, PRODUCT_SERVICE);
         return productServiceClient.search(content, minPrice, maxPrice);
     }
 
