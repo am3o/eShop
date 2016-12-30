@@ -1,16 +1,103 @@
+system:
+  docker:
+    server:
+      port: ${CONTAINER_GATEWAY_PORT}
+    eureka:
+      hostname: ${CONTAINER_EUREKA_NAME}
+      port: ${CONTAINER_EUREKA_PORT}
+  default:
+    server:
+      port: 8080
+    eureka:
+      hostname: localhost
+      port: 8761
+    routes:
+      catalog-service: CATALOG-SERVICE
+      authentication-service: AUTHENTICATION-SERVICE
+
+---
 spring:
+  profiles: default
   application:
      name: Gateway-Service
 
 server:
-  port: 8080
+  port: ${PORT:${system.default.server.port}}
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${system.default.eureka.hostname}:${system.default.eureka.port}/eureka/
+  instance:
+    prefer-ip-address: true
+    leaseRenewalIntervalInSeconds: 5
+
+ribbon:
+  readTimeout: 10000
+  eureka:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: THREAD
+          thread:
+            timeoutInMilliseconds: 10000
 
 zuul:
-  routes:
-    catalog:
-      path: /catalog/**
-      url: http://localhost:5001/
-    auth:
-      path: /auth/**
-      url: http://localhost:4201/
   prefix: /api
+  routes:
+    catalog-service:
+      path: /catalog/**
+      serviceId: ${system.default.routes.catalog-service}
+      stripPrefix: true
+    authentication-service:
+      path: /auth/**
+      serviceId: ${system.default.routes.authentication-service}
+      stripPrefix: true
+
+
+---
+spring:
+  profiles: docker-container
+  application:
+    name: Gateway-Service
+
+server:
+  port: ${PORT:${system.docker.server.port}}
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${system.docker.eureka.hostname}:${system.docker.eureka.port}/eureka/
+  instance:
+    prefer-ip-address: true
+    leaseRenewalIntervalInSeconds: 5
+
+ribbon:
+  readTimeout: 10000
+  eureka:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: THREAD
+          thread:
+            timeoutInMilliseconds: 10000
+
+zuul:
+  prefix: /api
+  routes:
+    catalog-service:
+      path: /catalog/**
+      serviceId: ${system.default.routes.catalog-service}
+      stripPrefix: true
+    authentication-service:
+      path: /auth/**
+      serviceId: ${system.default.routes.authentication-service}
+      stripPrefix: true

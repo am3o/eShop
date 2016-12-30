@@ -8,7 +8,7 @@ services:
     environment:
       MYSQL_DATABASE: eShop
       MYSQL_ROOT_PASSWORD: sicher
-      MYSQL_USER: admin
+      MYSQL_USER: eShop
       MYSQL_PASSWORD: sicher
     ports:
       - "3306:3306"
@@ -96,9 +96,16 @@ services:
   gateway:
     depends_on:
       - registration
+      - catalog
     image: am3o/eshop-gateway:latest
     container_name: eshop-gateway-service
     restart: always
+    links:
+      - registration:registration
+    environment:
+      CONTAINER_GATEWAY_PORT: 8080
+      CONTAINER_EUREKA_NAME: registration
+      CONTAINER_EUREKA_PORT: 8761
     ports:
       - "8080:8080"
 
