@@ -5,10 +5,12 @@ services:
     container_name: eshop-database
     volumes:
       - "/tmp/eShop-mySQL:/var/lib/mysql"
+      - ".././Resources/sql/create-tables.sql:/docker-entrypoint-initdb.d/create-tables.sql"
+      - ".././Resources/sql/initial.sql:/docker-entrypoint-initdb.d/initial.sql"
     environment:
       MYSQL_DATABASE: eShop
       MYSQL_ROOT_PASSWORD: sicher
-      MYSQL_USER: admin
+      MYSQL_USER: eShop
       MYSQL_PASSWORD: sicher
     ports:
       - "3306:3306"
@@ -86,6 +88,9 @@ services:
     container_name: eshop-catalog-service
     links:
       - registration:registration
+      - category
+      - product
+      - authentication
     environment:
       CONTAINER_CATALOG_PORT: 5001
       CONTAINER_EUREKA_NAME: registration
@@ -97,17 +102,20 @@ services:
     depends_on:
       - registration
       - catalog
+      - authentication
     image: am3o/eshop-gateway:latest
     container_name: eshop-gateway-service
     restart: always
     links:
       - registration:registration
+      - catalog
+      - authentication
     environment:
-      CONTAINER_GATEWAY_PORT: 8080
+      CONTAINER_GATEWAY_PORT: 8081
       CONTAINER_EUREKA_NAME: registration
       CONTAINER_EUREKA_PORT: 8761
     ports:
-      - "8080:8080"
+      - "8081:8081"
 
   registration:
      image: am3o/eshop-registration:latest
