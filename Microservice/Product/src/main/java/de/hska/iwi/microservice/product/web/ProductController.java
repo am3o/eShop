@@ -35,7 +35,7 @@ public class ProductController implements IProductController {
   @Override
   @RequestMapping(value = "/", method = RequestMethod.POST)
   public ResponseEntity<Product> createProduct(@RequestBody Product product) {
-    logger.info("Erzeuge neues Produkt");
+    logger.info(String.format("Erzeuge neues Produkt %s", product.toString()));
     return new ResponseEntity<Product>(productServiceFacade.createProduct(product),
         HttpStatus.CREATED);
   }
@@ -44,8 +44,8 @@ public class ProductController implements IProductController {
   @RequestMapping(value = "/{productId}", method = RequestMethod.PUT)
   public ResponseEntity<Product> updateProduct(@PathVariable("productId") int productId,
       @RequestBody Product product) {
-    logger.info("Aktualisere vorhandenes Produkt");
     product.setId(productId);
+    logger.info(String.format("Aktualisere vorhandenes Produkt %s", product.toString()));
     return new ResponseEntity<Product>(productServiceFacade.updateProduct(product),
         HttpStatus.ACCEPTED);
   }
@@ -53,7 +53,7 @@ public class ProductController implements IProductController {
   @Override
   @RequestMapping(value = "/{productId}", method = RequestMethod.DELETE)
   public ResponseEntity<Boolean> deleteProduct(@PathVariable("productId") int productId) {
-    logger.info("Lösche vorhandenes Produkt");
+    logger.info(String.format("Lösche vorhandenes Produkt mit ID: %d", productId));
     return new ResponseEntity<Boolean>(productServiceFacade.deleteProduct(productId),
         HttpStatus.ACCEPTED);
   }
@@ -69,13 +69,16 @@ public class ProductController implements IProductController {
       logger.info("Liefere alle Produkte zurück");
       result = productServiceFacade.getProducts();
     }
+    if (result instanceof List) {
+      logger.info(String.format("Anzahl an gefunden Produkte: %d", result.size()));
+    }
     return new ResponseEntity<List<Product>>(result, HttpStatus.OK);
   }
 
   @Override
   @RequestMapping(value = "/{productId}", method = RequestMethod.GET)
   public ResponseEntity<Product> getProduct(@PathVariable("productId") int productId) {
-    logger.info("Liefere spezielles Produkt zurück");
+    logger.info(String.format("Liefere spezielles Produkt mit ID: %d zurück", productId));
     return new ResponseEntity<Product>(productServiceFacade.getProduct(productId), HttpStatus.OK);
   }
 
@@ -85,9 +88,15 @@ public class ProductController implements IProductController {
       @RequestParam(value = "details", required = false, defaultValue = "") String details,
       @RequestParam(value = "minPrice", required = false) Double minPrice,
       @RequestParam(value = "maxPrice", required = false) Double maxPrice) {
-    double searchMinPrice = minPrice instanceof Double ? minPrice : SEARCH_MIN_PRICE_DEFAULT;
-    double searchMaxPrice = maxPrice instanceof Double ? maxPrice : SEARCH_MAX_PRICE_DEFAULT;
+    Double searchMinPrice = minPrice instanceof Double ? minPrice : SEARCH_MIN_PRICE_DEFAULT;
+    Double searchMaxPrice = maxPrice instanceof Double ? maxPrice : SEARCH_MAX_PRICE_DEFAULT;
+    logger.info(String.format(
+        "Suche nach passenden Produkten mit folgenden Parametern: [Details: %s; MinPrice: %s; MaxPrice: %s]",
+        details, searchMinPrice.toString(), searchMaxPrice.toString()));
     List<Product> result = productServiceFacade.search(details, searchMinPrice, searchMaxPrice);
+    if (result instanceof List) {
+      logger.info(String.format("Anzahl an gefundenen Produkten: %d", result.size()));
+    }
     return new ResponseEntity<List<Product>>(result, HttpStatus.OK);
   }
 }

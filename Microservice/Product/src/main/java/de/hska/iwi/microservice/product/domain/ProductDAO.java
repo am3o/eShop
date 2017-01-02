@@ -99,7 +99,7 @@ public class ProductDAO {
 
   @Override
   public String toString() {
-    return String.format("ProductDAO[id=%d, name=%s, details=%s, category=%s]", id, name, details,
+    return String.format("ProductDAO [id=%d, name=%s, details=%s, category=%s]", id, name, details,
         categoryId);
   }
 }
