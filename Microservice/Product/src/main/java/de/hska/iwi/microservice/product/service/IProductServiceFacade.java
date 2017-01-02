@@ -18,45 +18,45 @@
 package de.hska.iwi.microservice.product.service;
 
 import de.hska.iwi.microservice.product.entity.Product;
-
 import java.util.List;
 
 /**
  * Created by ameo on 11.06.16.
  */
 public interface IProductServiceFacade {
-    /**
-     * Erstellt ein neues Produkt in dem System.
-     */
-    Product createProduct(Product product);
 
-    /**
-     * Aktualisiert ein vorhandenes Produkt im System.
-     */
-    Product updateProduct(Product product);
+  /**
+   * Erstellt ein neues Produkt in dem System.
+   */
+  Product createProduct(Product product);
 
-    /**
-     * Löscht ein vorhandenes Produkt aus dem System.
-     */
-    boolean deleteProduct(int id);
+  /**
+   * Aktualisiert ein vorhandenes Produkt im System.
+   */
+  Product updateProduct(Product product);
 
-    /**
-     * Liefert alle Produkte aus dem System zurück.
-     */
-    List<Product> getProducts();
+  /**
+   * Löscht ein vorhandenes Produkt aus dem System.
+   */
+  boolean deleteProduct(int id);
 
-    /**
-     * Liefert alle Produkte mit der speziellen Kategorie aus dem System zurück.
-     */
-    List<Product> getProductsByCategoryId(int id);
+  /**
+   * Liefert alle Produkte aus dem System zurück.
+   */
+  List<Product> getProducts();
 
-    /**
-     * Liefert ein spezielles Produkt zurück.
-     */
-    Product getProduct(int id);
+  /**
+   * Liefert alle Produkte mit der speziellen Kategorie aus dem System zurück.
+   */
+  List<Product> getProductsByCategoryId(int id);
 
-    /**
-     * Sucht nach passenden Produkten anhand der gegebenen Kriterien name, minPrice, maxPrice.
-     */
-    List<Product> search(String details, double minPrice, double maxPrice);
+  /**
+   * Liefert ein spezielles Produkt zurück.
+   */
+  Product getProduct(int id);
+
+  /**
+   * Sucht nach passenden Produkten anhand der gegebenen Kriterien name, minPrice, maxPrice.
+   */
+  List<Product> search(String details, Double minPrice, Double maxPrice);
 }

@@ -21,64 +21,71 @@ package de.hska.iwi.microservice.product.entity;
  * Created by ameo on 11.06.16.
  */
 public class Product {
-    private int id;
 
-    private String name;
+  private int id;
 
-    private double price;
+  private String name;
 
-    private String details;
+  private double price;
 
-    private int categoryId;
+  private String details;
 
-    public Product() {
-    }
+  private int categoryId;
 
-    public Product(int id, String name, double price, String details, int categoryId) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.details = details;
-        this.categoryId = categoryId;
-    }
+  public Product() {
+  }
 
-    public int getId() {
-        return id;
-    }
+  public Product(int id, String name, double price, String details, int categoryId) {
+    this.id = id;
+    this.name = name;
+    this.price = price;
+    this.details = details;
+    this.categoryId = categoryId;
+  }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public double getPrice() {
-        return price;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
+  public double getPrice() {
+    return price;
+  }
 
-    public String getDetails() {
-        return details;
-    }
+  public void setPrice(double price) {
+    this.price = price;
+  }
 
-    public void setDetails(String details) {
-        this.details = details;
-    }
+  public String getDetails() {
+    return details;
+  }
 
-    public int getCategoryId() {
-        return categoryId;
-    }
+  public void setDetails(String details) {
+    this.details = details;
+  }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
-    }
+  public int getCategoryId() {
+    return categoryId;
+  }
+
+  public void setCategoryId(int categoryId) {
+    this.categoryId = categoryId;
+  }
+
+  @Override
+  public String toString() {
+    return String.format("Product [id=%d, name=%s, details=%s, category=%s]", id, name, details,
+        categoryId);
+  }
 }

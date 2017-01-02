@@ -17,9 +17,11 @@
 
 package de.hska.iwi.microservice.product.domain;
 
-import de.hska.iwi.microservice.product.entity.Product;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
@@ -27,72 +29,77 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "product")
 public class ProductDAO {
 
-    @Id
-    @GeneratedValue
-    private int id;
+  @Id
+  @GeneratedValue
+  private int id;
 
-    @Column(name = "name")
-    private String name;
+  @Column(name = "name")
+  private String name;
 
-    @Column(name = "price")
-    private double price;
+  @Column(name = "price")
+  private double price;
 
-    @Column(name = "details")
-    private String details;
+  @Column(name = "details")
+  private String details;
 
-    @Column(name = "category_id")
-    private int categoryId;
+  @Column(name = "category_id")
+  private int categoryId;
 
-    protected ProductDAO() {
-    }
+  protected ProductDAO() {
+  }
 
-    public ProductDAO(int id, String name, double price, String details, int categoryId) {
-        super();
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.details = details;
-        this.categoryId = categoryId;
-    }
+  public ProductDAO(int id, String name, double price, String details, int categoryId) {
+    super();
+    this.id = id;
+    this.name = name;
+    this.price = price;
+    this.details = details;
+    this.categoryId = categoryId;
+  }
 
-    public int getId() {
-        return id;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public double getPrice() {
-        return price;
-    }
+  public double getPrice() {
+    return price;
+  }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
+  public void setPrice(double price) {
+    this.price = price;
+  }
 
-    public String getDetails() {
-        return details;
-    }
+  public String getDetails() {
+    return details;
+  }
 
-    public void setDetails(String details) {
-        this.details = details;
-    }
+  public void setDetails(String details) {
+    this.details = details;
+  }
 
-    public Product toProduct() {
-        return new Product(id, name, price, details, categoryId);
-    }
+  public void setCategoryId(int categoryId) {
+    this.categoryId = categoryId;
+  }
 
-    @Override
-    public String toString() {
-        return String.format("ProductDAO[id=%d, name=%s, details=%s, category=%s]", id, name, details, categoryId);
-    }
+  public int getCategoryId() {
+    return categoryId;
+  }
+
+  @Override
+  public String toString() {
+    return String.format("ProductDAO [id=%d, name=%s, details=%s, category=%s]", id, name, details,
+        categoryId);
+  }
 }
