@@ -17,81 +17,84 @@
 
 package de.hska.iwi.microservice.product.service;
 
+import de.hska.iwi.microservice.product.adaptor.ProductAdapter;
 import de.hska.iwi.microservice.product.domain.ProductDAO;
 import de.hska.iwi.microservice.product.domain.ProductRepository;
 import de.hska.iwi.microservice.product.entity.Product;
-
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by ameo on 11.06.16.
  */
 @Service
 public class ProductServiceFacade implements IProductServiceFacade {
-    private final ProductRepository productRepository;
 
-    @Autowired
-    public ProductServiceFacade(ProductRepository productRepository) {
-        super();
-        this.productRepository = productRepository;
-    }
+  private final ProductRepository productRepository;
+  private final ProductAdapter productAdapter;
 
-    private ProductDAO convertToProductDAO(Product product) {
-        return new ProductDAO(product.getId(), product.getName(), product.getPrice(), product.getDetails(), product.getCategoryId());
-    }
+  @Autowired
+  public ProductServiceFacade(ProductRepository productRepository) {
+    super();
+    this.productRepository = productRepository;
+    this.productAdapter = new ProductAdapter();
+  }
 
-    private List<Product> convertToListProduct(List<ProductDAO> list) {
-        List<Product> result = new ArrayList<>();
-        for (ProductDAO productDAO : list)
-            result.add(productDAO.toProduct());
-        return result;
-    }
+  private ProductDAO convertToProductDAO(Product product) {
+    return this.productAdapter.convertProductToProductDAO(product);
+  }
 
-    @Override
-    public Product createProduct(Product product) {
-        ProductDAO productDAO = this.convertToProductDAO(product);
-        return productRepository.save(productDAO).toProduct();
-    }
+  private Product convertToProduct(ProductDAO productDAO) {
+    return this.productAdapter.convertProductDAOToProduct(productDAO);
+  }
 
-    @Override
-    public Product updateProduct(Product product) {
-        ProductDAO productDAO = this.convertToProductDAO(product);
-        return productRepository.save(productDAO).toProduct();
-    }
+  private List<Product> convertToListProduct(List<ProductDAO> productDAOList) {
+    return this.productAdapter.convertListProductDAOToListProduct(productDAOList);
+  }
 
-    @Override
-    public boolean deleteProduct(int id) {
-        ProductDAO obj = productRepository.findById(id);
-        if(obj instanceof ProductDAO) {
-            productRepository.delete(obj);
-        }
-        return !(productRepository.findById(id) instanceof ProductDAO);
-    }
+  @Override
+  public Product createProduct(Product product) {
+    ProductDAO resultProduct = this.convertToProductDAO(product);
+    return this.convertToProduct(productRepository.save(resultProduct));
+  }
 
-    @Override
-    public List<Product> getProducts() {
-        List<ProductDAO> result = productRepository.findAll();
-        return this.convertToListProduct(result);
-    }
+  @Override
+  public Product updateProduct(Product product) {
+    ProductDAO resultProduct = this.convertToProductDAO(product);
+    return this.convertToProduct(productRepository.save(resultProduct));
+  }
 
-    @Override
-    public List<Product> getProductsByCategoryId(int id) {
-        List<ProductDAO> result = productRepository.findByCategoryId(id);
-        return this.convertToListProduct(result);
+  @Override
+  public boolean deleteProduct(int id) {
+    ProductDAO obj = productRepository.findById(id);
+    if (obj instanceof ProductDAO) {
+      productRepository.delete(obj);
     }
+    return !(productRepository.findById(id) instanceof ProductDAO);
+  }
 
-    @Override
-    public Product getProduct(int id) {
-        return productRepository.findById(id).toProduct();
-    }
+  @Override
+  public List<Product> getProducts() {
+    List<ProductDAO> resultListProduct = productRepository.findAll();
+    return this.convertToListProduct(resultListProduct);
+  }
 
-    @Override
-    public List<Product> search(String details, double minPrice, double maxPrice) {
-        List resultList = productRepository.search(details, minPrice, maxPrice);
-        return this.convertToListProduct(resultList);
-    }
+  @Override
+  public List<Product> getProductsByCategoryId(int id) {
+    List<ProductDAO> resultListProduct = productRepository.findByCategoryId(id);
+    return this.convertToListProduct(resultListProduct);
+  }
+
+  @Override
+  public Product getProduct(int id) {
+    ProductDAO resultProduct = productRepository.findById(id);
+    return this.convertToProduct(resultProduct);
+  }
+
+  @Override
+  public List<Product> search(String details, double minPrice, double maxPrice) {
+    List<ProductDAO> resultList = productRepository.search(details, minPrice, maxPrice);
+    return this.convertToListProduct(resultList);
+  }
 }
