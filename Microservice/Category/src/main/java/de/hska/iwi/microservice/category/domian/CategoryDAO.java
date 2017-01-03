@@ -17,10 +17,7 @@
 
 package de.hska.iwi.microservice.category.domian;
 
-import de.hska.iwi.microservice.category.entity.Category;
-
 import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,46 +31,43 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "category")
 public class CategoryDAO implements Serializable {
-    private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private int id;
+  private static final long serialVersionUID = 1L;
 
-    @Column(name = "name")
-    private String name;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id", nullable = false)
+  private int id;
 
-    protected CategoryDAO() {
-    }
+  @Column(name = "name")
+  private String name;
 
-    public CategoryDAO(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+  protected CategoryDAO() {
+  }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  public CategoryDAO(int id, String name) {
+    this.id = id;
+    this.name = name;
+  }
 
-    public int getId() {
-        return id;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    @Override
-    public String toString() {
-        return String.format("Category[id=%d, name=%s]", this.id, this.name);
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public Category toCategory() {
-        return new Category(this.getId(), this.getName());
-    }
+  @Override
+  public String toString() {
+    return String.format("Category[id=%d, name=%s]", this.id, this.name);
+  }
 }
