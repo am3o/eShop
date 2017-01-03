@@ -21,7 +21,7 @@ system:
       hostname: localhost
       port: 3306
       database: eShop
-      username: eShopCate
+      username: eShop
       password: sicher
 ---
 

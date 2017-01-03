@@ -17,74 +17,83 @@
 
 package de.hska.iwi.microservice.category.service;
 
+import de.hska.iwi.microservice.category.adaptor.CategoryAdapter;
 import de.hska.iwi.microservice.category.domian.CategoryDAO;
 import de.hska.iwi.microservice.category.domian.CategoryRepository;
 import de.hska.iwi.microservice.category.entity.Category;
+import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by ameo on 27.05.16.
  */
 @Service
 public class CategoryServiceFacade implements ICategoryServiceFacade {
-    private final Logger logger = Logger.getLogger(CategoryServiceFacade.class);
-    private CategoryRepository categoryRepository;
 
-    @Autowired
-    public CategoryServiceFacade(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
+  private final Logger logger = Logger.getLogger(CategoryServiceFacade.class);
 
-    private CategoryDAO convertToCategoryDAO(Category category) {
-        return new CategoryDAO(category.getId(), category.getName());
-    }
+  private final CategoryRepository categoryRepository;
+  private final CategoryAdapter categoryAdapter = new CategoryAdapter();
 
-    private List<Category> convertToListCategory(List<CategoryDAO> list) {
-        List<Category> result = new ArrayList<>();
-        for (CategoryDAO value : list) {
-            result.add(value.toCategory());
-        }
-        return result;
-    }
+  @Autowired
+  public CategoryServiceFacade(CategoryRepository categoryRepository) {
+    super();
+    this.categoryRepository = categoryRepository;
+  }
 
-    @Override
-    public List<Category> getAllCategories() {
-        logger.info("Liefere alle Kategorien zurück.");
-        return this.convertToListCategory(categoryRepository.findAll());
-    }
+  private Category convertToCategory(CategoryDAO categoryDAO) {
+    logger.info("Wandle Datenbank-Objekt in Kategorie");
+    return this.categoryAdapter.convertCategoryDAOToCategory(categoryDAO);
+  }
 
-    @Override
-    public Category createCategory(Category category) {
-        logger.info(String.format("Erstelle neue Kategory mit dem Wert: %s", category.toString()));
-        CategoryDAO categoryDAO = this.convertToCategoryDAO(category);
-        return categoryRepository.save(categoryDAO).toCategory();
-    }
+  private CategoryDAO convertToCategoryDAO(Category category) {
+    logger.info("Wandle Kategorie in Datenbank-Objekt");
+    return this.categoryAdapter.convertCategoryToCategoryDAO(category);
+  }
 
-    @Override
-    public Category updateCategory(Category category) {
-        logger.info(String.format("Aktualisiere vorhande Kategory mit dem Wert:%s", category.toString()));
-        CategoryDAO categoryDAO = this.convertToCategoryDAO(category);
-        return categoryRepository.save(categoryDAO).toCategory();
-    }
+  private List<Category> convertToListCategory(List<CategoryDAO> list) {
+    logger.info("Wandle Datenbank-Objekt Liste in Kategorie-Liste");
+    return this.categoryAdapter.convertCategoryDAOListToCategoryList(list);
+  }
 
-    @Override
-    public Category getCategory(int categoryId) {
-        logger.info(String.format("Liefere Kategorie zurück mit dem Wert: %d", categoryId));
-        return categoryRepository.findById(categoryId).toCategory();
-    }
+  @Override
+  public List<Category> getAllCategories() {
+    logger.info("Liefere alle Kategorien zurück.");
+    return this.convertToListCategory(categoryRepository.findAll());
+  }
 
-    @Override
-    public boolean deleteCategory(int categoryId) {
-        logger.info(String.format("Lösche Kategorie mit dem Wert: %d", categoryId));
-        CategoryDAO obj = categoryRepository.findById(categoryId);
-        if(obj instanceof CategoryDAO) {
-            categoryRepository.delete(obj);
-        }
-        return !(categoryRepository.findById(categoryId) instanceof CategoryDAO);
+  @Override
+  public Category createCategory(Category category) {
+    logger.info(String.format("Erstelle neue Kategory mit dem Wert: %s", category.toString()));
+    CategoryDAO categoryDAO = this.convertToCategoryDAO(category);
+    return this.convertToCategory(categoryRepository.save(categoryDAO));
+  }
+
+  @Override
+  public Category updateCategory(Category category) {
+    logger
+        .info(String.format("Aktualisiere vorhande Kategory mit dem Wert:%s", category.toString()));
+    CategoryDAO categoryDAO = this.convertToCategoryDAO(category);
+    return this.convertToCategory(categoryRepository.save(categoryDAO));
+  }
+
+  @Override
+  public Category getCategory(int categoryId) {
+    logger.info(String.format("Liefere Kategorie zurück mit dem Wert: %d", categoryId));
+    return this.convertToCategory(categoryRepository.findById(categoryId));
+  }
+
+  @Override
+  public boolean deleteCategory(int categoryId) {
+    logger.info(String.format("Lösche Kategorie mit dem Wert: %d", categoryId));
+    CategoryDAO obj = categoryRepository.findById(categoryId);
+    if (obj instanceof CategoryDAO) {
+      logger.info(
+          String.format("Lösche einen Eintrag von Produkt aus der Datenbank: %s", obj.toString()));
+      categoryRepository.delete(obj);
     }
+    return !(categoryRepository.findById(categoryId) instanceof CategoryDAO);
+  }
 }
