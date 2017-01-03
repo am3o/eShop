@@ -39,6 +39,7 @@ public class ProductAdapter {
         logger.info(productDAO.toString());
         resultList.add(this.convertProductDAOToProduct(productDAO));
       }
+      return resultList;
     }
     return null;
   }
