@@ -88,9 +88,6 @@ services:
     container_name: eshop-catalog-service
     links:
       - registration:registration
-      - category
-      - product
-      - authentication
     environment:
       CONTAINER_CATALOG_PORT: 5001
       CONTAINER_EUREKA_NAME: registration
