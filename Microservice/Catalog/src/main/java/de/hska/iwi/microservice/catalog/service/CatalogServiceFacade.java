@@ -25,13 +25,9 @@ public class CatalogServiceFacade implements ICatalogServiceFacade {
 
   private final Logger logger = Logger.getLogger(CatalogServiceFacade.class);
 
-  private static final String CATEGORY_SERVICE = "category-Service";
+  private static final String CATEGORY_SERVICE = "category-service";
   private static final String PRODUCT_SERVICE = "production-service";
-  private static final String AUTHENTICATION_SERVICE = "AUTHENTICATION-SERVICE";
-
-  private static final String CATEGORY_SERVICE_URL_DEFAULT = "http://localhost:4211/";
-  private static final String PRODUCT_SERVICE_URL_DEFAULT = "http://localhost:4205/";
-  private static final String AUTHENTICATION_SERVICE_URL_DEFAULT = "http://localhost:4201/";
+  private static final String AUTHENTICATION_SERVICE = "authentication-service";
 
   private final DiscoveryClient discoveryClient;
 
@@ -50,27 +46,21 @@ public class CatalogServiceFacade implements ICatalogServiceFacade {
       if (discoveryClient instanceof DiscoveryClient) {
         switch (servicename) {
           case AUTHENTICATION_SERVICE:
-            if (discoveryClient.getServices().contains(servicename)) {
+            if (discoveryClient.getServices().contains(servicename.toLowerCase())) {
               service = new AuthenticationServiceClient(
-                  discoveryClient.getInstances(servicename).get(0).getUri().toString());
-            } else {
-              service = new AuthenticationServiceClient(AUTHENTICATION_SERVICE_URL_DEFAULT);
+                  discoveryClient.getInstances(servicename.toLowerCase()).get(0).getUri());
             }
             break;
           case PRODUCT_SERVICE:
-            if (discoveryClient.getServices().contains(servicename)) {
+            if (discoveryClient.getServices().contains(servicename.toLowerCase())) {
               service = new ProductServiceClient(
-                  discoveryClient.getInstances(servicename).get(0).getUri().toString());
-            } else {
-              service = new ProductServiceClient(PRODUCT_SERVICE_URL_DEFAULT);
+                  discoveryClient.getInstances(servicename.toLowerCase()).get(0).getUri());
             }
             break;
           case CATEGORY_SERVICE:
-            if (discoveryClient.getServices().contains(servicename)) {
+            if (discoveryClient.getServices().contains(servicename.toLowerCase())) {
               service = new CategoryServiceClient(
-                  discoveryClient.getInstances(servicename).get(0).getUri().toString());
-            } else {
-              service = new CategoryServiceClient(CATEGORY_SERVICE_URL_DEFAULT);
+                  discoveryClient.getInstances(servicename.toLowerCase()).get(0).getUri());
             }
             break;
           default:
