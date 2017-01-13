@@ -1,5 +1,5 @@
 # eShop-ViS
-[![License][license img]][license] [![Build Status][travis branch img]][travis status][![Code Climate][code climate img]][code climate][![Test Coverage][test coverage img]][test coverage]
+[![License][license img]][license] [![Build Status][travis branch img]][travis status] [![Code Climate][code climate img]][code climate] [![Test Coverage][test coverage img]][test coverage]
 
 Splitting a monilithic web shop application from Tomcat into microservices with Spring Boot and other technologies. This project is part of the masters course 'Distributed Information Systems' at the University of Applied Sciences (Karlsruhe)
 
