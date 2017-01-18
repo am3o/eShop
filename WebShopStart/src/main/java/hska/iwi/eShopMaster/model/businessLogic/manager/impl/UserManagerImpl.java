@@ -1,70 +1,114 @@
 package hska.iwi.eShopMaster.model.businessLogic.manager.impl;
 
-import hska.iwi.eShopMaster.model.businessLogic.manager.UserManager;
-import hska.iwi.eShopMaster.model.database.dataAccessObjects.RoleDAO;
-import hska.iwi.eShopMaster.model.database.dataAccessObjects.UserDAO;
-import hska.iwi.eShopMaster.model.database.dataobjects.Role;
-import hska.iwi.eShopMaster.model.database.dataobjects.User;
 
-/**
- * 
- * @author knad0001
- */
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import hska.iwi.eShopMaster.model.businessLogic.manager.UserManager;
+import hska.iwi.eShopMaster.model.businessLogic.manager.entity.User;
+import javax.ws.rs.core.MediaType;
 
 public class UserManagerImpl implements UserManager {
-	UserDAO helper;
-	
-	public UserManagerImpl() {
-		helper = new UserDAO();
-	}
 
-	
-	public void registerUser(String username, String name, String lastname, String password, Role role) {
+  @Override
+  public boolean existUser(String username, String password) {
+    User usr = null;
+    try {
+      Client client = Client.create();
+      WebResource webResource = client
+          .resource("http://localhost:8081/api/auth/");
 
-		User user = new User(username, name, lastname, password, role);
+      ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON_TYPE)
+          .header("usr", username).header("pass", password)
+          .get(ClientResponse.class);
 
-		helper.saveObject(user);
-	}
+      ObjectMapper objectMapper = new ObjectMapper();
+      usr = objectMapper.readValue(response.getEntity(String.class), User.class);
 
-	
-	public User getUserByUsername(String username) {
-		if (username == null || username.equals("")) {
-			return null;
-		}
-		return helper.getUserByUsername(username);
-	}
+    } catch (Exception ex) {
+      System.out.println(ex.toString());
+    }
+    return !(usr instanceof User);
+  }
 
-	public boolean deleteUserById(int id) {
-		User user = new User();
-		user.setId(id);
-		helper.deleteObject(user);
-		return true;
-	}
+  @Override
+  public User createUser(String username, String name, String lastname, String password,
+      String role) {
+    User usr = new User(0, name, lastname, username, password, role);
+    try {
+      Client client = Client.create();
+      WebResource webResource = client.resource("http://localhost:8081/api/auth/");
 
-	public Role getRoleByLevel(int level) {
-		RoleDAO roleHelper = new RoleDAO();
-		return roleHelper.getRoleByLevel(level);
-	}
+      ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON_TYPE)
+          .post(ClientResponse.class, usr);
 
-	public boolean doesUserAlreadyExist(String username) {
-		
-    	User dbUser = this.getUserByUsername(username);
-    	
-    	if (dbUser != null){
-    		return true;
-    	}
-    	else {
-    		return false;
-    	}
-	}
-	
+      ObjectMapper objectMapper = new ObjectMapper();
+      usr = objectMapper.readValue(response.getEntity(String.class), User.class);
 
-	public boolean validate(User user) {
-		if (user.getFirstname().isEmpty() || user.getPassword().isEmpty() || user.getRole() == null || user.getLastname() == null || user.getUsername() == null) {
-			return false;
-		}
-		
-		return true;
-	}
+    } catch (Exception ex) {
+      System.out.println(ex.toString());
+    }
+    return usr;
+  }
 
+  @Override
+  public boolean deleteUser(int userId) {
+    User usr = null;
+    try {
+      Client client = Client.create();
+      WebResource webResource = client
+          .resource(String.format("http://localhost:8081/api/auth/%d", userId));
+
+      ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON_TYPE)
+          .delete(ClientResponse.class);
+
+      ObjectMapper objectMapper = new ObjectMapper();
+      usr = objectMapper.readValue(response.getEntity(String.class), User.class);
+
+    } catch (Exception ex) {
+      System.out.println(ex.toString());
+    }
+    return !(usr instanceof User);
+  }
+
+  @Override
+  public User loginUser(String username, String password) {
+    User usr = null;
+    try {
+      Client client = Client.create();
+      WebResource webResource = client.resource("http://localhost:8081/api/auth/login");
+
+      ClientResponse response = webResource.header("usr", username)
+          .accept(MediaType.APPLICATION_JSON_TYPE)
+          .header("pass", password).put(ClientResponse.class);
+
+      ObjectMapper objectMapper = new ObjectMapper();
+      usr = objectMapper.readValue(response.getEntity(String.class), User.class);
+
+    } catch (Exception ex) {
+      System.out.println(ex.toString());
+    }
+    return usr;
+  }
+
+  @Override
+  public User logoutUser(String username, String password) {
+    User usr = null;
+    try {
+      Client client = Client.create();
+      WebResource webResource = client.resource("http://localhost:8081/api/auth/logout");
+
+      ClientResponse response = webResource.header("usr", username)
+          .accept(MediaType.APPLICATION_JSON_TYPE)
+          .header("pass", password).put(ClientResponse.class);
+
+      ObjectMapper objectMapper = new ObjectMapper();
+      usr = objectMapper.readValue(response.getEntity(String.class), User.class);
+
+    } catch (Exception ex) {
+      System.out.println(ex.toString());
+    }
+    return usr;
+  }
 }

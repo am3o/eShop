@@ -1,18 +1,18 @@
 package hska.iwi.eShopMaster.model.businessLogic.manager;
 
-import hska.iwi.eShopMaster.model.database.dataobjects.Role;
-import hska.iwi.eShopMaster.model.database.dataobjects.User;
+import hska.iwi.eShopMaster.model.businessLogic.manager.entity.User;
 
 
 public interface UserManager {
-    
-    public void registerUser(String username, String name, String lastname, String password, Role role);
-    
-    public User getUserByUsername(String username);
-    
-    public boolean deleteUserById(int id);
-    
-    public Role getRoleByLevel(int level);
-    
-    public boolean doesUserAlreadyExist(String username);
+
+  public boolean existUser(String username, String password);
+
+  public User createUser(String username, String name, String lastname, String password,
+      String role);
+
+  public boolean deleteUser(int userId);
+
+  public User loginUser(String username, String password);
+
+  public User logoutUser(String username, String password);
 }
