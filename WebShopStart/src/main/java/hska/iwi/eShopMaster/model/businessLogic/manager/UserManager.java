@@ -5,14 +5,16 @@ import hska.iwi.eShopMaster.model.businessLogic.manager.entity.User;
 
 public interface UserManager {
 
-  public boolean existUser(String username, String password);
+  boolean existUser(String username, String password);
 
-  public User createUser(String username, String name, String lastname, String password,
+  User checkPermission(String username, String password);
+
+  User createUser(String username, String name, String lastname, String password,
       String role);
 
-  public boolean deleteUser(int userId);
+  boolean deleteUser(int userId);
 
-  public User loginUser(String username, String password);
+  User loginUser(String username, String password);
 
-  public User logoutUser(String username, String password);
+  User logoutUser(String username, String password);
 }

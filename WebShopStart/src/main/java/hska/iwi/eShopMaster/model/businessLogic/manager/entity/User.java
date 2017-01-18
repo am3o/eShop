@@ -1,5 +1,7 @@
 package hska.iwi.eShopMaster.model.businessLogic.manager.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Created by ameo on 18.01.17.
  */
@@ -77,6 +79,7 @@ public class User implements java.io.Serializable {
     this.role = role;
   }
 
+  @JsonIgnore
   public boolean isEmpty() {
     return !(this.name instanceof String && this.lastname instanceof String
         && this.lastname instanceof String && this.password instanceof String);
