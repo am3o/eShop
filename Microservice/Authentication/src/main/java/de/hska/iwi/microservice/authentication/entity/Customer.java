@@ -106,6 +106,6 @@ public class Customer {
 
     @Override
     public String toString() {
-        return String.format("CustomerDAO[id=%d, name=%s, lastname=%s, username=%s, password=%s, role=%d]", id, name, lastname, username, password, role);
+        return String.format("CustomerDAO[id=%d, name=%s, lastname=%s, username=%s, password=%s, role=%d]", id, name, lastname, username, password, role.getValue());
     }
 }

@@ -20,53 +20,54 @@ package de.hska.iwi.microservice.authentication.service;
 import de.hska.iwi.microservice.authentication.entity.Customer;
 
 public interface IAuthenticationServiceFacade {
-    /**
-     * Erzeugt einen neuen Benutzer im System.
-     */
-    Customer createCustomer(Customer customer);
 
-    /**
-     * Liefert eine Liste an CustomerDAO zurück auf welche die gegebenen Informationen zutreffen.
-     */
-    Customer getCustomerInformation(Customer customer);
+  /**
+   * Erzeugt einen neuen Benutzer im System.
+   */
+  Customer createCustomer(Customer customer);
 
-    /**
-     * Liefert die hinterlegten Informationen zu dem speziellen Benutzer zurück.
-     */
-    Customer getCustomerInformation(String customername);
+  /**
+   * Liefert eine Liste an CustomerDAO zurück auf welche die gegebenen Informationen zutreffen.
+   */
+  Customer getCustomerInformation(Customer customer);
 
-    /**
-     * Liefert die hinterlegten Informationen zu dem speziellen Benutzer zurück.
-     */
-    Customer getCustomerInformation(long customerId);
+  /**
+   * Liefert die hinterlegten Informationen zu dem speziellen Benutzer zurück.
+   */
+  Customer getCustomerInformation(String customername);
 
-    /**
-     * Aktualisiert einen Benutzer im System.
-     */
-    Customer updateCustomer(Customer customer);
+  /**
+   * Liefert die hinterlegten Informationen zu dem speziellen Benutzer zurück.
+   */
+  Customer getCustomerInformation(long customerId);
 
-    /**
-     * Löscht einen Benutzer aus dem System.
-     */
-    boolean deleteCustomer(long CustomerId);
+  /**
+   * Aktualisiert einen Benutzer im System.
+   */
+  Customer updateCustomer(Customer customer);
 
-    /**
-     * Überprüft ob der angegebene Benutzer dem System vorliegt.
-     */
-    boolean existCustomer(String username, String password);
+  /**
+   * Löscht einen Benutzer aus dem System.
+   */
+  boolean deleteCustomer(long CustomerId);
 
-    /**
-     * Überprüfung ob der angegebene Benutzer über passende Rechte im System verfügt.
-     */
-    boolean checkPermission(String username, String password);
+  /**
+   * Überprüft ob der angegebene Benutzer dem System vorliegt.
+   */
+  boolean existCustomer(String username, String password);
 
-    /**
-     * Logt einen Benutzer in das System ein.
-     */
-    boolean logInCustomer(String username, String password);
+  /**
+   * Überprüfung ob der angegebene Benutzer über passende Rechte im System verfügt.
+   */
+  boolean checkPermission(String username, String password);
 
-    /**
-     * Logt einen Benutzer aus dem System aus.
-     */
-    boolean logOutCustomer(String username, String password);
+  /**
+   * Logt einen Benutzer in das System ein.
+   */
+  Customer logInCustomer(String username, String password);
+
+  /**
+   * Logt einen Benutzer aus dem System aus.
+   */
+  Customer logOutCustomer(String username, String password);
 }

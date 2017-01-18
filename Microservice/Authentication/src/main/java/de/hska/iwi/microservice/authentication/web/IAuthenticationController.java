@@ -21,39 +21,40 @@ import de.hska.iwi.microservice.authentication.entity.Customer;
 import org.springframework.http.ResponseEntity;
 
 public interface IAuthenticationController {
-    /**
-     * Erzeugt einen neuen Benutzer und die Operation wird quitiert, wenn dies erfolgreich war.
-     */
-    ResponseEntity<Customer> createCustomer(Customer customer);
 
-    /**
-     * Überprüft ob der angegebene Benutzer existiert.
-     */
-    ResponseEntity<Customer> existCustomer(String username, String password, boolean permission);
+  /**
+   * Erzeugt einen neuen Benutzer und die Operation wird quitiert, wenn dies erfolgreich war.
+   */
+  ResponseEntity<Customer> createCustomer(Customer customer);
 
-    /**
-     * Liefert alle vorliegenden Informationen zurück, welche von dem speziellen Benutzer vorhanden
-     * sind.
-     */
-    ResponseEntity<Customer> getCustomerInformation(long customerId);
+  /**
+   * Überprüft ob der angegebene Benutzer existiert.
+   */
+  ResponseEntity<Customer> existCustomer(String username, String password, boolean permission);
 
-    /**
-     * Aktualisiert die Informationen eines speziellen Benutzers.
-     */
-    ResponseEntity<Customer> updateCustomer(Customer customer);
+  /**
+   * Liefert alle vorliegenden Informationen zurück, welche von dem speziellen Benutzer vorhanden
+   * sind.
+   */
+  ResponseEntity<Customer> getCustomerInformation(long customerId);
 
-    /**
-     * Löscht einen speziellen Benutzer aus dem System.
-     */
-    ResponseEntity<Boolean> deleteCustomer(int customerId);
+  /**
+   * Aktualisiert die Informationen eines speziellen Benutzers.
+   */
+  ResponseEntity<Customer> updateCustomer(Customer customer);
 
-    /**
-     * Logt einen Benutzer in das System ein.
-     */
-    ResponseEntity<Boolean> loginCustomer(String username, String password);
+  /**
+   * Löscht einen speziellen Benutzer aus dem System.
+   */
+  ResponseEntity<Boolean> deleteCustomer(int customerId);
 
-    /**
-     * Logt einen Benutzer aus dem System aus.
-     */
-    ResponseEntity<Boolean> logoutCustomer(String username, String password);
+  /**
+   * Logt einen Benutzer in das System ein.
+   */
+  ResponseEntity<Customer> loginCustomer(String username, String password);
+
+  /**
+   * Logt einen Benutzer aus dem System aus.
+   */
+  ResponseEntity<Customer> logoutCustomer(String username, String password);
 }
