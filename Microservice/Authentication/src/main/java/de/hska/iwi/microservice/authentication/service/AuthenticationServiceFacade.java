@@ -17,6 +17,7 @@
 
 package de.hska.iwi.microservice.authentication.service;
 
+import de.hska.iwi.microservice.authentication.adaptor.CustomerAdapter;
 import de.hska.iwi.microservice.authentication.builder.CustomerBuilder;
 import de.hska.iwi.microservice.authentication.domian.CustomerDAO;
 import de.hska.iwi.microservice.authentication.domian.CustomerRepository;
@@ -30,23 +31,25 @@ public class AuthenticationServiceFacade implements IAuthenticationServiceFacade
 
   private final Logger logger = Logger.getLogger(AuthenticationServiceFacade.class);
   private final CustomerRepository customerRepository;
+  private final CustomerAdapter adapter;
 
   private static final int PERMISSION_ADMIN_ROLE = 1;
+
 
   @Autowired
   public AuthenticationServiceFacade(CustomerRepository customerRepository) {
     super();
     logger.info("Erzeuge AuthenticationServiceFasade");
     this.customerRepository = customerRepository;
+    this.adapter = new CustomerAdapter();
   }
 
   private CustomerDAO convertToCustomerDAO(Customer customer) {
-    return new CustomerDAO(customer.getId(), customer.getName(), customer.getLastname(),
-        customer.getUsername(), customer.getPassword(), customer.getRole().getValue());
+    return adapter.convertCustomerToCustomerDAO(customer);
   }
 
   private Customer convertToCustomer(CustomerDAO customerDAO) {
-    return null;
+    return adapter.convertCustomerDAOToCustomer(customerDAO);
   }
 
   @Override

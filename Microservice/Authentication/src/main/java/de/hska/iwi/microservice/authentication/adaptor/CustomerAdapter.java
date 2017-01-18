@@ -8,11 +8,11 @@ import org.apache.log4j.Logger;
 /**
  * Created by ameo on 18.01.17.
  */
-public class CustomAdapter {
+public class CustomerAdapter {
 
-  private final Logger logger = Logger.getLogger(CustomAdapter.class);
+  private final Logger logger = Logger.getLogger(CustomerAdapter.class);
 
-  public CustomAdapter() {
+  public CustomerAdapter() {
     super();
   }
 
