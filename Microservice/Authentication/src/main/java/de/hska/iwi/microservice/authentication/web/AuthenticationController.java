@@ -61,7 +61,7 @@ public class AuthenticationController implements IAuthenticationController {
     ResponseEntity<Customer> response = new ResponseEntity<Customer>(
         new CustomerBuilder().buildEmpty(), HttpStatus.NOT_FOUND);
     try {
-      if (this.authenticationServiceFasade.checkPermission(username, password)) {
+      if (this.authenticationServiceFasade.existCustomer(username, password)) {
         CustomerBuilder builder = new CustomerBuilder(username, password);
         if (!permission) {
           response = new ResponseEntity<Customer>(builder.build(), HttpStatus.OK);

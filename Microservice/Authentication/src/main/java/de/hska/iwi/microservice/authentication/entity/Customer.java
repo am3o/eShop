@@ -21,91 +21,95 @@ package de.hska.iwi.microservice.authentication.entity;
  * Created by ameo on 06.06.16.
  */
 public class Customer {
-    public enum Permission {
-        Admin(0), User(1);
 
-        private final int value;
+  public enum Permission {
+    Admin(1), User(2);
 
-        private Permission(int value) {
-            this.value = value;
-        }
+    private final int value;
 
-        public int getValue() {
-            return value;
-        }
+    private Permission(int value) {
+      this.value = value;
     }
 
-    private long id;
-    private String name;
-    private String lastname;
-    private String username;
-    private String password;
-    private Permission role = Permission.User;
-
-    public Customer() {
-        super();
+    public int getValue() {
+      return value;
     }
+  }
 
-    public Customer(long id, String name, String lastname, String username, String password, Permission role) {
-        super();
-        this.id = id;
-        this.name = name;
-        this.lastname = lastname;
-        this.username = username;
-        this.password = password;
-        this.role = role ;
-    }
+  private long id;
+  private String name;
+  private String lastname;
+  private String username;
+  private String password;
+  private Permission role = Permission.User;
 
-    public String getName() {
-        return name;
-    }
+  public Customer() {
+    super();
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public Customer(long id, String name, String lastname, String username, String password,
+      Permission role) {
+    super();
+    this.id = id;
+    this.name = name;
+    this.lastname = lastname;
+    this.username = username;
+    this.password = password;
+    this.role = role;
+  }
 
-    public String getLastname() {
-        return lastname;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public String getUsername() {
-        return username;
-    }
+  public String getLastname() {
+    return lastname;
+  }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+  public void setLastname(String lastname) {
+    this.lastname = lastname;
+  }
 
-    public String getPassword() {
-        return password;
-    }
+  public String getUsername() {
+    return username;
+  }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+  public void setUsername(String username) {
+    this.username = username;
+  }
 
-    public Permission getRole() {
-        return role;
-    }
+  public String getPassword() {
+    return password;
+  }
 
-    public void setRole(Permission role) {
-        this.role = role;
-    }
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
-    public long getId() {
-        return id;
-    }
+  public Permission getRole() {
+    return role;
+  }
 
-    public void setId(long id) {
-        this.id = id;
-    }
+  public void setRole(Permission role) {
+    this.role = role;
+  }
 
-    @Override
-    public String toString() {
-        return String.format("CustomerDAO[id=%d, name=%s, lastname=%s, username=%s, password=%s, role=%d]", id, name, lastname, username, password, role.getValue());
-    }
+  public long getId() {
+    return id;
+  }
+
+  public void setId(long id) {
+    this.id = id;
+  }
+
+  @Override
+  public String toString() {
+    return String
+        .format("CustomerDAO[id=%d, name=%s, lastname=%s, username=%s, password=%s, role=%d]", id,
+            name, lastname, username, password, role.getValue());
+  }
 }
