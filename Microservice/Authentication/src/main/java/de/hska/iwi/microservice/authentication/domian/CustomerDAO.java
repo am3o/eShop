@@ -17,10 +17,7 @@
 
 package de.hska.iwi.microservice.authentication.domian;
 
-import de.hska.iwi.microservice.authentication.entity.Customer;
-
 import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,94 +28,94 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "customer")
 public class CustomerDAO implements Serializable {
-    private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private long id;
+  private static final long serialVersionUID = 1L;
 
-    @Column(name = "name")
-    private String name;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id")
+  private long id;
 
-    @Column(name = "lastname")
-    private String lastname;
+  @Column(name = "name")
+  private String name;
 
-    @Column(name = "username")
-    private String username;
+  @Column(name = "lastname")
+  private String lastname;
 
-    @Column(name = "password")
-    private String password;
+  @Column(name = "username")
+  private String username;
 
-    @Column(name = "role")
-    private int role = 2;
+  @Column(name = "password")
+  private String password;
 
-    protected CustomerDAO() {
-    }
+  @Column(name = "role")
+  private int role = 2;
 
-    public CustomerDAO(long id, String name, String lastname, String username, String password, int role) {
-        this.id = id;
-        this.name = name;
-        this.lastname = lastname;
-        this.username = username;
-        this.password = password;
-        this.role = role;
-    }
+  protected CustomerDAO() {
+  }
 
-    public void setId(long id) {
-        this.id = id;
-    }
+  public CustomerDAO(long id, String name, String lastname, String username, String password,
+      int role) {
+    this.id = id;
+    this.name = name;
+    this.lastname = lastname;
+    this.username = username;
+    this.password = password;
+    this.role = role;
+  }
 
-    public long getId() {
-        return id;
-    }
+  public void setId(long id) {
+    this.id = id;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public long getId() {
+    return id;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public String getLastname() {
-        return lastname;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
+  public String getLastname() {
+    return lastname;
+  }
 
-    public String getUsername() {
-        return username;
-    }
+  public void setLastname(String lastname) {
+    this.lastname = lastname;
+  }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+  public String getUsername() {
+    return username;
+  }
 
-    public String getPassword() {
-        return password;
-    }
+  public void setUsername(String username) {
+    this.username = username;
+  }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+  public String getPassword() {
+    return password;
+  }
 
-    public int getRole() {
-        return role;
-    }
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
-    public void setRole(int role) {
-        this.role = role;
-    }
+  public int getRole() {
+    return role;
+  }
 
-    @Override
-    public String toString() {
-        return String.format("CustomerDAO[id=%d, name=%s, lastname=%s, username=%s, password=%s, role=%d]", id, name, lastname, username, password, role);
-    }
+  public void setRole(int role) {
+    this.role = role;
+  }
 
-    public de.hska.iwi.microservice.authentication.entity.Customer toCustomer() {
-        return new de.hska.iwi.microservice.authentication.entity.Customer(this.id, this.name, this.lastname, this.username, this.password, this.role == 0 ? Customer.Permission.Admin : Customer.Permission.User);
-    }
+  @Override
+  public String toString() {
+    return String
+        .format("CustomerDAO[id=%d, name=%s, lastname=%s, username=%s, password=%s, role=%d]", id,
+            name, lastname, username, password, role);
+  }
 }
