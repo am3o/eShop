@@ -12,6 +12,8 @@ import org.apache.log4j.Logger;
 
 public class UserManagerImpl implements UserManager {
 
+  private final static String BASIS_URL_AUTH = "http://localhost:8081/api/auth/";
+
   private final Logger logger = Logger.getLogger(UserManagerImpl.class);
   private final ObjectMapper parser = new ObjectMapper();
 
@@ -21,7 +23,7 @@ public class UserManagerImpl implements UserManager {
     try {
       Client client = Client.create();
       WebResource webResource = client
-          .resource("http://localhost:8081/api/auth/");
+          .resource(BASIS_URL_AUTH);
 
       ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON_TYPE)
           .header("usr", username).header("pass", password)
@@ -40,7 +42,7 @@ public class UserManagerImpl implements UserManager {
     try {
       Client client = Client.create();
       WebResource webResource = client
-          .resource("http://localhost:8081/api/auth?permission=true");
+          .resource(String.format("%s%s", BASIS_URL_AUTH, "?permission=true"));
 
       ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON_TYPE)
           .header("usr", username).header("pass", password)
@@ -77,7 +79,7 @@ public class UserManagerImpl implements UserManager {
     try {
       Client client = Client.create();
       WebResource webResource = client
-          .resource(String.format("http://localhost:8081/api/auth/%d", userId));
+          .resource(String.format("%s%d", BASIS_URL_AUTH, userId));
 
       ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON_TYPE)
           .delete(ClientResponse.class);
@@ -94,7 +96,7 @@ public class UserManagerImpl implements UserManager {
     User usr = null;
     try {
       Client client = Client.create();
-      WebResource webResource = client.resource("http://localhost:8081/api/auth/login");
+      WebResource webResource = client.resource(String.format("%s/login", BASIS_URL_AUTH));
 
       ClientResponse response = webResource.header("usr", username)
           .accept(MediaType.APPLICATION_JSON_TYPE)
@@ -113,7 +115,7 @@ public class UserManagerImpl implements UserManager {
     User usr = null;
     try {
       Client client = Client.create();
-      WebResource webResource = client.resource("http://localhost:8081/api/auth/logout");
+      WebResource webResource = client.resource(String.format("%s/logout", BASIS_URL_AUTH));
 
       ClientResponse response = webResource.header("usr", username)
           .accept(MediaType.APPLICATION_JSON_TYPE)
