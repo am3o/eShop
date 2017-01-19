@@ -13,6 +13,8 @@ import org.apache.log4j.Logger;
 
 public class CategoryManagerImpl implements CategoryManager {
 
+  private final static String BASIS_URL_CATEGORY = "http://localhost:8081/api/catalog/category/";
+
   private final Logger logger = Logger.getLogger(CategoryManagerImpl.class);
   private final ObjectMapper parser = new ObjectMapper();
 
@@ -22,7 +24,7 @@ public class CategoryManagerImpl implements CategoryManager {
     try {
       Client client = Client.create();
       WebResource webResource = client
-          .resource("http://localhost:8081/api/catalog/category");
+          .resource(BASIS_URL_CATEGORY);
 
       ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON_TYPE)
           .get(ClientResponse.class);
@@ -40,7 +42,7 @@ public class CategoryManagerImpl implements CategoryManager {
     try {
       Client client = Client.create();
       WebResource webResource = client
-          .resource(String.format("http://localhost:8081/api/catalog/category/%d", id));
+          .resource(String.format("%s%d", BASIS_URL_CATEGORY, id));
 
       ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON_TYPE)
           .get(ClientResponse.class);
@@ -58,7 +60,7 @@ public class CategoryManagerImpl implements CategoryManager {
     try {
       Client client = Client.create();
       WebResource webResource = client
-          .resource("http://localhost:8081/api/catalog/category/");
+          .resource(BASIS_URL_CATEGORY);
 
       webResource.accept(MediaType.APPLICATION_JSON_TYPE)
           .post(ClientResponse.class, parser.writeValueAsString(category));
@@ -72,7 +74,7 @@ public class CategoryManagerImpl implements CategoryManager {
     try {
       Client client = Client.create();
       WebResource webResource = client
-          .resource(String.format("http://localhost:8081/api/catalog/category/%d", id));
+          .resource(String.format("%s%d", BASIS_URL_CATEGORY, id));
 
       webResource.accept(MediaType.APPLICATION_JSON_TYPE).delete();
     } catch (Exception ex) {
