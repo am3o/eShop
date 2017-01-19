@@ -13,6 +13,7 @@ public class LogoutAction extends ActionSupport {
    *
    */
   private static final long serialVersionUID = -530488065543708898L;
+  private final String CONTEXT_USER = "webshop_user";
 
   public String execute() throws Exception {
 
@@ -20,13 +21,12 @@ public class LogoutAction extends ActionSupport {
     Map<String, Object> session = ActionContext.getContext().getSession();
 
     UserManager userManager = new UserManagerImpl();
-    User currentUser = (User) session.get("webshop_user");
+    User currentUser = (User) session.get(CONTEXT_USER);
 
     userManager.logoutUser(currentUser.getUsername(), currentUser.getPassword());
 
     session.clear();
 
     return "success";
-
   }
 }
