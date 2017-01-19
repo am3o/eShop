@@ -11,6 +11,8 @@ import javax.ws.rs.core.MediaType;
 
 public class UserManagerImpl implements UserManager {
 
+  private final ObjectMapper parser = new ObjectMapper();
+
   @Override
   public boolean existUser(String username, String password) {
     User usr = null;
@@ -23,9 +25,7 @@ public class UserManagerImpl implements UserManager {
           .header("usr", username).header("pass", password)
           .get(ClientResponse.class);
 
-      ObjectMapper objectMapper = new ObjectMapper();
-      usr = objectMapper.readValue(response.getEntity(String.class), User.class);
-
+      usr = parser.readValue(response.getEntity(String.class), User.class);
     } catch (Exception ex) {
       System.out.println(ex.toString());
     }
@@ -44,9 +44,7 @@ public class UserManagerImpl implements UserManager {
           .header("usr", username).header("pass", password)
           .get(ClientResponse.class);
 
-      ObjectMapper objectMapper = new ObjectMapper();
-      usr = objectMapper.readValue(response.getEntity(String.class), User.class);
-
+      usr = parser.readValue(response.getEntity(String.class), User.class);
     } catch (Exception ex) {
       System.out.println(ex.toString());
     }
@@ -58,16 +56,13 @@ public class UserManagerImpl implements UserManager {
       String role) {
     User usr = new User(0, name, lastname, username, password, role);
     try {
-      ObjectMapper objectMapper = new ObjectMapper();
-
       Client client = Client.create();
       WebResource webResource = client.resource("http://localhost:8081/api/auth/");
 
       ClientResponse response = webResource.type(MediaType.APPLICATION_JSON_TYPE)
-          .post(ClientResponse.class, objectMapper.writeValueAsString(usr));
+          .post(ClientResponse.class, parser.writeValueAsString(usr));
 
-      usr = objectMapper.readValue(response.getEntity(String.class), User.class);
-
+      usr = parser.readValue(response.getEntity(String.class), User.class);
     } catch (Exception ex) {
       System.out.println(ex.toString());
     }
@@ -85,9 +80,7 @@ public class UserManagerImpl implements UserManager {
       ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON_TYPE)
           .delete(ClientResponse.class);
 
-      ObjectMapper objectMapper = new ObjectMapper();
-      usr = objectMapper.readValue(response.getEntity(String.class), User.class);
-
+      usr = parser.readValue(response.getEntity(String.class), User.class);
     } catch (Exception ex) {
       System.out.println(ex.toString());
     }
@@ -105,10 +98,8 @@ public class UserManagerImpl implements UserManager {
           .accept(MediaType.APPLICATION_JSON_TYPE)
           .header("pass", password).put(ClientResponse.class);
 
-      ObjectMapper objectMapper = new ObjectMapper();
-      usr = objectMapper.readValue(response.getEntity(String.class), User.class);
+      usr = parser.readValue(response.getEntity(String.class), User.class);
       usr.setRole(this.checkPermission(usr.getUsername(), usr.getPassword()).getRole());
-
     } catch (Exception ex) {
       System.out.println(ex.toString());
     }
@@ -126,9 +117,7 @@ public class UserManagerImpl implements UserManager {
           .accept(MediaType.APPLICATION_JSON_TYPE)
           .header("pass", password).put(ClientResponse.class);
 
-      ObjectMapper objectMapper = new ObjectMapper();
-      usr = objectMapper.readValue(response.getEntity(String.class), User.class);
-
+      usr = parser.readValue(response.getEntity(String.class), User.class);
     } catch (Exception ex) {
       System.out.println(ex.toString());
     }
