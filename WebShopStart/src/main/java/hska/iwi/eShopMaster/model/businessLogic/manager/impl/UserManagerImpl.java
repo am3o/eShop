@@ -8,9 +8,11 @@ import com.sun.jersey.api.client.WebResource;
 import hska.iwi.eShopMaster.model.businessLogic.manager.UserManager;
 import hska.iwi.eShopMaster.model.businessLogic.manager.entity.User;
 import javax.ws.rs.core.MediaType;
+import org.apache.log4j.Logger;
 
 public class UserManagerImpl implements UserManager {
 
+  private final Logger logger = Logger.getLogger(UserManagerImpl.class);
   private final ObjectMapper parser = new ObjectMapper();
 
   @Override
@@ -27,7 +29,7 @@ public class UserManagerImpl implements UserManager {
 
       usr = parser.readValue(response.getEntity(String.class), User.class);
     } catch (Exception ex) {
-      System.out.println(ex.toString());
+      logger.error(ex);
     }
     return !(usr instanceof User);
   }
@@ -46,7 +48,7 @@ public class UserManagerImpl implements UserManager {
 
       usr = parser.readValue(response.getEntity(String.class), User.class);
     } catch (Exception ex) {
-      System.out.println(ex.toString());
+      logger.error(ex);
     }
     return usr;
   }
@@ -64,7 +66,7 @@ public class UserManagerImpl implements UserManager {
 
       usr = parser.readValue(response.getEntity(String.class), User.class);
     } catch (Exception ex) {
-      System.out.println(ex.toString());
+      logger.error(ex);
     }
     return usr;
   }
@@ -82,7 +84,7 @@ public class UserManagerImpl implements UserManager {
 
       usr = parser.readValue(response.getEntity(String.class), User.class);
     } catch (Exception ex) {
-      System.out.println(ex.toString());
+      logger.error(ex);
     }
     return !(usr instanceof User);
   }
@@ -101,7 +103,7 @@ public class UserManagerImpl implements UserManager {
       usr = parser.readValue(response.getEntity(String.class), User.class);
       usr.setRole(this.checkPermission(usr.getUsername(), usr.getPassword()).getRole());
     } catch (Exception ex) {
-      System.out.println(ex.toString());
+      logger.error(ex);
     }
     return usr;
   }
@@ -119,7 +121,7 @@ public class UserManagerImpl implements UserManager {
 
       usr = parser.readValue(response.getEntity(String.class), User.class);
     } catch (Exception ex) {
-      System.out.println(ex.toString());
+      logger.error(ex);
     }
     return usr;
   }
