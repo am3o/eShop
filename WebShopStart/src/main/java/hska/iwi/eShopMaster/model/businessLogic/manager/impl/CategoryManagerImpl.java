@@ -1,45 +1,82 @@
 package hska.iwi.eShopMaster.model.businessLogic.manager.impl;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
 import hska.iwi.eShopMaster.model.businessLogic.manager.CategoryManager;
-import hska.iwi.eShopMaster.model.database.dataAccessObjects.CategoryDAO;
-import hska.iwi.eShopMaster.model.database.dataobjects.Category;
-
+import hska.iwi.eShopMaster.model.businessLogic.manager.entity.Category;
 import java.util.List;
+import javax.ws.rs.core.MediaType;
+import org.apache.log4j.Logger;
 
-public class CategoryManagerImpl implements CategoryManager{
-	private CategoryDAO helper;
-	
-	public CategoryManagerImpl() {
-		helper = new CategoryDAO();
-	}
+public class CategoryManagerImpl implements CategoryManager {
 
-	public List<Category> getCategories() {
-		return helper.getObjectList();
-	}
+  private final Logger logger = Logger.getLogger(CategoryManagerImpl.class);
+  private final ObjectMapper parser = new ObjectMapper();
 
-	public Category getCategory(int id) {
-		return helper.getObjectById(id);
-	}
+  @Override
+  public List<Category> getCategories() {
+    List<Category> categories = null;
+    try {
+      Client client = Client.create();
+      WebResource webResource = client
+          .resource("http://localhost:8081/api/catalog/category");
 
-	public Category getCategoryByName(String name) {
-		return helper.getObjectByName(name);
-	}
+      ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON_TYPE)
+          .get(ClientResponse.class);
 
-	public void addCategory(String name) {
-		Category cat = new Category(name);
-		helper.saveObject(cat);
+      categories = parser.readValue(response.getEntity(String.class), List.class);
+    } catch (Exception ex) {
+      logger.error(ex);
+    }
+    return categories;
+  }
 
-	}
+  @Override
+  public Category getCategory(int id) {
+    Category category = null;
+    try {
+      Client client = Client.create();
+      WebResource webResource = client
+          .resource(String.format("http://localhost:8081/api/catalog/category/%d", id));
 
-	public void delCategory(Category cat) {
-	
-// 		Products are also deleted because of relation in Category.java 
-		helper.deleteById(cat.getId());
-	}
+      ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON_TYPE)
+          .get(ClientResponse.class);
 
-	public void delCategoryById(int id) {
-		
-		helper.deleteById(id);
-	}
+      category = parser.readValue(response.getEntity(String.class), Category.class);
+    } catch (Exception ex) {
+      logger.error(ex);
+    }
+    return category;
+  }
+
+  @Override
+  public void addCategory(String name) {
+    Category category = new Category(name);
+    try {
+      Client client = Client.create();
+      WebResource webResource = client
+          .resource("http://localhost:8081/api/catalog/category/");
+
+      webResource.accept(MediaType.APPLICATION_JSON_TYPE)
+          .post(ClientResponse.class, parser.writeValueAsString(category));
+    } catch (Exception ex) {
+      logger.error(ex);
+    }
+  }
+
+  @Override
+  public void delCategoryById(int id) {
+    try {
+      Client client = Client.create();
+      WebResource webResource = client
+          .resource(String.format("http://localhost:8081/api/catalog/category/%d", id));
+
+      webResource.accept(MediaType.APPLICATION_JSON_TYPE).delete();
+    } catch (Exception ex) {
+      logger.error(ex);
+    }
+  }
 }
