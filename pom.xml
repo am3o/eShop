@@ -27,5 +27,6 @@
     <module>Microservice/Gateway</module>
     <module>Microservice/Catalog</module>
     <module>Microservice/Monitoring</module>
+    <module>Microservice/OAuth</module>
   </modules>
 </project>
