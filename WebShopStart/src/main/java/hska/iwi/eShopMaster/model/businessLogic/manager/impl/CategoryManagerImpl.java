@@ -7,6 +7,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import hska.iwi.eShopMaster.model.businessLogic.manager.CategoryManager;
 import hska.iwi.eShopMaster.model.businessLogic.manager.entity.Category;
+import hska.iwi.eShopMaster.model.businessLogic.manager.entity.User;
 import java.util.List;
 import javax.ws.rs.core.MediaType;
 import org.apache.log4j.Logger;
@@ -17,6 +18,12 @@ public class CategoryManagerImpl implements CategoryManager {
 
   private final Logger logger = Logger.getLogger(CategoryManagerImpl.class);
   private final ObjectMapper parser = new ObjectMapper();
+
+  private final User currentUser;
+
+  public CategoryManagerImpl(User currentUser) {
+    this.currentUser = currentUser;
+  }
 
   @Override
   public List<Category> getCategories() {
@@ -42,7 +49,8 @@ public class CategoryManagerImpl implements CategoryManager {
     try {
       Client client = Client.create();
       WebResource webResource = client
-          .resource(String.format("%s%d", BASIS_URL_CATEGORY, id));
+          .resource(BASIS_URL_CATEGORY)
+          .path(String.valueOf(id));
 
       ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON_TYPE)
           .get(ClientResponse.class);
@@ -62,7 +70,10 @@ public class CategoryManagerImpl implements CategoryManager {
       WebResource webResource = client
           .resource(BASIS_URL_CATEGORY);
 
-      webResource.accept(MediaType.APPLICATION_JSON_TYPE)
+      webResource.type(MediaType.APPLICATION_JSON_TYPE)
+          .accept(MediaType.APPLICATION_JSON_TYPE)
+          .header("usr", currentUser.getUsername())
+          .header("pass", currentUser.getPassword())
           .post(ClientResponse.class, parser.writeValueAsString(category));
     } catch (Exception ex) {
       logger.error(ex);
@@ -74,9 +85,13 @@ public class CategoryManagerImpl implements CategoryManager {
     try {
       Client client = Client.create();
       WebResource webResource = client
-          .resource(String.format("%s%d", BASIS_URL_CATEGORY, id));
+          .resource(BASIS_URL_CATEGORY)
+          .path(String.valueOf(id));
 
-      webResource.accept(MediaType.APPLICATION_JSON_TYPE).delete();
+      webResource.accept(MediaType.APPLICATION_JSON_TYPE)
+          .header("usr", currentUser.getUsername())
+          .header("pass", currentUser.getPassword())
+          .delete();
     } catch (Exception ex) {
       logger.error(ex);
     }

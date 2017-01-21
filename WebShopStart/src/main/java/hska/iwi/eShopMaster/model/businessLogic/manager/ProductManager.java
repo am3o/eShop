@@ -1,24 +1,21 @@
 package hska.iwi.eShopMaster.model.businessLogic.manager;
 
-import hska.iwi.eShopMaster.model.database.dataobjects.Product;
 
+import hska.iwi.eShopMaster.model.businessLogic.manager.entity.Product;
 import java.util.List;
 
 public interface ProductManager {
 
-	public List<Product> getProducts();
+  List<Product> getProducts();
 
-	public Product getProductById(int id);
+  Product getProductById(int id);
 
-	public Product getProductByName(String name);
+  int addProduct(String name, double price, int categoryId, String details);
 
-	public int addProduct(String name, double price, int categoryId, String details);
+  List<Product> getProductsForSearchValues(String searchValue, Double searchMinPrice,
+      Double searchMaxPrice);
 
-	public List<Product> getProductsForSearchValues(String searchValue, Double searchMinPrice, Double searchMaxPrice);
-	
-	public boolean deleteProductsByCategoryId(int categoryId);
-	
-    public void deleteProductById(int id);
-    
-	
+  boolean deleteProductsByCategoryId(int categoryId);
+
+  void deleteProductById(int id);
 }

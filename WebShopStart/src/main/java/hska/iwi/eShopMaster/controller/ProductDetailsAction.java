@@ -3,88 +3,64 @@ package hska.iwi.eShopMaster.controller;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import hska.iwi.eShopMaster.model.businessLogic.manager.ProductManager;
+import hska.iwi.eShopMaster.model.businessLogic.manager.entity.Product;
+import hska.iwi.eShopMaster.model.businessLogic.manager.entity.User;
+import hska.iwi.eShopMaster.model.businessLogic.manager.impl.CategoryManagerImpl;
 import hska.iwi.eShopMaster.model.businessLogic.manager.impl.ProductManagerImpl;
-import hska.iwi.eShopMaster.model.database.dataobjects.Product;
-import hska.iwi.eShopMaster.model.database.dataobjects.User;
-
 import java.util.Map;
 
 public class ProductDetailsAction extends ActionSupport {
-	
-	private User user;
-	private int id;
-	private String searchValue;
-	private Integer searchMinPrice;
-	private Integer searchMaxPrice;
-	private Product product;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7708747680872125699L;
+  private User user;
+  private int id;
+  private Product product;
 
-	public String execute() throws Exception {
+  /**
+   *
+   */
+  private static final long serialVersionUID = 7708747680872125699L;
 
-		String res = "input";
-		
-		Map<String, Object> session = ActionContext.getContext().getSession();
-		user = (User) session.get("webshop_user");
-		
-		if(user != null) {
-			ProductManager productManager = new ProductManagerImpl();
-			product = productManager.getProductById(id);
-			
-			res = "success";			
-		}
-		
-		return res;		
-	}
-	
-	public User getUser() {
-		return user;
-	}
+  public String execute() throws Exception {
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    String res = "input";
 
-	public int getId() {
-		return id;
-	}
+    Map<String, Object> session = ActionContext.getContext().getSession();
+    user = (User) session.get("webshop_user");
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    if (user instanceof User) {
+      ProductManager productManager = new ProductManagerImpl(user);
+      product = productManager.getProductById(id);
 
-	public String getSearchValue() {
-		return searchValue;
-	}
+      CategoryManagerImpl categoryManager = new CategoryManagerImpl(user);
+      product.setCategory(categoryManager.getCategory(product.getCategoryId()));
 
-	public void setSearchValue(String searchValue) {
-		this.searchValue = searchValue;
-	}
+      res = "success";
+    }
 
-	public Integer getSearchMinPrice() {
-		return searchMinPrice;
-	}
+    return res;
+  }
 
-	public void setSearchMinPrice(Integer searchMinPrice) {
-		this.searchMinPrice = searchMinPrice;
-	}
+  public User getUser() {
+    return user;
+  }
 
-	public Integer getSearchMaxPrice() {
-		return searchMaxPrice;
-	}
+  public void setUser(User user) {
+    this.user = user;
+  }
 
-	public void setSearchMaxPrice(Integer searchMaxPrice) {
-		this.searchMaxPrice = searchMaxPrice;
-	}
+  public int getId() {
+    return id;
+  }
 
-	public Product getProduct() {
-		return product;
-	}
+  public void setId(int id) {
+    this.id = id;
+  }
 
-	public void setProduct(Product product) {
-		this.product = product;
-	}
+  public Product getProduct() {
+    return product;
+  }
+
+  public void setProduct(Product product) {
+    this.product = product;
+  }
 }

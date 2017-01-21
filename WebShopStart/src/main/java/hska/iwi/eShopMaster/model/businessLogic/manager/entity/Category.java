@@ -6,7 +6,7 @@ package hska.iwi.eShopMaster.model.businessLogic.manager.entity;
 public class Category {
 
   private int id;
-  private String name;
+  private String name = "undefined";
 
   public Category() {
     super();

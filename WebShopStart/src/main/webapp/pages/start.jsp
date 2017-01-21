@@ -48,7 +48,7 @@
             </h3>
             <s:form action="SearchAction" theme="simple">
                 <div class="form-group">
-                    <label>Suchtext:</label>
+                    <label>Suchtext-DETAILS:</label>
                     <s:textfield name="searchValue" cssClass="form-control"/>
                 </div>
                 <div class="form-group">
@@ -76,47 +76,34 @@
     <div id="startpage_products">
 
         <table class="table table-striped">
+
             <tr class="header">
                 <td><s:text name="product.nr"/></td>
-                <td><s:text name="product.name"/></td>
-                <td><s:text name="product.price"/></td>
                 <td><s:text name="product.category"/></td>
+                <td><s:text name="product.name"/></td>
+                <td><s:text name="product.details"/></td>
+                <td><s:text name="product.price"/></td>
                 <td></td>
             </tr>
             <s:iterator value="products" status="rowstatus">
                 <tr>
-                    <s:if test="#rowstatus.odd == true">
-                        <td class="odd"><s:property value="#rowstatus.index+1"/>
-                        <td class="odd"><s:property value="name"/></td>
-                        <td class="odd"><s:property value="price"/></td>
-                        <td class="odd"><s:property value="category.name"/></td>
+                    <td class="odd"><s:property value="#rowstatus.index+1"/></td>
+                    <td class="odd"><s:property value="categoryName" default="undefined"/></td>
+                    <td class="odd"><s:property value="name"/></td>
+                    <td class="odd"><s:property value="details"/></td>
+                    <td class="odd"><s:property value="price"/></td>
+                    <td class="odd"><a
+                            href="./ProductDetailsAction.action?id=<s:property value='id'/>"><span
+                            class="glyphicon glyphicon-option-vertical"
+                            aria-hidden="true"></span></a>
+                    </td>
+                    <s:if test="#session.webshop_user.role=='Admin'">
                         <td class="odd"><a
-                                href="./ProductDetailsAction.action?id=<s:property value='id'/>&searchValue=<s:property value='searchValue'/>&searchMinPrice=<s:property value='searchMinPrice'/>&searchMaxPrice=<s:property value='searchMaxPrice'/>"><img
-                                src="img/detBtn.png" alt="<s:text name="product.details" />"/></a>
+                                href="./DeleteProductAction.action?id=<s:property value='id'/>"><span
+                                class="glyphicon glyphicon-remove"
+                                aria-hidden="true"></span></a>
                         </td>
-                        <s:if test="#session.webshop_user.role.level==0">
-                            <td class="odd"><a
-                                    href="./DeleteProductAction.action?id=<s:property value='id'/>"><img
-                                    src="img/delBtn.png"
-                                    alt="<s:text name="product.delete" />"/></a></td>
-                        </s:if>
                     </s:if>
-                    <s:else>
-                        <td><s:property value="#rowstatus.index+1"/>
-                        <td><s:property value="name"/></td>
-                        <td><s:property value="price"/></td>
-                        <td><s:property value="category.name"/></td>
-                        <td>
-                            <a href="./ProductDetailsAction.action?id=<s:property value='id'/>&searchValue=<s:property value='searchValue'/>&searchMinPrice=<s:property value='searchMinPrice'/>&searchMaxPrice=<s:property value='searchMaxPrice'/>"><img
-                                    src="img/detBtn.png"
-                                    alt="<s:text name="product.details" />"/></a></td>
-                        <s:if test="#session.webshop_user.role.level==0">
-                            <td>
-                                <a href="./DeleteProductAction.action?id=<s:property value='id'/>"><img
-                                        src="img/delBtn.png"
-                                        alt="<s:text name="product.delete" />"/></a></td>
-                        </s:if>
-                    </s:else>
                 </tr>
             </s:iterator>
         </table>

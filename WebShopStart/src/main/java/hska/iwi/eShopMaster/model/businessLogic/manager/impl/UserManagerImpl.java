@@ -42,7 +42,8 @@ public class UserManagerImpl implements UserManager {
     try {
       Client client = Client.create();
       WebResource webResource = client
-          .resource(String.format("%s%s", BASIS_URL_AUTH, "?permission=true"));
+          .resource(BASIS_URL_AUTH)
+          .queryParam("permission", "true");
 
       ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON_TYPE)
           .header("usr", username).header("pass", password)
@@ -61,7 +62,7 @@ public class UserManagerImpl implements UserManager {
     User usr = new User(0, name, lastname, username, password, role);
     try {
       Client client = Client.create();
-      WebResource webResource = client.resource("http://localhost:8081/api/auth/");
+      WebResource webResource = client.resource(BASIS_URL_AUTH);
 
       ClientResponse response = webResource.type(MediaType.APPLICATION_JSON_TYPE)
           .post(ClientResponse.class, parser.writeValueAsString(usr));
@@ -79,7 +80,8 @@ public class UserManagerImpl implements UserManager {
     try {
       Client client = Client.create();
       WebResource webResource = client
-          .resource(String.format("%s%d", BASIS_URL_AUTH, userId));
+          .resource(BASIS_URL_AUTH)
+          .path(String.valueOf(userId));
 
       ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON_TYPE)
           .delete(ClientResponse.class);
@@ -96,7 +98,8 @@ public class UserManagerImpl implements UserManager {
     User usr = null;
     try {
       Client client = Client.create();
-      WebResource webResource = client.resource(String.format("%s/login", BASIS_URL_AUTH));
+      WebResource webResource = client.resource(BASIS_URL_AUTH)
+          .path("login");
 
       ClientResponse response = webResource.header("usr", username)
           .accept(MediaType.APPLICATION_JSON_TYPE)
@@ -115,7 +118,8 @@ public class UserManagerImpl implements UserManager {
     User usr = null;
     try {
       Client client = Client.create();
-      WebResource webResource = client.resource(String.format("%s/logout", BASIS_URL_AUTH));
+      WebResource webResource = client.resource(BASIS_URL_AUTH)
+          .path("logout");
 
       ClientResponse response = webResource.header("usr", username)
           .accept(MediaType.APPLICATION_JSON_TYPE)
