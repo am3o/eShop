@@ -26,7 +26,6 @@ public class ListAllProductsAction extends ActionSupport {
     user = (User) session.get("webshop_user");
 
     if (user instanceof User) {
-      System.out.println("list all products!");
       ProductManager productManager = new ProductManagerImpl(user);
       this.products = productManager.getProducts();
       result = "success";
