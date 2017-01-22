@@ -39,6 +39,11 @@ public interface IAuthenticationController {
   ResponseEntity<Customer> getCustomerInformation(long customerId);
 
   /**
+   * Liefert einen vorliegenden Benutzer zurück mit dem gegebenen Benutzernamen.
+   */
+  ResponseEntity<Customer> getCustomerByUsername(String username);
+
+  /**
    * Aktualisiert die Informationen eines speziellen Benutzers.
    */
   ResponseEntity<Customer> updateCustomer(Customer customer);

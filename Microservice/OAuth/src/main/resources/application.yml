@@ -1,0 +1,53 @@
+system:
+  docker:
+    server:
+      port: ${CONTAINER_AUTHENTICATION_PORT}
+    eureka:
+      hostname: ${CONTAINER_EUREKA_NAME}
+      port: ${CONTAINER_EUREKA_PORT}
+  default:
+    server:
+      port: 5005
+    eureka:
+      hostname: localhost
+      port: 8761
+
+---
+spring:
+  profiles: default
+  application:
+    name: oauth-service
+
+server:
+  port: ${PORT:${system.default.server.port}}
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${system.default.eureka.hostname}:${system.default.eureka.port}/eureka/
+  instance:
+    preferIpAddress: true
+
+security:
+  basic:
+    enabled: false
+  ignored: /css/**,/js/**,/favicon.ico,/webjars/**
+
+logging:
+  level.org.springframework.security: DEBUG
+
+---
+spring:
+  profiles: docker-container
+  application:
+      name: oauth-service
+
+server:
+  port: ${PORT:${system.docker.server.port}}
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${system.docker.eureka.hostname}:${system.docker.eureka.port}/eureka/
+  instance:
+    preferIpAddress: true

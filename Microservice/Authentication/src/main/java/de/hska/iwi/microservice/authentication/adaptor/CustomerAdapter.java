@@ -28,7 +28,7 @@ public class CustomerAdapter {
     if (customerDAO instanceof CustomerDAO) {
       return new Customer(customerDAO.getId(), customerDAO.getName(), customerDAO.getLastname(),
           customerDAO.getUsername(), customerDAO.getPassword(),
-          customerDAO.getRole() == 0 ? Permission.Admin : Permission.User);
+          customerDAO.getRole() == 1 ? Permission.Admin : Permission.User);
     }
     return null;
   }

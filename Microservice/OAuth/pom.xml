@@ -11,7 +11,7 @@
   </parent>
   <groupId>de.hska.iwi.microservice</groupId>
 
-  <artifactId>OAuth</artifactId>
+  <artifactId>OAuthService</artifactId>
   <name>oauth</name>
 
   <properties>

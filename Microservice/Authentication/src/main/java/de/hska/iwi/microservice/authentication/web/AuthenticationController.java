@@ -88,6 +88,15 @@ public class AuthenticationController implements IAuthenticationController {
         authenticationServiceFasade.getCustomerInformation(customerId), HttpStatus.OK);
   }
 
+  @Override
+  @RequestMapping(value = "/username", method = RequestMethod.GET)
+  public ResponseEntity<Customer> getCustomerByUsername(
+      @RequestHeader(name = "usr") String username) {
+    logger.info(String.format("Service-Aufruf: getCustomerByUsername mit dem Wert: %s", username));
+    return new ResponseEntity<Customer>(
+        authenticationServiceFasade.getCustomerInformation(username), HttpStatus.OK);
+  }
+
 
   @Override
   @RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
