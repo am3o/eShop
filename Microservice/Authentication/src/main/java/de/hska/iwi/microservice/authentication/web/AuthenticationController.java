@@ -45,7 +45,7 @@ public class AuthenticationController implements IAuthenticationController {
   }
 
   @Override
-  @RequestMapping(value = "/", method = RequestMethod.POST)
+  @RequestMapping(value = "/registration", method = RequestMethod.POST)
   public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
     logger.info(
         String.format("Service-Aufruf: createCustomer mit dem Wert: %s", customer.toString()));

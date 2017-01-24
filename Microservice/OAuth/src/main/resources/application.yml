@@ -1,7 +1,7 @@
 system:
   docker:
     server:
-      port: ${CONTAINER_AUTHENTICATION_PORT}
+      port: ${CONTAINER_OAUTH_PORT}
     eureka:
       hostname: ${CONTAINER_EUREKA_NAME}
       port: ${CONTAINER_EUREKA_PORT}
@@ -51,3 +51,11 @@ eureka:
       defaultZone: http://${system.docker.eureka.hostname}:${system.docker.eureka.port}/eureka/
   instance:
     preferIpAddress: true
+
+security:
+  basic:
+    enabled: false
+  ignored: /css/**,/js/**,/favicon.ico,/webjars/**
+
+logging:
+  level.org.springframework.security: DEBUG
