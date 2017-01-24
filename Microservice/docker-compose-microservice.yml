@@ -15,13 +15,27 @@ services:
     ports:
       - "3306:3306"
 
+  oauth:
+    depends_on:
+      - registration
+      - authentication
+    image: am3o/eshop-oauth:latest
+    container_name: eshop-oauth-service
+    links:
+      - registration:registration
+    environment:
+      CONTAINER_OAUTH_PORT: 5005
+      CONTAINER_EUREKA_NAME: registration
+      CONTAINER_EUREKA_PORT: 8761
+    ports:
+      - "5005:5005"
+
   authentication:
     depends_on:
       - eshop-database
       - registration
     image: am3o/eshop-authentication:latest
     container_name: eshop-authentication-service
-    restart: always
     links:
       - registration:registration
       - eshop-database:authentication-database
@@ -43,7 +57,6 @@ services:
       - registration
     image: am3o/eshop-product:latest
     container_name: eshop-product-service
-    restart: always
     links:
       - registration:registration
       - eshop-database:product-database
@@ -65,7 +78,6 @@ services:
       - registration
     image: am3o/eshop-category:latest
     container_name: eshop-category-service
-    restart: always
     links:
       - registration:registration
       - eshop-database:category-database
@@ -100,13 +112,14 @@ services:
       - registration
       - catalog
       - authentication
+      - oauth
     image: am3o/eshop-gateway:latest
     container_name: eshop-gateway-service
-    restart: always
     links:
       - registration:registration
       - catalog
       - authentication
+      - oauth
     environment:
       CONTAINER_GATEWAY_PORT: 8081
       CONTAINER_EUREKA_NAME: registration
@@ -117,7 +130,6 @@ services:
   registration:
      image: am3o/eshop-registration:latest
      container_name: eshop-registration-service
-     restart: always
      environment:
       CONTAINER_EUREKA_NAME: eureka
       CONTAINER_EUREKA_PORT: 8761
@@ -127,9 +139,12 @@ services:
   monitoring:
     depends_on:
       - registration
+      - catalog
       - gateway
+    links:
+      - gateway:gateway
+      - catalog:catalog
     image: am3o/eshop-monitoring:latest
     container_name: eshop-monitoring-service
-    restart: always
     ports:
       - "9001:9001"
